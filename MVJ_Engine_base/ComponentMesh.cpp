@@ -20,12 +20,6 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh)
 }
 
 
-update_status ComponentMesh::Update()  {
-
-
-
-	return UPDATE_CONTINUE;
-}
 
 ComponentMesh::~ComponentMesh()
 {

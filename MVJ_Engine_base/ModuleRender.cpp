@@ -41,6 +41,54 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go,int idMesh, c
 	return meshComp;
 }
 
+update_status ModuleRender::RenderMesh(const Mesh & meshActual) {
+	/*
+	if (meshActual.numVertices > 0) {
+		glUseProgram(App->shaderProgram->programModel);
+
+		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+			"model"), 1, GL_TRUE, &model[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+			"view"), 1, GL_TRUE, &App->camera->view[0][0]);
+		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+			"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
+
+
+		GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
+		if (renderTexture) glUniform1i(drawText, 1);
+		else  glUniform1i(drawText, 0);
+
+
+		unsigned vboActual = meshActual.vbo;
+		unsigned numVerticesActual = meshActual.numVertices;
+		unsigned numIndexesActual = meshActual.numIndexesMesh; 
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, App->modelLoader->materials[App->modelLoader->textures[i]]); // <- mesh.materialIndex
+		glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
+
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, vboActual);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, App->modelLoader->ibos[i]);
+		glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+
+		glUseProgram(0);
+
+	} */
+	return UPDATE_CONTINUE;
+}
+
 // Called before render is available
 bool ModuleRender::Init()
 {

@@ -9,7 +9,6 @@ struct Mesh {
 
 	unsigned vbo;
 	unsigned ibo;
-	unsigned numVerticesMesh;
 	unsigned numIndexesMesh;
 	unsigned materialIndex;
 	unsigned numVertices;
@@ -24,9 +23,6 @@ public:
 	ComponentMesh( GameObject* my_go);
 	ComponentMesh(GameObject* my_go, const Mesh& mesh);
 	~ComponentMesh();
-
-	update_status Update() override;
-
 
 public:
 	Mesh mesh;

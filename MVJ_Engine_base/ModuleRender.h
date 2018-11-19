@@ -12,6 +12,7 @@ struct SDL_Rect;
 
 class ComponentMesh;
 class GameObject;
+class Mesh;
 
 class ModuleRender : public Module
 {
@@ -26,8 +27,10 @@ public:
 	bool CleanUp();
 	void WindowResized(unsigned width, unsigned height);
 
-	ComponentMesh* CreateComponentMesh( GameObject* my_go);
-	ComponentMesh* CreateComponentMesh( GameObject* my_go,int idMesh, char* path);
+	ComponentMesh* CreateComponentMesh(GameObject* my_go);
+	ComponentMesh* CreateComponentMesh(GameObject* my_go,int idMesh, char* path);
+
+	update_status RenderMesh(const Mesh & meshActual);
 
 	math::float4x4 model; 
 

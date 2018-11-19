@@ -67,6 +67,7 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, Mesh & mesh, int
 	mesh.materialIndex = src_mesh->mMaterialIndex;
 	mesh.numVertices = src_mesh->mNumVertices;
 	mesh.numFaces = src_mesh->mNumFaces;
+	mesh.numIndexesMesh = src_mesh->mNumFaces * 3;
 
 	sprintf(b, ">Mesh loaded \n");	
 	App->menu->console.AddLog(b);
