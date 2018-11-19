@@ -11,7 +11,7 @@ public:
 	GameObject();
 	~GameObject();
 
-	Component* CreateComponent(type_comp type);
+	Component* CreateComponent(type_comp type, int id, char * path);
 
 public:
 	bool active;
