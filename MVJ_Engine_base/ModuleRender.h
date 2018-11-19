@@ -30,7 +30,7 @@ public:
 	ComponentMesh* CreateComponentMesh(GameObject* my_go);
 	ComponentMesh* CreateComponentMesh(GameObject* my_go,int idMesh, char* path);
 
-	update_status RenderMesh(const Mesh & meshActual);
+	update_status RenderMesh(ComponentMesh * meshComp);
 
 	math::float4x4 model; 
 

@@ -41,7 +41,7 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go,int idMesh, c
 	return meshComp;
 }
 
-update_status ModuleRender::RenderMesh(const Mesh & meshActual) {
+update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 	/*
 	if (meshActual.numVertices > 0) {
 		glUseProgram(App->shaderProgram->programModel);
@@ -57,9 +57,9 @@ update_status ModuleRender::RenderMesh(const Mesh & meshActual) {
 		GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
 		if (renderTexture) glUniform1i(drawText, 1);
 		else  glUniform1i(drawText, 0);
+		
 
-
-		unsigned vboActual = meshActual.vbo;
+		unsigned vboActual = meshComp->mesh.vbo; //           <------------------ correct
 		unsigned numVerticesActual = meshActual.numVertices;
 		unsigned numIndexesActual = meshActual.numIndexesMesh; 
 
