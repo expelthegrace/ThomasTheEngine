@@ -13,6 +13,7 @@ struct SDL_Rect;
 class ComponentMesh;
 class GameObject;
 class Mesh;
+class ComponentMaterial;
 
 class ModuleRender : public Module
 {
@@ -29,6 +30,8 @@ public:
 
 	ComponentMesh* CreateComponentMesh(GameObject* my_go);
 	ComponentMesh* CreateComponentMesh(GameObject* my_go,int idMesh, char* path);
+
+	ComponentMaterial * CreateComponentMaterial(GameObject* my_go, int idMesh, char* path);
 
 	update_status RenderMesh(ComponentMesh * meshComp);
 

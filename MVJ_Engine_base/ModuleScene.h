@@ -13,6 +13,8 @@ public:
 	ModuleScene();
 	~ModuleScene();
 
+	bool Init();
+
 public:
 
 	GameObject * gameObjects;

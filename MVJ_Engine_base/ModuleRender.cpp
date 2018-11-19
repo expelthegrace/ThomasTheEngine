@@ -11,6 +11,7 @@
 #include "ModuleCamera.h"
 #include "ComponentMesh.h"
 #include "GameObject.h"
+#include "ComponentMaterial.h"
 
 ModuleRender::ModuleRender()
 {
@@ -40,6 +41,14 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go,int idMesh, c
 	meshComponents.push_back(meshComp);
 	return meshComp;
 }
+
+ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int idMaterial, char* path) {
+	unsigned mat = App->modelLoader->GenerateMaterial(idMaterial, path);
+	ComponentMaterial* materialComp = new ComponentMaterial(mat);
+
+	return materialComp;
+}
+
 
 update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 	/*
@@ -227,7 +236,8 @@ update_status ModuleRender::PostUpdate()
 bool ModuleRender::CleanUp()
 {
 	for (int i = 0; i < meshComponents.size(); ++i)	delete meshComponents[i];
-	
+	meshComponents.clear();
+
 	LOG("Destroying renderer");
 	SDL_GL_DeleteContext(context);
 

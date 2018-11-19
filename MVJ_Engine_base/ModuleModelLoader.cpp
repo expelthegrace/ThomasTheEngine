@@ -87,7 +87,6 @@ Mesh ModuleModelLoader::GenerateMesh(int idMesh, const char* path) {
 	sprintf(b, "Loading model with path: %s \n", path);
 	App->menu->console.AddLog(b);
 
-
 	if (scene == nullptr) {
 		errorMesage = aiGetErrorString();
 		sprintf(b, "Error loading model: %s", errorMesage);
@@ -97,6 +96,25 @@ Mesh ModuleModelLoader::GenerateMesh(int idMesh, const char* path) {
 	else LoadBuffers(sceneAct,mesh, idMesh);
 
 	return mesh;
+}
+
+unsigned ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
+
+	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
+
+	const aiMaterial* src_material = sceneAct->mMaterials[idMaterial];
+	unsigned dst_material;
+
+	aiString file;
+	aiTextureMapping mapping;
+	unsigned uvindex = 0;
+
+	if (src_material->GetTexture(aiTextureType_DIFFUSE, 0, &file, &mapping, &uvindex) == AI_SUCCESS)
+	{
+		dst_material = App->textures->Load(file.C_Str(), false);
+	}
+
+	return dst_material;
 }
 
 

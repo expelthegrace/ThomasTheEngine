@@ -8,6 +8,7 @@
 #include <assimp/mesh.h>
 #include "MathGeoLib.h"
 #include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 class ModuleModelLoader :
 	public Module
@@ -28,6 +29,7 @@ public:
 	void            GenerateMaterials(const aiScene* scene);
 
 	Mesh GenerateMesh(int idMesh, const char* path);
+	unsigned GenerateMaterial(int idMaterial, const char* path);
 
 	bool LoadBuffers(const aiScene* scene, Mesh& mesh, int idMesh);
 
