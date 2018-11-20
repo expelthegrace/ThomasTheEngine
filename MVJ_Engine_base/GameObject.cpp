@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Component.h"
 #include "ComponentMesh.h"
+#include "ComponentTransform.h"
 
 
 GameObject::GameObject(char * name, bool active, GameObject * parent)
@@ -10,6 +11,9 @@ GameObject::GameObject(char * name, bool active, GameObject * parent)
 	this->name = name;
 	this->active = active;
 	this->parent = parent;
+
+	transform = new ComponentTransform();
+	components.push_back(transform);
 }
 
 

@@ -19,7 +19,7 @@ public:
 
 private:
 
-	std::vector<GameObject*> gameObjects;
+	//std::vector<GameObject*> gameObjects;
 	GameObject* ROOT;
 };
 

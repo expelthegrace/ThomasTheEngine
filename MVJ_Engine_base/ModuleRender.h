@@ -34,12 +34,13 @@ public:
 
 	ComponentMaterial * CreateComponentMaterial(GameObject* my_go, int idMesh, char* path);
 
+private:
 	update_status RenderMesh(ComponentMesh * meshComp);
 
-	math::float4x4 model; 
+public:
+	math::float4x4 model, identity;
 
 	bool renderTexture, showGrid;
-
 	void* context;
 
 private:

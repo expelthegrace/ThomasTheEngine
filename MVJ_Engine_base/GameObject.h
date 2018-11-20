@@ -5,7 +5,7 @@
 #include <vector>
 
 class Component;
-
+class ComponentTransform;
 class GameObject
 {
 public:
@@ -20,6 +20,7 @@ public:
 	bool active;
 	char* name;
 	GameObject* parent;
+	ComponentTransform* transform;
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
 };

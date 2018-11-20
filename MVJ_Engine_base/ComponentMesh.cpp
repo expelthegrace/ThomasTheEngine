@@ -22,7 +22,5 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh)
 
 
 ComponentMesh::~ComponentMesh()
-{
-
-	
+{	
 }

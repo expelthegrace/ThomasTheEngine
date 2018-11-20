@@ -25,9 +25,9 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 
 bool ModuleScene::Init() {
 	ROOT = new GameObject("ROOT", true, nullptr);
-	gameObjects.push_back(ROOT);
-
-	CreateModel("casa", ROOT, "BakerHouse.fbx");
+	//gameObjects.push_back(ROOT);
+	GameObject* casa = CreateModel("casa", ROOT, "BakerHouse.fbx");
+	ROOT->children.push_back(casa);
 
 	return true;
 }
