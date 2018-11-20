@@ -28,13 +28,7 @@ GameObject* GameObject::AddChild(GameObject* child) {
 Component* GameObject::CreateComponent(type_comp type, int id, char * path) {
 	Component* comp;
 
-	switch (type) {
-	case MESH:
-		comp = App->renderer->CreateComponentMesh(this, id, path);
-		components.push_back(comp);
-		break;
-
-	}
+	
 
 	return comp;
 }

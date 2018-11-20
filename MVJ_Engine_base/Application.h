@@ -16,6 +16,7 @@ class ModuleCamera;
 class ModuleModelLoader;
 class Timer;
 class ModuleTimer;
+class ModuleScene;
 
 class Application
 {
@@ -39,6 +40,7 @@ public:
 	ModuleCamera* camera = nullptr;
 	ModuleModelLoader* modelLoader = nullptr;
 	ModuleTimer* timer = nullptr;
+	ModuleScene* scene = nullptr;
 
 	bool exit;
 

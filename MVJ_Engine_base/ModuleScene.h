@@ -2,6 +2,7 @@
 #define _MODULESCENE_
 
 #include "Module.h"
+#include <vector>
 
 
 class GameObject;
@@ -14,11 +15,12 @@ public:
 	~ModuleScene();
 
 	bool Init();
-	GameObject* CreateModel(char * path);
+	GameObject* CreateModel(char* name, GameObject* parent, char * path);
 
 private:
 
-	GameObject * gameObjects;
+	std::vector<GameObject*> gameObjects;
+	GameObject* ROOT;
 };
 
 #endif

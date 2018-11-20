@@ -12,6 +12,10 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "ComponentMaterial.h"
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
+#include <assimp/material.h>
+#include <assimp/mesh.h>
 
 ModuleRender::ModuleRender()
 {
@@ -30,14 +34,14 @@ ComponentMesh* ModuleRender::CreateComponentMesh( GameObject* my_go) {
 	return meshComp;
 }
 
-ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go,int idMesh, char* path) {
+ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, char* path) {
 
 	ComponentMesh* meshComp = new ComponentMesh(my_go);
 	App->modelLoader->GenerateMesh(idMesh, meshComp, path);
 	
 	if (meshComp->mesh.numVertices == 0) meshComp->avaliable = false;
 
-	meshComponents.push_back(meshComp);
+	meshComponents.push_back(meshComp); // saved in the render module
 	return meshComp;
 }
 
@@ -48,6 +52,16 @@ ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int 
 	return materialComp;
 }
 
+GameObject* ModuleRender::CreateModel(char * path) {
+	GameObject* newGO = new GameObject("", true, nullptr);
+
+	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
+
+	for (int i = 0; i < sceneAct->mNumMaterials; ++i) newGO->components.push_back(CreateComponentMaterial(newGO, i, path));
+	for (int i = 0; i < sceneAct->mNumMeshes; ++i) newGO->components.push_back(CreateComponentMesh(newGO, i, path));
+	
+	return newGO;
+}
 
 update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 	

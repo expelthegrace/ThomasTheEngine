@@ -30,6 +30,7 @@ public:
 
 	ComponentMesh* CreateComponentMesh(GameObject* my_go);
 	ComponentMesh* CreateComponentMesh(GameObject* my_go,int idMesh, char* path);
+	GameObject* CreateModel(char* path);
 
 	ComponentMaterial * CreateComponentMaterial(GameObject* my_go, int idMesh, char* path);
 

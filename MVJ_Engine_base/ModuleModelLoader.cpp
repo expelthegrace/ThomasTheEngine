@@ -68,7 +68,7 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* m
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	int numMaterials = sceneActual->mNumMaterials;
-	int index = meshComp->my_go->components.size() - 1;
+	int index = meshComp->my_go->components.size()  - idMesh;
 	ComponentMaterial* compMat = (ComponentMaterial*)meshComp->my_go->components[index - numMaterials + src_mesh->mMaterialIndex];
 
 	mesh->materialIndex = compMat->material;
@@ -76,7 +76,6 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* m
 	mesh->numFaces = src_mesh->mNumFaces;
 	mesh->numIndexesMesh = src_mesh->mNumFaces * 3;
 
-	delete compMat;
 
 	sprintf(b, ">Mesh loaded \n");
 	App->menu->console.AddLog(b);
@@ -85,7 +84,7 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* m
 	sprintf(b, "Number of faces: %u \n", mesh->numFaces);
 	App->menu->console.AddLog(b);
 
-	delete mesh;
+	
 	return true;
 }
 
