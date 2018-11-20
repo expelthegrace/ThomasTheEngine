@@ -11,9 +11,11 @@ public:
 	ComponentTransform();
 	~ComponentTransform();
 
+	void Reset();
+
 public:
-	float3 position, scale;
-	Quat rotation;
+	float3 position, scale, rotation;
+	
 };
 
 #endif

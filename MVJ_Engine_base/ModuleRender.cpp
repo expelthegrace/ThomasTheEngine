@@ -77,7 +77,11 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 	if (meshActual.numVertices > 0) {
 		glUseProgram(App->shaderProgram->programModel);
 
-		model = math::TranslateOp(meshComp->my_go->transform->position).ToFloat4x4();
+		float4x4 pos = math::TranslateOp(meshComp->my_go->transform->position).ToFloat4x4();
+		Quat rotation = Quat::FromEulerXYZ(meshComp->my_go->transform->rotation.x, meshComp->my_go->transform->rotation.y, meshComp->my_go->transform->rotation.z);
+		float4x4 scale = math::ScaleOp(meshComp->my_go->transform->scale).ToFloat4x4();
+
+		model = pos * rotation * scale;
 
 		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 			"model"), 1, GL_TRUE, &model[0][0]);
@@ -125,7 +129,7 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 // Called before render is available
 bool ModuleRender::Init()
 {
-	//identity = float4x4::identity();
+	identity = float4x4::identity;
 	renderTexture = true;
 	showGrid = true;
 	LOG("Creating Renderer context");
@@ -168,18 +172,14 @@ update_status ModuleRender::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// Called every draw update
-update_status ModuleRender::Update()
-{
-	
-	for (int i = 0; i < meshComponents.size(); ++i) if (meshComponents[i]->active && meshComponents[i]->avaliable) RenderMesh(meshComponents[i]);
+void ModuleRender::DrawGrid() {
 
 	float3 colorWhite = { 1.,1.,1. };
 
 	glUseProgram(App->shaderProgram->programLines);
 
 	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programLines,
-		"model"), 1, GL_TRUE, &model[0][0]);
+		"model"), 1, GL_TRUE, &identity[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programLines,
 		"view"), 1, GL_TRUE, &App->camera->view[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programLines,
@@ -205,6 +205,15 @@ update_status ModuleRender::Update()
 	}
 
 	glUseProgram(0);
+
+}
+// Called every draw update
+update_status ModuleRender::Update()
+{
+	
+	for (int i = 0; i < meshComponents.size(); ++i) if (meshComponents[i]->active && meshComponents[i]->avaliable) RenderMesh(meshComponents[i]);
+
+	DrawGrid();
 	
 	return UPDATE_CONTINUE;
 }

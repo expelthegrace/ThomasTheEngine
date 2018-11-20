@@ -19,6 +19,11 @@ public:
 	update_status   PostUpdate();
 	bool            CleanUp();
 
+	update_status MainBarMenu();
+	update_status Configuration();
+	update_status Properties();
+	update_status GameObjects();
+
 	struct ExampleAppLog
 	{
 		ImGuiTextBuffer     Buf;
@@ -66,6 +71,8 @@ public:
 
 private:
 	void updateFramerates();
+	int consoleHeight;
+	ImVec2 mainMenuSize;
 };
 
 #endif /* __ModuleMenu_h__ */
