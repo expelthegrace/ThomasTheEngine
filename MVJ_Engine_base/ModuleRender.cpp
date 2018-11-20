@@ -17,7 +17,7 @@ ModuleRender::ModuleRender()
 {
 }
 
-// Destructor
+
 ModuleRender::~ModuleRender()
 {
 }
@@ -31,12 +31,11 @@ ComponentMesh* ModuleRender::CreateComponentMesh( GameObject* my_go) {
 }
 
 ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go,int idMesh, char* path) {
-	
-	Mesh meshAux = App->modelLoader->GenerateMesh(idMesh, path);
-	ComponentMesh* meshComp = new ComponentMesh(my_go,meshAux);
 
-	if (meshAux.numVertices > 0) (*meshComp).mesh = meshAux;
-	else meshComp->avaliable = false;
+	ComponentMesh* meshComp = new ComponentMesh(my_go);
+	App->modelLoader->GenerateMesh(idMesh, meshComp, path);
+	
+	if (meshComp->mesh.numVertices == 0) meshComp->avaliable = false;
 
 	meshComponents.push_back(meshComp);
 	return meshComp;
@@ -51,7 +50,9 @@ ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int 
 
 
 update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
-	/*
+	
+	Mesh meshActual = meshComp->mesh;
+
 	if (meshActual.numVertices > 0) {
 		glUseProgram(App->shaderProgram->programModel);
 
@@ -73,7 +74,7 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 		unsigned numIndexesActual = meshActual.numIndexesMesh; 
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, App->modelLoader->materials[App->modelLoader->textures[i]]); // <- mesh.materialIndex
+		glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex );// App->modelLoader->materials[App->modelLoader->textures[i]]); // <- mesh.materialIndex
 		glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
 
 		glEnableVertexAttribArray(0);
@@ -81,7 +82,7 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 		glBindBuffer(GL_ARRAY_BUFFER, vboActual);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, App->modelLoader->ibos[i]);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
 		glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
 
 		glDisableVertexAttribArray(0);
@@ -94,7 +95,7 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 
 		glUseProgram(0);
 
-	} */
+	} 
 	return UPDATE_CONTINUE;
 }
 
@@ -146,6 +147,7 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
+	/*
 	if (App->modelLoader->scene != NULL) {
 		glUseProgram(App->shaderProgram->programModel);
 
@@ -190,6 +192,10 @@ update_status ModuleRender::Update()
 		}
 		glUseProgram(0);
 	}
+	*/
+
+	for (int i = 0; i < meshComponents.size(); ++i) RenderMesh(meshComponents[i]);
+
 	float3 colorWhite = { 1.,1.,1. };
 
 	glUseProgram(App->shaderProgram->programLines);
@@ -237,6 +243,7 @@ bool ModuleRender::CleanUp()
 {
 	for (int i = 0; i < meshComponents.size(); ++i)	delete meshComponents[i];
 	meshComponents.clear();
+
 
 	LOG("Destroying renderer");
 	SDL_GL_DeleteContext(context);

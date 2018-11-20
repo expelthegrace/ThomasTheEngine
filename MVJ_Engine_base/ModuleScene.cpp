@@ -11,6 +11,12 @@ ModuleScene::~ModuleScene()
 {
 }
 
+GameObject* ModuleScene::CreateModel(char * path) {
+
+
+	return nullptr;
+}
+
 bool ModuleScene::Init() {
 
 	

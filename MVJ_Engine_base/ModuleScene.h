@@ -14,8 +14,9 @@ public:
 	~ModuleScene();
 
 	bool Init();
+	GameObject* CreateModel(char * path);
 
-public:
+private:
 
 	GameObject * gameObjects;
 };

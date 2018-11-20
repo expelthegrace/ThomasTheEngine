@@ -12,7 +12,7 @@ struct SDL_Rect;
 
 class ComponentMesh;
 class GameObject;
-class Mesh;
+struct Mesh;
 class ComponentMaterial;
 
 class ModuleRender : public Module

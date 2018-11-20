@@ -5,6 +5,8 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleCamera.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 ModuleModelLoader::ModuleModelLoader()
 {
@@ -16,13 +18,14 @@ ModuleModelLoader::~ModuleModelLoader()
 }
 
 
-bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, Mesh & mesh, int idMesh) {
+bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* meshComp, int idMesh) {
+	Mesh* mesh = &meshComp->mesh;
 	const aiMesh* src_mesh = sceneActual->mMeshes[idMesh];
 
-	mesh.numVertices = src_mesh->mNumVertices;
-	mesh.numFaces = src_mesh->mNumFaces;
+	mesh->numVertices = src_mesh->mNumVertices;
+	mesh->numFaces = src_mesh->mNumFaces;
 
-	unsigned* vboActual = &mesh.vbo;
+	unsigned* vboActual = &mesh->vbo;
 
 	glGenBuffers(1, vboActual);
 	glBindBuffer(GL_ARRAY_BUFFER, *vboActual);
@@ -42,7 +45,7 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, Mesh & mesh, int
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	unsigned* iboActual = &mesh.ibo;
+	unsigned* iboActual = &mesh->ibo;
 
 	glGenBuffers(1, iboActual);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *iboActual);
@@ -64,23 +67,30 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, Mesh & mesh, int
 	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	mesh.materialIndex = src_mesh->mMaterialIndex;
-	mesh.numVertices = src_mesh->mNumVertices;
-	mesh.numFaces = src_mesh->mNumFaces;
-	mesh.numIndexesMesh = src_mesh->mNumFaces * 3;
+	int numMaterials = sceneActual->mNumMaterials;
+	int index = meshComp->my_go->components.size() - 1;
+	ComponentMaterial* compMat = (ComponentMaterial*)meshComp->my_go->components[index - numMaterials + src_mesh->mMaterialIndex];
 
-	sprintf(b, ">Mesh loaded \n");	
+	mesh->materialIndex = compMat->material;
+	mesh->numVertices = src_mesh->mNumVertices;
+	mesh->numFaces = src_mesh->mNumFaces;
+	mesh->numIndexesMesh = src_mesh->mNumFaces * 3;
+
+	delete compMat;
+
+	sprintf(b, ">Mesh loaded \n");
 	App->menu->console.AddLog(b);
-	sprintf(b, "Number of vertices: %u \n", mesh.numVertices);
+	sprintf(b, "Number of vertices: %u \n", mesh->numVertices);
 	App->menu->console.AddLog(b);
-	sprintf(b, "Number of faces: %u \n", mesh.numFaces);
+	sprintf(b, "Number of faces: %u \n", mesh->numFaces);
 	App->menu->console.AddLog(b);
-	
+
+	delete mesh;
 	return true;
 }
 
-Mesh ModuleModelLoader::GenerateMesh(int idMesh, const char* path) {
-	Mesh mesh;
+void ModuleModelLoader::GenerateMesh(int idMesh, ComponentMesh * compMesh, const char* path) {
+
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
 	const char* errorMesage;
 
@@ -91,11 +101,11 @@ Mesh ModuleModelLoader::GenerateMesh(int idMesh, const char* path) {
 		errorMesage = aiGetErrorString();
 		sprintf(b, "Error loading model: %s", errorMesage);
 		App->menu->console.AddLog(b);
-		mesh.numVertices = 0;
+		compMesh->mesh.numVertices = 0;
 	}
-	else LoadBuffers(sceneAct,mesh, idMesh);
+	else LoadBuffers(sceneAct, compMesh, idMesh);
 
-	return mesh;
+
 }
 
 unsigned ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
@@ -151,7 +161,7 @@ void ModuleModelLoader::GenerateMeshes(const aiScene* scene)
 			if (src_mesh->mVertices[i].y < minY) minY = src_mesh->mVertices[i].y;
 			if (src_mesh->mVertices[i].z > maxZ) maxZ = src_mesh->mVertices[i].z;
 			if (src_mesh->mVertices[i].z < minZ) minZ = src_mesh->mVertices[i].z;
-		}	
+		}
 
 		// Texture coords
 
@@ -193,7 +203,7 @@ void ModuleModelLoader::GenerateMeshes(const aiScene* scene)
 		numVerticesMesh[i] = src_mesh->mNumVertices;
 		numIndexesMesh[i] = src_mesh->mNumFaces * 3;
 
-		
+
 	}
 
 	boundingBox = new AABB(math::float3(minX, minY, minZ), math::float3(maxX, maxY, maxZ));
@@ -251,7 +261,7 @@ bool ModuleModelLoader::LoadNewModel(char* path) {
 		numVerticesMesh = new unsigned[numMeshes];
 		numIndexesMesh = new unsigned[numMeshes];
 
-		
+
 		GenerateMeshes(scene);
 		GenerateMaterials(scene);
 	}
@@ -259,7 +269,7 @@ bool ModuleModelLoader::LoadNewModel(char* path) {
 	modelPosition = boundingBox->CenterPoint();
 	modelScale = { 1,1,1 };
 	modelRotation = { 0,0,0 };
-	
+
 
 	//Console data update
 
@@ -291,19 +301,19 @@ bool ModuleModelLoader::LoadNewModel(char* path) {
 
 bool ModuleModelLoader::Init() {
 	modelLoaded = false;
-	LoadNewModel("BakerHouse.fbx");
+	//LoadNewModel("BakerHouse.fbx");
 
 	return true;
 }
 
 bool ModuleModelLoader::CleanUp() {
-	delete[] vbos;
+	/*delete[] vbos;
 	delete[] ibos;
 	delete[] textures;
 	delete[] materials;
 	delete[] numVerticesMesh;
 	delete[] numIndexesMesh;
-
+	*/
 	aiDetachAllLogStreams();
 	return true;
 }
