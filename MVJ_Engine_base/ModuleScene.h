@@ -15,7 +15,10 @@ public:
 	~ModuleScene();
 
 	bool Init();
+	update_status Update() override;
 	GameObject* CreateModel(char* name, GameObject* parent, char * path);
+	GameObject* FindByName(char* name);
+	void MoveTo(GameObject* source, GameObject* newParent);
 
 private:
 

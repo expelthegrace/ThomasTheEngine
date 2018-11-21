@@ -12,9 +12,12 @@ public:
 	~ComponentTransform();
 
 	void Reset();
+	update_status Update() override;
 
 public:
 	float3 position, scale, rotation;
+	float4x4 model;
+	GameObject* my_go;
 	
 };
 

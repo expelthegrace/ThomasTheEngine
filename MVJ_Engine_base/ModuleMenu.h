@@ -21,8 +21,8 @@ public:
 
 	update_status MainBarMenu();
 	update_status Configuration();
-	update_status Properties();
-	update_status GameObjects();
+	update_status Inspector();
+	update_status Hierarchy();
 
 	struct ExampleAppLog
 	{
@@ -73,6 +73,8 @@ private:
 	void updateFramerates();
 	int consoleHeight;
 	ImVec2 mainMenuSize;
+	int columnWidth;
+	float columnScreenRatio;
 };
 
 #endif /* __ModuleMenu_h__ */

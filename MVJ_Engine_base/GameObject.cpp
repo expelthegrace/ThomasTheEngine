@@ -13,6 +13,7 @@ GameObject::GameObject(char * name, bool active, GameObject * parent)
 	this->parent = parent;
 
 	transform = new ComponentTransform();
+	transform->my_go = this;
 	components.push_back(transform);
 }
 

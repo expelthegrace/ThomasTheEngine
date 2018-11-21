@@ -77,14 +77,9 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 	if (meshActual.numVertices > 0) {
 		glUseProgram(App->shaderProgram->programModel);
 
-		float4x4 pos = math::TranslateOp(meshComp->my_go->transform->position).ToFloat4x4();
-		Quat rotation = Quat::FromEulerXYZ(meshComp->my_go->transform->rotation.x, meshComp->my_go->transform->rotation.y, meshComp->my_go->transform->rotation.z);
-		float4x4 scale = math::ScaleOp(meshComp->my_go->transform->scale).ToFloat4x4();
-
-		model = pos * rotation * scale;
 
 		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-			"model"), 1, GL_TRUE, &model[0][0]);
+			"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
 		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 			"view"), 1, GL_TRUE, &App->camera->view[0][0]);
 		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
@@ -159,8 +154,6 @@ bool ModuleRender::Init()
     SDL_GetWindowSize(App->window->window, &width, &height);
     glViewport(0, 0, width, height);
 
-
-	model = math::float4x4::identity;
 
 	return true;
 }

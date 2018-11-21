@@ -47,6 +47,7 @@ bool ModuleMenu::Init() {
 	ImVec4 oliveLighter = { 0.7f,0.7f,0.1f,1.0f };
 	ImVec4 oliveLTrans = { 0.5f,0.5f,0.f,.7f };
 
+	columnScreenRatio = 6.f / 9.f;
 
 	ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = { 0.1f,0.1f,0.1f,0.7f };
 	//ImGui::GetStyle().Colors[ImGuiCol_ScrollbarBg] = { 0.05f, 0.05f,0.0f,1.0f };
@@ -145,8 +146,8 @@ update_status ModuleMenu::MainBarMenu() {
 update_status ModuleMenu::Configuration() {
 	bool obert = true;
 
-	ImGui::SetNextWindowPos(ImVec2(0, (App->camera->screenHeight - mainMenuSize.y) / 2 + mainMenuSize.y));
-	ImGui::SetNextWindowSize(ImVec2(App->camera->screenWidth / 4, (App->camera->screenHeight - mainMenuSize.y) / 2));
+	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - columnWidth, (App->camera->screenHeight - mainMenuSize.y) / 2 + mainMenuSize.y));
+	ImGui::SetNextWindowSize(ImVec2(columnWidth, (App->camera->screenHeight - mainMenuSize.y) / 2));
 	ImGui::Begin("Configuration", &obert);
 
 	if (ImGui::CollapsingHeader("Input"))
@@ -217,11 +218,11 @@ update_status ModuleMenu::Configuration() {
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleMenu::Properties() {
-	ImGui::SetNextWindowPos(ImVec2(0, mainMenuSize.y));
-	ImGui::SetNextWindowSize(ImVec2(App->camera->screenWidth / 4, (App->camera->screenHeight - mainMenuSize.y) / 2));
+update_status ModuleMenu::Inspector() {
+	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - columnWidth, mainMenuSize.y));
+	ImGui::SetNextWindowSize(ImVec2(columnWidth, App->camera->screenHeight - mainMenuSize.y)); //(App->camera->screenHeight - mainMenuSize.y) / 2)
 	bool obert = true;
-	ImGui::Begin("Properties", &obert);
+	ImGui::Begin("Inspector", &obert);
 
 	if (ImGui::CollapsingHeader("Transformation"))
 	{
@@ -246,12 +247,11 @@ update_status ModuleMenu::Properties() {
 	return UPDATE_CONTINUE;
 }
 
-
-update_status ModuleMenu::GameObjects() {
-	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - App->camera->screenWidth / 4, mainMenuSize.y));
-	ImGui::SetNextWindowSize(ImVec2(App->camera->screenWidth / 4, (App->camera->screenHeight - mainMenuSize.y) / 2));
+update_status ModuleMenu::Hierarchy() {
+	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - 2 * columnWidth, mainMenuSize.y));
+	ImGui::SetNextWindowSize(ImVec2(columnWidth, App->camera->screenHeight - mainMenuSize.y));
 	bool obert = true;
-	ImGui::Begin("GameObject Hierarchy", &obert);
+	ImGui::Begin("Hierarchy", &obert);
 
 	
 
@@ -260,7 +260,7 @@ update_status ModuleMenu::GameObjects() {
 }
 
 update_status ModuleMenu::Update() {
-	
+	columnWidth = (App->camera->screenWidth - (App->camera->screenWidth * columnScreenRatio)) / 2;
 	
 	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
 	GlobalMemoryStatusEx(&memInfo);
@@ -270,14 +270,14 @@ update_status ModuleMenu::Update() {
 	update_status ret = UPDATE_CONTINUE;
 
 	if (showWindows) {
-		ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth / 4, App->camera->screenHeight - consoleHeight));
-		ImGui::SetNextWindowSize(ImVec2(App->camera->screenWidth / 2, consoleHeight));
+		ImGui::SetNextWindowPos(ImVec2(0, App->camera->screenHeight - consoleHeight));
+		ImGui::SetNextWindowSize(ImVec2(App->camera->screenWidth - columnWidth * 2, consoleHeight));
 		console.Draw("Console");
 
 		if ((ret = MainBarMenu()) != UPDATE_CONTINUE) return ret;
-		if ((ret = Properties()) != UPDATE_CONTINUE) return ret;
+		if ((ret = Inspector()) != UPDATE_CONTINUE) return ret;
 		if ((ret = Configuration()) != UPDATE_CONTINUE) return ret;
-		if ((ret = GameObjects()) != UPDATE_CONTINUE) return ret;
+		if ((ret = Hierarchy()) != UPDATE_CONTINUE) return ret;
 		
 	}
 	

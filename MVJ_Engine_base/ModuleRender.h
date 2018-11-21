@@ -40,7 +40,7 @@ private:
 	update_status RenderMesh(ComponentMesh * meshComp);
 
 public:
-	math::float4x4 model, identity;
+	math::float4x4 identity;
 
 	bool renderTexture, showGrid;
 	void* context;
