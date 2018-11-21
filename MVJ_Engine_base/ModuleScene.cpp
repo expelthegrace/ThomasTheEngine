@@ -18,7 +18,7 @@ ModuleScene::~ModuleScene()
 update_status ModuleScene::Update() {
 	//Update all transforms
 	ROOT->transform->Update();
-	for (int i = 0; i < ROOT->children.size(); ++i)  ROOT->children[i]->transform->Update();
+	//for (int i = 0; i < ROOT->children.size(); ++i)  ROOT->children[i]->transform->Update();
 
 	return UPDATE_CONTINUE;
 }

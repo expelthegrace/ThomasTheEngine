@@ -28,5 +28,7 @@ update_status ComponentTransform::Update() {
 	model = newpos * newrotation * newscale;
 	if (my_go->parent != nullptr) model = my_go->parent->transform->model * model;
 
+	for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->Update();
+
 	return UPDATE_CONTINUE;
 }
