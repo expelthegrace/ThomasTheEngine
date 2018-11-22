@@ -20,6 +20,7 @@
 #include "ModuleMenu.h"
 #include "ComponentBB.h"
 #include "debugdraw.h"
+#include "ModuleDebugDraw.h"
 
 ModuleRender::ModuleRender()
 {
@@ -89,8 +90,14 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 
 
 		GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
+		GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
+
 		if (renderTexture) glUniform1i(drawText, 1);
-		else  glUniform1i(drawText, 0);
+		else {
+			glUniform1i(drawText, 0);
+			float color[4] = { 0.6, 1, 0.6, 1 };
+			glUniform4fv(color0, 1, color);
+		}
 		
 
 		unsigned vboActual = meshComp->mesh.vbo; //           <------------------ correct
@@ -125,62 +132,9 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 
 void ModuleRender::RenderBB(ComponentBB* BB) {
 	
+	
 
-	glUseProgram(App->shaderProgram->programLines);
-
-	float3* corners = new float3[8];
-
-
-	int linesGrid = glGetUniformLocation(App->shaderProgram->programLines, "color0");
-	float green[4] = { 0.2, 1, 0.2, 1 };
-	glUniform4fv(linesGrid, 1, green);
-
-	GLuint vbo_vertices;
-	glGenBuffers(1, &vbo_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
-	glBufferData(GL_ARRAY_BUFFER, 24, corners, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	GLushort elements[] = {
-	0, 1, 2, 
-	4, 5, 6, 
-	0, 3, 1, 4, 2, 5, 3, 6
-	};
-	GLuint ibo_elements;
-	glGenBuffers(1, &ibo_elements);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_elements);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-		"model"), 1, GL_TRUE, &BB->my_go->transform->model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-		"view"), 1, GL_TRUE, &App->camera->view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-		"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_vertices);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(
-		0,  // attribute
-		3,                  // number of elements per vertex, here (x,y,z,w)
-		GL_FLOAT,           // the type of each element
-		GL_FALSE,           // take our values as-is
-		0,                  // no extra data between each position
-		0                   // offset of first element
-	);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_elements);
-	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_SHORT, 0);
-	glDrawElements(GL_LINE_LOOP, 4, GL_UNSIGNED_SHORT, (GLvoid*)(4 * sizeof(GLushort)));
-	glDrawElements(GL_LINES, 8, GL_UNSIGNED_SHORT, (GLvoid*)(8 * sizeof(GLushort)));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	glDisableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glDeleteBuffers(1, &vbo_vertices);
-	glDeleteBuffers(1, &ibo_elements);
+	
 }
 
 // Called before render is available
@@ -228,7 +182,7 @@ update_status ModuleRender::PreUpdate()
 }
 
 void ModuleRender::DrawGrid() {
-
+	
 	float3 colorWhite = { 1.,1.,1. };
 
 	glUseProgram(App->shaderProgram->programLines);
@@ -260,6 +214,7 @@ void ModuleRender::DrawGrid() {
 	}
 
 	glUseProgram(0);
+
 
 }
 // Called every draw update

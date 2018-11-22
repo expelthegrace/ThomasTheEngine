@@ -166,6 +166,8 @@
     <ClInclude Include="ModuleTimer.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Timers.h" />
+    <ClInclude Include="Util\debug_draw.hpp" />
+    <ClInclude Include="Util\par_shapes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -229,8 +231,8 @@
     <ClCompile Include="Timers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Game\Default.fs" />
-    <None Include="Game\Default.vs" />
+    <None Include="Game\Color.fs" />
+    <None Include="Game\Color.vs" />
     <None Include="IMGUI\.travis.yml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

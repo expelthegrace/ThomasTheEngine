@@ -101,7 +101,7 @@ void ModuleProgram::CreateProgram(GLuint& variable, char* vsName, char* fsName) 
 
 bool ModuleProgram::Init() {
 	
-	CreateProgram(programLines, "Default.vs", "Default.fs");
+	CreateProgram(programLines, "Color.vs", "Color.fs");
 	CreateProgram(programModel, "ModelShader.vs", "ModelShader.fs");
 	
 	return true;
