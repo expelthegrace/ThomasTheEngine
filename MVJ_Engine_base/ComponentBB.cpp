@@ -19,6 +19,7 @@ ComponentBB::ComponentBB(GameObject* my_go)
 	float3(-0.5f,  0.5f,  0.5f),
 	};
 
+	type = BB;
 	Aabb = new math::AABB();
 	Aabb->SetFrom(unitaryCube, 24);
 

@@ -6,6 +6,7 @@ ComponentTransform::ComponentTransform()
 	scale = { 1.f,1.f,1.f };
 	position = { 0.f,0.f,0.f };
 	rotation = { 0.f, 0.f, 0.f };
+	type = TRANSFORM;
 }
 
 
@@ -17,6 +18,8 @@ void ComponentTransform::Reset() {
 	scale = { 1.f,1.f,1.f };
 	position = { 0.f,0.f,0.f };
 	rotation = { 0.f, 0.f, 0.f };
+	type = TRANSFORM;
+
 }
 
 update_status ComponentTransform::Update() {

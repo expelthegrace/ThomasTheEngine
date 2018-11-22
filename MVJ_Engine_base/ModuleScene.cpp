@@ -32,8 +32,7 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 	GO->parent = parent;
 	
 	std::vector<Component*> comps = GO->GetComponents(MESH);
-	std::vector<Component*>* components = & comps;
-	GO->BB->SetAABB((std::vector<ComponentMesh*>*) components);
+	GO->BB->SetAABB((std::vector<ComponentMesh*>*) &comps);
 
 	parent->children.push_back(GO);
 
