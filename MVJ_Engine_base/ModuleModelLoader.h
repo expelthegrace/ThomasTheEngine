@@ -25,10 +25,6 @@ public:
 
 	bool LoadNewModel(char* path);
 
-	//carlos
-	void            GenerateMeshes(const aiScene* scene);
-	void            GenerateMaterials(const aiScene* scene);
-
 	void GenerateMesh(int idMesh, ComponentMesh* compMesh, const char* path);
 	unsigned GenerateMaterial(int idMaterial, const char* path);
 

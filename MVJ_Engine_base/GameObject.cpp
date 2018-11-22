@@ -50,7 +50,6 @@ update_status GameObject::Update() {
 Component* GameObject::CreateComponent(type_comp type, int id, char * path) {
 	Component* comp;
 
-	
 
 	return comp;
 }

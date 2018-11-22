@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _APP_
+#define _APP_
 
 #include<list>
 #include "Globals.h"
@@ -17,6 +18,7 @@ class ModuleModelLoader;
 class Timer;
 class ModuleTimer;
 class ModuleScene;
+class ModuleDebugDraw;
 
 class Application
 {
@@ -41,6 +43,7 @@ public:
 	ModuleModelLoader* modelLoader = nullptr;
 	ModuleTimer* timer = nullptr;
 	ModuleScene* scene = nullptr;
+	ModuleDebugDraw* debugdraw = nullptr;
 
 	bool exit;
 
@@ -50,3 +53,5 @@ private:
 };
 
 extern Application* App;
+
+#endif

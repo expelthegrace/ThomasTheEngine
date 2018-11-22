@@ -18,9 +18,8 @@ ModuleScene::~ModuleScene()
 }
 
 update_status ModuleScene::Update() {
-	//Update all transforms
+	
 	ROOT->Update();
-	//for (int i = 0; i < ROOT->children.size(); ++i)  ROOT->children[i]->transform->Update();
 
 	return UPDATE_CONTINUE;
 }
@@ -41,10 +40,9 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 
 bool ModuleScene::Init() {
 	ROOT = new GameObject("ROOT", true, nullptr);
-	//gameObjects.push_back(ROOT);
+	
 	GameObject* casa = CreateModel("casa", ROOT, "BakerHouse.fbx");
 	
-
 	return true;
 }
 

@@ -1,4 +1,4 @@
-#pragma once
+
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
@@ -11,6 +11,7 @@
 #include "ModuleModelLoader.h"
 #include "ModuleTimer.h"
 #include "ModuleScene.h"
+#include "ModuleDebugDraw.h"
 
 
 using namespace std;
@@ -28,6 +29,7 @@ Application::Application()
 	modules.push_back(shaderProgram = new ModuleProgram());
 	modules.push_back(timer = new ModuleTimer());
 	modules.push_back(scene = new ModuleScene());
+	modules.push_back(debugdraw = new ModuleDebugDraw());
 	
 	//modules.push_back(exercise = new ModuleRenderExercise());
 	

@@ -19,6 +19,7 @@
 #include <assimp/mesh.h>
 #include "ModuleMenu.h"
 #include "ComponentBB.h"
+#include "debugdraw.h"
 
 ModuleRender::ModuleRender()
 {
