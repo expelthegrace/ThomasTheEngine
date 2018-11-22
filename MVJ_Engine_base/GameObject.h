@@ -14,6 +14,7 @@ public:
 
 	Component* CreateComponent(type_comp type, int id, char * path);
 	GameObject* AddChild(GameObject * child);
+	std::vector<Component*> GetComponents(type_comp type);
 	// delete gameobject (recursiu)
 
 public:

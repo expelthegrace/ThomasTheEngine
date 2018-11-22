@@ -146,7 +146,7 @@ update_status ModuleMenu::MainBarMenu() {
 update_status ModuleMenu::Configuration() {
 	bool obert = true;
 
-	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - columnWidth, (App->camera->screenHeight - mainMenuSize.y) / 2 + mainMenuSize.y));
+	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - 2 * columnWidth, (App->camera->screenHeight - mainMenuSize.y) / 2 + mainMenuSize.y));
 	ImGui::SetNextWindowSize(ImVec2(columnWidth, (App->camera->screenHeight - mainMenuSize.y) / 2));
 	ImGui::Begin("Configuration", &obert);
 
@@ -249,7 +249,7 @@ update_status ModuleMenu::Inspector() {
 
 update_status ModuleMenu::Hierarchy() {
 	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - 2 * columnWidth, mainMenuSize.y));
-	ImGui::SetNextWindowSize(ImVec2(columnWidth, App->camera->screenHeight - mainMenuSize.y));
+	ImGui::SetNextWindowSize(ImVec2(columnWidth, (App->camera->screenHeight - mainMenuSize.y) / 2));
 	bool obert = true;
 	ImGui::Begin("Hierarchy", &obert);
 
