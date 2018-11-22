@@ -12,6 +12,8 @@ struct SDL_Rect;
 
 class ComponentMesh;
 class GameObject;
+class ComponentBB;
+
 struct Mesh;
 class ComponentMaterial;
 
@@ -35,9 +37,11 @@ public:
 	GameObject* CreateModel(char* path);
 
 	ComponentMaterial * CreateComponentMaterial(GameObject* my_go, int idMesh, char* path);
+	void RenderBB(ComponentBB* BB);
 
 private:
 	update_status RenderMesh(ComponentMesh * meshComp);
+	
 
 public:
 	math::float4x4 identity;

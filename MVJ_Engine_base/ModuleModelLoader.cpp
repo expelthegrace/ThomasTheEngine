@@ -76,10 +76,12 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* m
 	mesh->numFaces = src_mesh->mNumFaces;
 	mesh->numIndexesMesh = src_mesh->mNumFaces * 3;
 
-	for (int i = 0; i < src_mesh->mNumVertices; ++i) {
-		mesh->vertices.push_back(float3(src_mesh->mVertices[i].x, src_mesh->mVertices[i].y, src_mesh->mVertices[i].z));
-	}
+	float3 * verticesAux = new float3[src_mesh->mNumVertices];
+
+	for (int i = 0; i < src_mesh->mNumVertices; ++i) 
+		verticesAux[i] = float3(src_mesh->mVertices[i].x, src_mesh->mVertices[i].y, src_mesh->mVertices[i].z);
 	
+	mesh->vertices = verticesAux;
 
 	sprintf(b, ">Mesh loaded \n");
 	App->menu->console.AddLog(b);

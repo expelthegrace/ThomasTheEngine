@@ -18,7 +18,8 @@ enum type_comp
 	CAMERA = 1,
 	MESH,
 	MATERIAL,
-	TRANSFORM
+	TRANSFORM,
+	BB
 };
 
 // Configuration -----------

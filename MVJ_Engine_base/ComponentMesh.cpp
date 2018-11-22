@@ -8,9 +8,10 @@ ComponentMesh::ComponentMesh( GameObject* my_go)
 	active = true;
 	this->my_go = my_go;
 	avaliable = false;
+	mesh.vertices = nullptr;
 }
 
-ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh,const std::vector<float3> & vertices)
+ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertices)
 {
 	type = MESH;
 	active = true;

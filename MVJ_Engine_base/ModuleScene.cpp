@@ -4,6 +4,8 @@
 #include "ModuleRender.h"
 #include <queue>
 #include "ComponentTransform.h"
+#include "ComponentBB.h"
+#include <vector>
 
 
 ModuleScene::ModuleScene()
@@ -17,7 +19,7 @@ ModuleScene::~ModuleScene()
 
 update_status ModuleScene::Update() {
 	//Update all transforms
-	ROOT->transform->Update();
+	ROOT->Update();
 	//for (int i = 0; i < ROOT->children.size(); ++i)  ROOT->children[i]->transform->Update();
 
 	return UPDATE_CONTINUE;
@@ -28,6 +30,11 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 	GameObject* GO = App->renderer->CreateModel(path);
 	GO->name = name;
 	GO->parent = parent;
+	
+	std::vector<Component*> comps = GO->GetComponents(MESH);
+	std::vector<Component*>* components = & comps;
+	GO->BB->SetAABB((std::vector<ComponentMesh*>*) components);
+
 	parent->children.push_back(GO);
 
 	return nullptr;

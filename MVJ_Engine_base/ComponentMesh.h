@@ -15,7 +15,7 @@ struct Mesh {
 	unsigned materialIndex;
 	unsigned numVertices;
 	unsigned numFaces;
-	std::vector<float3> vertices;
+	float3* vertices;
 
 
 };
@@ -25,7 +25,7 @@ class ComponentMesh :
 {
 public:
 	ComponentMesh( GameObject* my_go);
-	ComponentMesh(GameObject* my_go, const Mesh& mesh, const std::vector<float3> & vertices);
+	ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertices);
 	~ComponentMesh();
 
 public:

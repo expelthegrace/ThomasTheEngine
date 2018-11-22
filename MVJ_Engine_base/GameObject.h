@@ -6,11 +6,15 @@
 
 class Component;
 class ComponentTransform;
+class ComponentBB;
 class GameObject
 {
 public:
 	GameObject(char * name, bool active, GameObject * parent);
 	~GameObject();
+
+	update_status Update();
+
 
 	Component* CreateComponent(type_comp type, int id, char * path);
 	GameObject* AddChild(GameObject * child);
@@ -22,6 +26,7 @@ public:
 	char* name;
 	GameObject* parent;
 	ComponentTransform* transform;
+	ComponentBB* BB;
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
 };
