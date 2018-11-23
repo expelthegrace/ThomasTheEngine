@@ -21,6 +21,7 @@
 #include "ComponentBB.h"
 #include "debugdraw.h"
 #include "ModuleDebugDraw.h"
+#include "ModuleScene.h"
 
 ModuleRender::ModuleRender()
 {
@@ -92,7 +93,7 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 		GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
 		GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
 
-		if (renderTexture) glUniform1i(drawText, 1);
+		if (meshComp->renderTexture) glUniform1i(drawText, 1);
 		else {
 			glUniform1i(drawText, 0);
 			float color[4] = { 0.6, 1, 0.6, 1 };
@@ -221,7 +222,11 @@ void ModuleRender::DrawGrid() {
 update_status ModuleRender::Update()
 {
 	
-	for (int i = 0; i < meshComponents.size(); ++i) if (meshComponents[i]->active && meshComponents[i]->avaliable) RenderMesh(meshComponents[i]);
+	for (int i = 0; i < meshComponents.size(); ++i) if (
+		meshComponents[i]->active && 
+		meshComponents[i]->avaliable &&
+		meshComponents[i]->my_go->active) 
+		RenderMesh(meshComponents[i]);
 
 	DrawGrid();
 	

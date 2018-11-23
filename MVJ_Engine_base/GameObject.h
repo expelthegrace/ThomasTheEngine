@@ -20,6 +20,7 @@ public:
 	GameObject* AddChild(GameObject * child);
 	std::vector<Component*> GetComponents(type_comp type);
 	// delete gameobject (recursiu)
+	void SetActive(bool active);
 
 	void SelectGO(bool selected);
 	void SelectGOChild(bool selected);
@@ -34,6 +35,9 @@ public:
 	ComponentBB* BB;
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
+
+private:
+	bool lastFrameActive;
 };
 
 #endif

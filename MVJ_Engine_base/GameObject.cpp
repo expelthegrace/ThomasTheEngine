@@ -12,6 +12,7 @@ GameObject::GameObject(char * name, bool active, GameObject * parent)
 	this->name = name;
 	this->active = active;
 	this->parent = parent;
+	this->lastFrameActive = this->active;
 
 	ComponentBB* BB = new ComponentBB(this);
 	this->BB = BB;
@@ -28,6 +29,12 @@ GameObject::~GameObject()
 	delete name;
 	for (int i = 0; i < components.size(); ++i) delete components[i];
 	components.clear();
+}
+
+void GameObject::SetActive(bool active) {
+	this->active = active;
+	lastFrameActive = active;
+	for (int i = 0; i < children.size(); ++i) children[i]->SetActive(active);
 }
 
 void GameObject::SelectGO(bool selected) {
@@ -53,6 +60,11 @@ std::vector<Component*> GameObject::GetComponents(type_comp type) {
 }
 
 update_status GameObject::Update() {
+
+	if (lastFrameActive != active) SetActive(active);
+
+	
+
 	for (int i = 0; i < components.size(); ++i) components[i]->Update();
 
 	return UPDATE_CONTINUE;

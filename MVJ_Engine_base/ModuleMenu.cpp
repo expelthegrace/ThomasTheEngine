@@ -15,6 +15,8 @@
 #include "ModuleScene.h"
 #include "ComponentTransform.h"
 
+#include <vector>
+
 
 
 ModuleMenu::ModuleMenu()
@@ -124,7 +126,7 @@ void ModuleMenu::FillTree(GameObject* gameobject)
 
 	if (!gameobject->active)
 	{
-		ImGui::PushStyleColor(ImGuiCol_Text, { 1,0,0,0.5f });
+		ImGui::PushStyleColor(ImGuiCol_Text, { 0.7,0.7,0.7,1.f });
 	}
 
 	if (gameobject->selected)
@@ -282,6 +284,7 @@ update_status ModuleMenu::Inspector() {
 
 	ImGui::Begin("Inspector", &obert, ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_AlwaysVerticalScrollbar);
 	ImGui::Text(GO_act->name);
+	ImGui::Checkbox("Active", &GO_act->active);
 
 	if (ImGui::CollapsingHeader("Transformation"),true)
 	{
@@ -295,7 +298,7 @@ update_status ModuleMenu::Inspector() {
 		ImGui::SameLine();
 		ImGui::SliderFloat("Z", &GO_act->transform->position.z, -variation, variation);
 		ImGui::PopItemWidth();
-	*/
+	
 		variation = 5;
 		ImGui::Text("Rotation");
 		ImGui::PushItemWidth(columnWidth / 4);
@@ -306,8 +309,8 @@ update_status ModuleMenu::Inspector() {
 		ImGui::SliderFloat("Z", &GO_act->transform->rotation.z, -variation, variation);
 		ImGui::PopItemWidth();
 
-		/*
-		variation = 10;
+		*/
+		variation = 2;
 		ImGui::Text("Scale");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::SliderFloat("X", &GO_act->transform->scale.x, -variation, variation);
@@ -317,13 +320,8 @@ update_status ModuleMenu::Inspector() {
 		ImGui::SliderFloat("Z", &GO_act->transform->scale.z, -variation, variation);
 		ImGui::PopItemWidth();
 		
-		float v3pos[3] = { App->modelLoader->modelPosition.x,App->modelLoader->modelPosition.y,App->modelLoader->modelPosition.z };
-		ImGui::InputFloat3("Position", v3pos);
-		float v3rot[3] = { App->modelLoader->modelRotation.x,App->modelLoader->modelRotation.y,App->modelLoader->modelRotation.z };
-		ImGui::InputFloat3("Rotation", v3rot);
-		float v3scale[3] = { App->modelLoader->modelScale.x,App->modelLoader->modelScale.y,App->modelLoader->modelScale.z };
-		ImGui::InputFloat3("Scale", v3scale);
-		*/
+
+		
 
 	}
 	if (ImGui::CollapsingHeader("Geometry"))
@@ -332,7 +330,15 @@ update_status ModuleMenu::Inspector() {
 	}
 	if (ImGui::CollapsingHeader("Texture"))
 	{
-		ImGui::Checkbox("Draw texture", &App->renderer->renderTexture);
+		std::vector<Component*> comps = GO_act->GetComponents(MESH);
+		ComponentMesh* meshAux;
+		char* titleTexture = new char[50];
+		for (int i = 0; i < comps.size(); ++i) {		
+			meshAux = (ComponentMesh*) comps[i];		
+			sprintf(titleTexture, "Draw texture %i", i);
+			ImGui::Checkbox(titleTexture, &meshAux->renderTexture);
+		}
+		
 	}
 
 	ImGui::End();

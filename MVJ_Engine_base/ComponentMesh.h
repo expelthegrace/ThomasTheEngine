@@ -31,6 +31,7 @@ public:
 public:
 	Mesh mesh;
 	bool avaliable;
+	bool renderTexture = true;
 
 
 };
