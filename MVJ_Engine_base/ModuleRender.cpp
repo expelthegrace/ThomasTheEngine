@@ -227,7 +227,7 @@ update_status ModuleRender::Update()
 		meshComponents[i]->avaliable &&
 		meshComponents[i]->my_go->active) 
 		RenderMesh(meshComponents[i]);
-
+	
 	DrawGrid();
 	
 	return UPDATE_CONTINUE;
