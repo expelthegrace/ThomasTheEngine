@@ -24,6 +24,14 @@ update_status ModuleScene::Update() {
 	return UPDATE_CONTINUE;
 }
 
+void ModuleScene::NewGOSelected(GameObject* newGO) {
+
+	if (GO_selected != nullptr) GO_selected->selected = false;
+
+	GO_selected = newGO;
+	newGO->SelectGO(true);
+}
+
 GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path) {
 	
 	GameObject* GO = App->renderer->CreateModel(path);
@@ -41,6 +49,8 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 bool ModuleScene::Init() {
 	ROOT = new GameObject("ROOT", true, nullptr);
 	
+	GO_selected = ROOT;
+
 	GameObject* casa = CreateModel("casa", ROOT, "BakerHouse.fbx");
 	
 	return true;

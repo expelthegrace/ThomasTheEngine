@@ -20,10 +20,16 @@ public:
 	GameObject* FindByName(char* name);
 	void MoveTo(GameObject* source, GameObject* newParent);
 
+	void NewGOSelected(GameObject* GO);
+
+public:
+	GameObject* ROOT;
+	GameObject* GO_selected = nullptr;
+
 private:
 
 	//std::vector<GameObject*> gameObjects;
-	GameObject* ROOT;
+
 };
 
 #endif

@@ -11,6 +11,9 @@
 #include "ModuleCamera.h"
 #include "ModuleInput.h"
 #include "ModuleModelLoader.h"
+#include "GameObject.h"
+#include "ModuleScene.h"
+#include "ComponentTransform.h"
 
 
 
@@ -104,6 +107,58 @@ void ModuleMenu::updateFramerates() {
 	//iterator increase
 	++logMSIterator;
 	if (logMSIterator > 49) logMSIterator = 0;
+}
+
+void ModuleMenu::FillTree(GameObject* gameobject)
+{
+	unsigned int flags;
+
+	flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+
+	if (gameobject->children.size() <= 0)
+	{
+		flags |= ImGuiTreeNodeFlags_Leaf;
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 15);
+	}
+
+
+	if (!gameobject->active)
+	{
+		ImGui::PushStyleColor(ImGuiCol_Text, { 1,0,0,0.5f });
+	}
+
+	if (gameobject->selected)
+	{
+		flags |= ImGuiTreeNodeFlags_Selected;
+	}
+
+	if (gameobject->child_selected)
+	{
+		ImGui::SetNextTreeNodeOpen(true);
+	}
+
+	bool opened = ImGui::TreeNodeEx(gameobject->name, flags);
+	
+	if (ImGui::IsItemClicked(0))
+	{
+		App->scene->NewGOSelected(gameobject);
+	}
+	
+	if (opened)
+	{
+		
+		for (int i = 0; i < gameobject->children.size(); ++i)
+		{
+			FillTree(gameobject->children[i]);
+		}
+		
+		ImGui::TreePop();
+	}
+
+	if (!gameobject->active)
+	{
+		ImGui::PopStyleColor();
+	}
 }
 
 update_status ModuleMenu::PreUpdate() {
@@ -222,16 +277,53 @@ update_status ModuleMenu::Inspector() {
 	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - columnWidth, mainMenuSize.y));
 	ImGui::SetNextWindowSize(ImVec2(columnWidth, App->camera->screenHeight - mainMenuSize.y)); //(App->camera->screenHeight - mainMenuSize.y) / 2)
 	bool obert = true;
-	ImGui::Begin("Inspector", &obert);
 
-	if (ImGui::CollapsingHeader("Transformation"))
+	GameObject* GO_act = App->scene->GO_selected;
+
+	ImGui::Begin("Inspector", &obert, ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_AlwaysVerticalScrollbar);
+	ImGui::Text(GO_act->name);
+
+	if (ImGui::CollapsingHeader("Transformation"),true)
 	{
+		float variation = 15;
+		/*
+		ImGui::Text("Position");
+		ImGui::PushItemWidth(columnWidth / 4);
+		ImGui::SliderFloat("X", &GO_act->transform->position.x, -variation, variation);
+		ImGui::SameLine();
+		ImGui::SliderFloat("Y", &GO_act->transform->position.y, -variation, variation);
+		ImGui::SameLine();
+		ImGui::SliderFloat("Z", &GO_act->transform->position.z, -variation, variation);
+		ImGui::PopItemWidth();
+	*/
+		variation = 5;
+		ImGui::Text("Rotation");
+		ImGui::PushItemWidth(columnWidth / 4);
+		ImGui::SliderFloat("X", &GO_act->transform->rotation.x, -variation, variation);
+		ImGui::SameLine();
+		ImGui::SliderFloat("Y", &GO_act->transform->rotation.y, -variation, variation);
+		ImGui::SameLine();
+		ImGui::SliderFloat("Z", &GO_act->transform->rotation.z, -variation, variation);
+		ImGui::PopItemWidth();
+
+		/*
+		variation = 10;
+		ImGui::Text("Scale");
+		ImGui::PushItemWidth(columnWidth / 4);
+		ImGui::SliderFloat("X", &GO_act->transform->scale.x, -variation, variation);
+		ImGui::SameLine();
+		ImGui::SliderFloat("Y", &GO_act->transform->scale.y, -variation, variation);
+		ImGui::SameLine();
+		ImGui::SliderFloat("Z", &GO_act->transform->scale.z, -variation, variation);
+		ImGui::PopItemWidth();
+		
 		float v3pos[3] = { App->modelLoader->modelPosition.x,App->modelLoader->modelPosition.y,App->modelLoader->modelPosition.z };
 		ImGui::InputFloat3("Position", v3pos);
 		float v3rot[3] = { App->modelLoader->modelRotation.x,App->modelLoader->modelRotation.y,App->modelLoader->modelRotation.z };
 		ImGui::InputFloat3("Rotation", v3rot);
 		float v3scale[3] = { App->modelLoader->modelScale.x,App->modelLoader->modelScale.y,App->modelLoader->modelScale.z };
 		ImGui::InputFloat3("Scale", v3scale);
+		*/
 
 	}
 	if (ImGui::CollapsingHeader("Geometry"))
@@ -252,9 +344,10 @@ update_status ModuleMenu::Hierarchy() {
 	ImGui::SetNextWindowSize(ImVec2(columnWidth, (App->camera->screenHeight - mainMenuSize.y) / 2));
 	bool obert = true;
 	ImGui::Begin("Hierarchy", &obert);
+	
+	FillTree(App->scene->ROOT);
 
 	
-
 	ImGui::End();
 	return UPDATE_CONTINUE;
 }

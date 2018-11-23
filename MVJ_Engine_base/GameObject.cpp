@@ -30,6 +30,17 @@ GameObject::~GameObject()
 	components.clear();
 }
 
+void GameObject::SelectGO(bool selected) {
+	this->selected = selected;
+
+	if (parent != nullptr) parent->SelectGOChild(selected);
+}
+
+void GameObject::SelectGOChild(bool selected) {
+	this->child_selected = selected;
+	if (parent != nullptr) parent->SelectGOChild(selected);
+}
+
 GameObject* GameObject::AddChild(GameObject* child) {
 	children.push_back(child);
 	return child;

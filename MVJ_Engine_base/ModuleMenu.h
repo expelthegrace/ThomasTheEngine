@@ -6,6 +6,8 @@
 #include "windows.h"
 #include "psapi.h"
 
+class GameObject;
+
 class ModuleMenu :
 	public Module
 {
@@ -23,6 +25,8 @@ public:
 	update_status Configuration();
 	update_status Inspector();
 	update_status Hierarchy();
+
+	void FillTree(GameObject* gameobject);
 
 	struct ExampleAppLog
 	{

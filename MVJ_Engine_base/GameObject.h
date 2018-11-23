@@ -21,7 +21,12 @@ public:
 	std::vector<Component*> GetComponents(type_comp type);
 	// delete gameobject (recursiu)
 
+	void SelectGO(bool selected);
+	void SelectGOChild(bool selected);
+
 public:
+	bool selected = false;
+	bool child_selected = false;
 	bool active;
 	char* name;
 	GameObject* parent;
