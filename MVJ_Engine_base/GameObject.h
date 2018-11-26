@@ -15,7 +15,6 @@ public:
 
 	update_status Update();
 
-
 	Component* CreateComponent(type_comp type, int id, char * path);
 	GameObject* AddChild(GameObject * child);
 	std::vector<Component*> GetComponents(type_comp type);
