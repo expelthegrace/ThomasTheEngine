@@ -1,4 +1,3 @@
-
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
@@ -12,6 +11,7 @@
 #include "ModuleTimer.h"
 #include "ModuleScene.h"
 #include "ModuleDebugDraw.h"
+#include "Brofiler.h"
 
 
 using namespace std;
@@ -58,11 +58,13 @@ bool Application::Init()
 
 update_status Application::Update()
 {
+	BROFILER_CATEGORY("Update", Profiler::Color::Orchid);
 	update_status ret = UPDATE_CONTINUE;
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->PreUpdate();
 
+	
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->Update();
 

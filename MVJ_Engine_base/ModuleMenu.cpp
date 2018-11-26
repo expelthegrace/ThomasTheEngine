@@ -126,7 +126,7 @@ void ModuleMenu::FillTree(GameObject* gameobject)
 
 	if (!gameobject->active)
 	{
-		ImGui::PushStyleColor(ImGuiCol_Text, { 0.7,0.7,0.7,1.f });
+		ImGui::PushStyleColor(ImGuiCol_Text, { 0.7f,0.7f,0.7f,1.f });
 	}
 
 	if (gameobject->selected)
