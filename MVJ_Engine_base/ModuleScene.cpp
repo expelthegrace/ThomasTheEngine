@@ -1,3 +1,4 @@
+#include "Brofiler.h"
 #include "ModuleScene.h"
 #include "GameObject.h"
 #include "Application.h"
@@ -19,6 +20,8 @@ ModuleScene::~ModuleScene()
 
 update_status ModuleScene::Update() {
 	
+	BROFILER_CATEGORY("Component Updates", Profiler::Color::Orchid);
+
 	ROOT->Update();
 
 	return UPDATE_CONTINUE;

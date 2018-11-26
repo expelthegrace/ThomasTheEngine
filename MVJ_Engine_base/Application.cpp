@@ -58,7 +58,6 @@ bool Application::Init()
 
 update_status Application::Update()
 {
-	BROFILER_CATEGORY("Update", Profiler::Color::Orchid);
 	update_status ret = UPDATE_CONTINUE;
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)

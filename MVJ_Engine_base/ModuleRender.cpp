@@ -22,6 +22,7 @@
 #include "debugdraw.h"
 #include "ModuleDebugDraw.h"
 #include "ModuleScene.h"
+#include "Brofiler.h"
 
 ModuleRender::ModuleRender()
 {
@@ -221,7 +222,7 @@ void ModuleRender::DrawGrid() {
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	
+	BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
 	for (int i = 0; i < meshComponents.size(); ++i) if (
 		meshComponents[i]->active && 
 		meshComponents[i]->avaliable &&

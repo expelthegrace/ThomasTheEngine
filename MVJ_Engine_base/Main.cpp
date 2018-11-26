@@ -26,7 +26,7 @@ int main(int argc, char ** argv)
 
 	while (state != MAIN_EXIT)
 	{
-		BROFILER_FRAME("YourThreadName");
+		BROFILER_FRAME("MainThread");
 
 		switch (state)
 		{
