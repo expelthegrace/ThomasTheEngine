@@ -289,40 +289,54 @@ update_status ModuleMenu::Inspector() {
 	if (ImGui::CollapsingHeader("Transformation"),true)
 	{
 		float variation = 15;
-		/*
+		
 		ImGui::Text("Position");
 		ImGui::PushItemWidth(columnWidth / 4);
+		ImGui::PushID("1");
 		ImGui::SliderFloat("X", &GO_act->transform->position.x, -variation, variation);
+		ImGui::PopID();
 		ImGui::SameLine();
+		ImGui::PushID("2");
 		ImGui::SliderFloat("Y", &GO_act->transform->position.y, -variation, variation);
+		ImGui::PopID();
 		ImGui::SameLine();
+		ImGui::PushID("3");
 		ImGui::SliderFloat("Z", &GO_act->transform->position.z, -variation, variation);
+		ImGui::PopID();
 		ImGui::PopItemWidth();
 	
 		variation = 5;
 		ImGui::Text("Rotation");
 		ImGui::PushItemWidth(columnWidth / 4);
+		ImGui::PushID("4");
 		ImGui::SliderFloat("X", &GO_act->transform->rotation.x, -variation, variation);
+		ImGui::PopID();
 		ImGui::SameLine();
+		ImGui::PushID("5");
 		ImGui::SliderFloat("Y", &GO_act->transform->rotation.y, -variation, variation);
+		ImGui::PopID();
 		ImGui::SameLine();
+		ImGui::PushID("6");
 		ImGui::SliderFloat("Z", &GO_act->transform->rotation.z, -variation, variation);
+		ImGui::PopID();
 		ImGui::PopItemWidth();
 
-		*/
 		variation = 2;
 		ImGui::Text("Scale");
 		ImGui::PushItemWidth(columnWidth / 4);
+		ImGui::PushID("7");
 		ImGui::SliderFloat("X", &GO_act->transform->scale.x, -variation, variation);
+		ImGui::PopID();
 		ImGui::SameLine();
+		ImGui::PushID("8");
 		ImGui::SliderFloat("Y", &GO_act->transform->scale.y, -variation, variation);
+		ImGui::PopID();
 		ImGui::SameLine();
+		ImGui::PushID("9");
 		ImGui::SliderFloat("Z", &GO_act->transform->scale.z, -variation, variation);
+		ImGui::PopID();
 		ImGui::PopItemWidth();
 		
-
-		
-
 	}
 	if (ImGui::CollapsingHeader("Geometry"))
 	{
