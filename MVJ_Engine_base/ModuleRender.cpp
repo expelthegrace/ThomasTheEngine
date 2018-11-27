@@ -180,6 +180,8 @@ update_status ModuleRender::PreUpdate()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	App->scene->ROOT->transform->UpdateTransform(false);
+
 	return UPDATE_CONTINUE;
 }
 

@@ -54,7 +54,8 @@ bool ModuleScene::Init() {
 	
 	GO_selected = ROOT;
 
-	GameObject* casa = CreateModel("casa", ROOT, "BakerHouse.fbx");
+	GameObject* casa1 = CreateModel("casa1", ROOT, "BakerHouse.fbx");
+	GameObject* casa2 = CreateModel("casa2", ROOT, "BakerHouse.fbx");
 	
 	return true;
 }

@@ -288,52 +288,58 @@ update_status ModuleMenu::Inspector() {
 
 	if (ImGui::CollapsingHeader("Transformation"),true)
 	{
-		float variation = 15;
-		
+		if (ImGui::Button("Reset")) GO_act->transform->Reset();
+
+		float variation = 15;	
 		ImGui::Text("Position");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("1");
-		ImGui::SliderFloat("X", &GO_act->transform->position.x, -variation, variation);
+		if (ImGui::SliderFloat("X", &GO_act->transform->position.x, -variation, variation)) GO_act->transform->changed = true ;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("2");
-		ImGui::SliderFloat("Y", &GO_act->transform->position.y, -variation, variation);
+		if (ImGui::SliderFloat("Y", &GO_act->transform->position.y, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("3");
-		ImGui::SliderFloat("Z", &GO_act->transform->position.z, -variation, variation);
+		if (ImGui::SliderFloat("Z", &GO_act->transform->position.z, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::PopItemWidth();
 	
-		variation = 5;
+		variation = 200;
+		math::float3 rotationAux = GO_act->transform->rotation.ToEulerXYZ();
+		rotationAux = RadToDeg(rotationAux);
 		ImGui::Text("Rotation");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("4");
-		ImGui::SliderFloat("X", &GO_act->transform->rotation.x, -variation, variation);
+		if (ImGui::SliderFloat("X", &rotationAux.x, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("5");
-		ImGui::SliderFloat("Y", &GO_act->transform->rotation.y, -variation, variation);
+		if (ImGui::SliderFloat("Y", &rotationAux.y, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("6");
-		ImGui::SliderFloat("Z", &GO_act->transform->rotation.z, -variation, variation);
+		if (ImGui::SliderFloat("Z", &rotationAux.z, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::PopItemWidth();
+		rotationAux = DegToRad(rotationAux);
+
+		GO_act->transform->rotation = Quat::FromEulerXYZ(rotationAux.x, rotationAux.y, rotationAux.z);
 
 		variation = 2;
 		ImGui::Text("Scale");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("7");
-		ImGui::SliderFloat("X", &GO_act->transform->scale.x, -variation, variation);
+		if (ImGui::SliderFloat("X", &GO_act->transform->scale.x, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("8");
-		ImGui::SliderFloat("Y", &GO_act->transform->scale.y, -variation, variation);
+		if (ImGui::SliderFloat("Y", &GO_act->transform->scale.y, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("9");
-		ImGui::SliderFloat("Z", &GO_act->transform->scale.z, -variation, variation);
+		if (ImGui::SliderFloat("Z", &GO_act->transform->scale.z, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::PopItemWidth();
 		

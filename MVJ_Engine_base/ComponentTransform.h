@@ -12,12 +12,15 @@ public:
 	~ComponentTransform();
 
 	void Reset();
-	update_status Update() override;
+	void UpdateTransform(bool updateChilds);
 
 public:
-	float3 position, scale, rotation;
+	float3 position, scale;
+	math::Quat rotation;
 	float4x4 model;
 	GameObject* my_go;
+
+	bool changed = false;
 	
 };
 
