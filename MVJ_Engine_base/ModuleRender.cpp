@@ -187,8 +187,6 @@ update_status ModuleRender::PreUpdate()
 
 void ModuleRender::DrawGrid() {
 	
-	float3 colorWhite = { 1.,1.,1. };
-
 	glUseProgram(App->shaderProgram->programLines);
 
 	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programLines,

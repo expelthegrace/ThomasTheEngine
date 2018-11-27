@@ -107,6 +107,12 @@ update_status   ModuleCamera::Update() {
 		cameraChanged = true;
 	}
 
+	if (App->input->mouseWheel != 0) {
+		camPos += fwd * App->input->mouseWheel * 1.1f;
+		cameraChanged = true;
+	}
+
+
 	if (App->input->mouse_buttons[SDL_BUTTON_RIGHT - 1] == KEY_DOWN) {
 		// WASD movement
 		if (App->input->keyboard[SDL_SCANCODE_E]) {
@@ -170,6 +176,7 @@ update_status   ModuleCamera::Update() {
 					up = (side.Cross(fwd)).Normalized();
 				}
 			}
+
 			lastMouse = actualMouse;
 			cameraChanged = true;			
 		}
@@ -177,8 +184,7 @@ update_status   ModuleCamera::Update() {
 	else {
 		pressingRightMouse = false;
 	}
-	
-	
+
 	if (cameraChanged) {
 		UpdateFrustum();
 		cameraChanged = false;

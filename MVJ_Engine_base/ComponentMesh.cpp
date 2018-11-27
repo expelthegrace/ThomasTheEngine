@@ -25,4 +25,5 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertic
 
 ComponentMesh::~ComponentMesh()
 {	
+	delete mesh.vertices;
 }

@@ -277,7 +277,7 @@ update_status ModuleMenu::Configuration() {
 
 update_status ModuleMenu::Inspector() {
 	ImGui::SetNextWindowPos(ImVec2(App->camera->screenWidth - columnWidth, mainMenuSize.y));
-	ImGui::SetNextWindowSize(ImVec2(columnWidth, App->camera->screenHeight - mainMenuSize.y)); //(App->camera->screenHeight - mainMenuSize.y) / 2)
+	ImGui::SetNextWindowSize(ImVec2(columnWidth, App->camera->screenHeight - mainMenuSize.y)); 
 	bool obert = true;
 
 	GameObject* GO_act = App->scene->GO_selected;
