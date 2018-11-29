@@ -222,6 +222,18 @@ void ModuleRender::DrawGrid() {
 // Called every draw update
 update_status ModuleRender::Update()
 {
+
+	//draw editor camera
+	ModuleCamera* cam = App->camera;	
+	GenerateFBOTexture(500, 500, &(cam->fboSet));
+
+	glBindFramebuffer(GL_FRAMEBUFFER, cam->fboSet.fbo);
+	// he de crear a menu el viewport i pasarli aquell tamany a la camera
+	glViewport(0, 0, cam->fboSet.fb_width, cam->fboSet.fb_height); // aixo es el que esta modificant ara el viewport
+	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
 	BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
 	for (int i = 0; i < meshComponents.size(); ++i) if (
 		meshComponents[i]->active && 
@@ -229,6 +241,9 @@ update_status ModuleRender::Update()
 		meshComponents[i]->my_go->active) 
 		RenderMesh(meshComponents[i]);
 	
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	//
 	DrawGrid();
 	
 	return UPDATE_CONTINUE;
@@ -239,6 +254,55 @@ update_status ModuleRender::PostUpdate()
 	SDL_GL_SwapWindow(App->window->window);
 
 	return UPDATE_CONTINUE;
+}
+
+
+void ModuleRender::GenerateFBOTexture(unsigned w, unsigned h, FBOset* fboset)
+{
+
+	if (w != fboset->fb_width || h != fboset->fb_height)
+	{
+		if (fboset->fb_tex != 0)
+		{
+			glDeleteTextures(1, &(fboset->fb_tex));
+		}
+
+		if (w != 0 && h != 0)
+		{
+			if (fboset->fbo == 0)
+			{
+				glGenFramebuffers(1, &(fboset->fbo));
+			}
+
+			glBindFramebuffer(GL_FRAMEBUFFER, fboset->fbo);
+			glGenTextures(1, &(fboset->fb_tex));
+			glBindTexture(GL_TEXTURE_2D, fboset->fb_tex);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			glGenRenderbuffers(1, &(fboset->fb_depth));
+			glBindRenderbuffer(GL_RENDERBUFFER, fboset->fb_depth);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, w, h);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, fboset->fb_depth);
+			glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboset->fb_tex, 0);
+
+			glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		fboset->fb_width = w;
+		fboset->fb_height = h;
+	}
+
 }
 
 // Called before quitting

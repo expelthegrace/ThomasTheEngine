@@ -9,6 +9,7 @@
 struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
+struct FBOset;
 
 class ComponentMesh;
 class GameObject;
@@ -29,6 +30,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 	void WindowResized(unsigned width, unsigned height);
+	void GenerateFBOTexture(unsigned w, unsigned h, FBOset* fboset);
 
 	void DrawGrid();
 

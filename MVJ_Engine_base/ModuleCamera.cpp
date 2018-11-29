@@ -60,7 +60,7 @@ bool  ModuleCamera::Init() { // ------------------------------------------------
 	return true;
 }
 
-void ModuleCamera::ResizeFOV(unsigned & newWidth, unsigned & newHeight) {
+void ModuleCamera::ResizeFOV(unsigned newWidth, unsigned newHeight) {
 	float aspect = (float)newWidth / (float)newHeight;
 	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) *aspect);
 	UpdateFrustum();

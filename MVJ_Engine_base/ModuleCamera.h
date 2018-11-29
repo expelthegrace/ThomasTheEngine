@@ -3,6 +3,14 @@
 #include "MathGeoLib.h"
 #include "ModuleInput.h"
 
+struct FBOset {
+	unsigned fbo;
+	unsigned fb_depth;
+	unsigned fb_tex;
+	unsigned fb_width;
+	unsigned fb_height;
+};
+
 class ModuleCamera :
 	public Module
 {
@@ -28,7 +36,7 @@ public:
 
 	void LookAt(math::float3& target);
 	void FocusModel();
-	void ResizeFOV(unsigned & newWidth, unsigned & newHeight);
+	void ResizeFOV(unsigned newWidth, unsigned newHeight);
 
 	int screenWidth, screenHeight;
 
@@ -45,6 +53,9 @@ public:
 	math::float4x4 projection;
 
 	bool pressingRightMouse;
+
+	FBOset fboSet;
+	
 
 private:
 	bool cameraChanged;
