@@ -75,14 +75,14 @@ update_status ComponentBB::Update() {
 
 	//Aabb->Scale(&center, my_go->transform->scale);
 	
-	/*
+	
 	if (Aabb->IsFinite()) {
-		Aabb->TransformAsAABB(my_go->transform->model);
-		Aabb->GetCornerPoints(cornersAABB);
+		//Aabb->TransformAsAABB(my_go->transform->model);
+		//Aabb->GetCornerPoints(cornersAABB);
 		const ddVec3 boxColor = { 0.0f, 0.8f, 0.8f };
 		dd::box(cornersAABB, boxColor);
 	}
-	*/
+	
 	
 	return UPDATE_CONTINUE;
 
