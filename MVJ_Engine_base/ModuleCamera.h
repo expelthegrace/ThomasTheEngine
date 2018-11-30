@@ -38,7 +38,8 @@ public:
 	void FocusModel();
 	void ResizeFOV(unsigned newWidth, unsigned newHeight);
 
-	int screenWidth, screenHeight;
+	int screenWidth, screenHeight = 0;
+	int editorWidth, editorHeight = 0;
 
 	math::float3 up;
 	math::float3 fwd;

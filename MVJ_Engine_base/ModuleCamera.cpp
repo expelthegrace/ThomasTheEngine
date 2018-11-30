@@ -10,6 +10,12 @@
 
 ModuleCamera::ModuleCamera()
 {
+
+	fboSet.fbo = 0;
+	fboSet.fb_depth = 0;
+	fboSet.fb_tex = 0;
+	fboSet.fb_width = 0;
+	fboSet.fb_height = 0;
 }
 
 

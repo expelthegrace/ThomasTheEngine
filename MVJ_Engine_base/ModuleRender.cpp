@@ -222,35 +222,36 @@ void ModuleRender::DrawGrid() {
 // Called every draw update
 update_status ModuleRender::Update()
 {
-
 	//draw editor camera
-	ModuleCamera* cam = App->camera;	
-	GenerateFBOTexture(500, 500, &(cam->fboSet));
+	ModuleCamera* cam = App->camera;
+	GenerateFBOTexture(cam->editorWidth, cam->editorHeight, &(cam->fboSet));
 
 	glBindFramebuffer(GL_FRAMEBUFFER, cam->fboSet.fbo);
-	// he de crear a menu el viewport i pasarli aquell tamany a la camera
-	glViewport(0, 0, cam->fboSet.fb_width, cam->fboSet.fb_height); // aixo es el que esta modificant ara el viewport
+	glViewport(0, 0, cam->fboSet.fb_width, cam->fboSet.fb_height); 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-	BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
+	//BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
 	for (int i = 0; i < meshComponents.size(); ++i) if (
-		meshComponents[i]->active && 
+		meshComponents[i]->active &&
 		meshComponents[i]->avaliable &&
-		meshComponents[i]->my_go->active) 
+		meshComponents[i]->my_go->active)
 		RenderMesh(meshComponents[i]);
-	
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 
 	//
 	DrawGrid();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	App->menu->DrawEditorCamera();
 	
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::PostUpdate()
 {
+
 	SDL_GL_SwapWindow(App->window->window);
 
 	return UPDATE_CONTINUE;

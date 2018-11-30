@@ -170,6 +170,38 @@ update_status ModuleMenu::PreUpdate() {
 	return UPDATE_CONTINUE;
 }
 
+void ModuleMenu::DrawEditorCamera() {
+
+	bool obert = true;
+
+	App->camera->editorWidth = App->camera->screenWidth - 2 * columnWidth;
+	App->camera->editorHeight = (App->camera->screenHeight - mainMenuSize.y) - consoleHeight;
+
+	ImGui::SetNextWindowPos(ImVec2(0, mainMenuSize.y));
+	ImGui::SetNextWindowSize(ImVec2(App->camera->editorWidth, App->camera->editorHeight));
+
+	
+
+	if (ImGui::Begin("Editor")) {
+
+		if (ImGui::BeginChild("Editor Canvas", ImVec2(0, 0), true, ImGuiWindowFlags_NoMove))
+		{
+			
+			ImGui::GetWindowDrawList()->AddImage(
+				(void*)App->camera->fboSet.fb_tex,
+				ImVec2(ImGui::GetCursorScreenPos()),
+				ImVec2(ImGui::GetCursorScreenPos().x + App->camera->fboSet.fb_width,
+					ImGui::GetCursorScreenPos().y + App->camera->fboSet.fb_height),
+				ImVec2(0, 1), ImVec2(1, 0));
+
+				
+		}
+		ImGui::EndChild();
+	}
+	ImGui::End();
+
+}
+
 update_status ModuleMenu::MainBarMenu() {
 	consoleHeight = App->camera->screenHeight * 1.f / 4;
 	
@@ -397,6 +429,7 @@ update_status ModuleMenu::Update() {
 		if ((ret = Inspector()) != UPDATE_CONTINUE) return ret;
 		if ((ret = Configuration()) != UPDATE_CONTINUE) return ret;
 		if ((ret = Hierarchy()) != UPDATE_CONTINUE) return ret;
+	
 		
 	}
 	

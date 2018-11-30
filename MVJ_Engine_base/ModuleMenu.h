@@ -21,6 +21,7 @@ public:
 	update_status   PostUpdate();
 	bool            CleanUp();
 
+	void DrawEditorCamera();
 	update_status MainBarMenu();
 	update_status Configuration();
 	update_status Inspector();
