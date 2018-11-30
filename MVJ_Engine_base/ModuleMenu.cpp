@@ -326,15 +326,15 @@ update_status ModuleMenu::Inspector() {
 		ImGui::Text("Position");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("1");
-		if (ImGui::SliderFloat("X", &GO_act->transform->position.x, -variation, variation)) GO_act->transform->changed = true ;
+		if (ImGui::SliderFloat("", &GO_act->transform->position.x, -variation, variation)) GO_act->transform->changed = true ;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("2");
-		if (ImGui::SliderFloat("Y", &GO_act->transform->position.y, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &GO_act->transform->position.y, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("3");
-		if (ImGui::SliderFloat("Z", &GO_act->transform->position.z, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &GO_act->transform->position.z, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::PopItemWidth();
 	
@@ -344,15 +344,15 @@ update_status ModuleMenu::Inspector() {
 		ImGui::Text("Rotation");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("4");
-		if (ImGui::SliderFloat("X", &rotationAux.x, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &rotationAux.x, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("5");
-		if (ImGui::SliderFloat("Y", &rotationAux.y, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &rotationAux.y, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("6");
-		if (ImGui::SliderFloat("Z", &rotationAux.z, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &rotationAux.z, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::PopItemWidth();
 		rotationAux = DegToRad(rotationAux);
@@ -363,15 +363,15 @@ update_status ModuleMenu::Inspector() {
 		ImGui::Text("Scale");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("7");
-		if (ImGui::SliderFloat("X", &GO_act->transform->scale.x, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &GO_act->transform->scale.x, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("8");
-		if (ImGui::SliderFloat("Y", &GO_act->transform->scale.y, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &GO_act->transform->scale.y, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::SameLine();
 		ImGui::PushID("9");
-		if (ImGui::SliderFloat("Z", &GO_act->transform->scale.z, -variation, variation)) GO_act->transform->changed = true;
+		if (ImGui::SliderFloat("", &GO_act->transform->scale.z, -variation, variation)) GO_act->transform->changed = true;
 		ImGui::PopID();
 		ImGui::PopItemWidth();
 		

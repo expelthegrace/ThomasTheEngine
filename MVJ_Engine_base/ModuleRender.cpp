@@ -215,6 +215,11 @@ void ModuleRender::DrawGrid() {
 		glEnd();
 	}
 
+	const float4x4 identity_mat = float4x4::identity;
+	dd::axisTriad(identity_mat, 0.3f, 2.0f);
+
+
+
 	glUseProgram(0);
 
 
@@ -232,17 +237,17 @@ update_status ModuleRender::Update()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-	//BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
+	BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
 	for (int i = 0; i < meshComponents.size(); ++i) if (
 		meshComponents[i]->active &&
 		meshComponents[i]->avaliable &&
 		meshComponents[i]->my_go->active)
 		RenderMesh(meshComponents[i]);
 
-
-	//
 	DrawGrid();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	App->debugdraw->Draw(nullptr, &(App->camera->fboSet));
 
 	App->menu->DrawEditorCamera();
 	

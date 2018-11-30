@@ -6,6 +6,8 @@
 class DDRenderInterfaceCoreGL;
 class Camera;
 
+struct FBOset;
+
 class ModuleDebugDraw : public Module
 {
 
@@ -18,7 +20,7 @@ public:
 	update_status   Update();
 	bool            CleanUp();
 
-    void            Draw(Camera* camera, unsigned fbo, unsigned fb_width, unsigned fb_height);
+    void            Draw(Camera* camera, FBOset * fboset);
 private:
 
     static DDRenderInterfaceCoreGL* implementation;

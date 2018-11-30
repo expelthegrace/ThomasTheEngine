@@ -605,16 +605,16 @@ update_status  ModuleDebugDraw::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleDebugDraw::Draw(Camera* camera, unsigned fbo, unsigned fb_width, unsigned fb_height)
+void ModuleDebugDraw::Draw(Camera* camera,FBOset * fboset)
 {
 	math::float4x4 view  = App->camera->view;
 	math::float4x4 proj = App->camera->projection;
 
-    implementation->width     = fb_width;
-    implementation->height    = fb_height;
+    implementation->width     = fboset->fb_width;
+    implementation->height    = fboset->fb_height;
     implementation->mvpMatrix = proj * view;
 
-    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fboset->fbo);
     dd::flush();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
