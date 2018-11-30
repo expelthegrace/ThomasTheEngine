@@ -21,6 +21,8 @@ public:
 
 public:
 	AABB* Aabb;
+
+	float3* cornersAABB;
 };
 
 #endif

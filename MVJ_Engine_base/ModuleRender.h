@@ -39,7 +39,6 @@ public:
 	GameObject* CreateModel(char* path);
 
 	ComponentMaterial * CreateComponentMaterial(GameObject* my_go, int idMesh, char* path);
-	void RenderBB(ComponentBB* BB);
 
 private:
 	update_status RenderMesh(ComponentMesh * meshComp);

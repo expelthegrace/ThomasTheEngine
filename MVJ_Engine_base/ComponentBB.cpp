@@ -5,23 +5,34 @@
 #include "ModuleRender.h"
 #include "Application.h"
 #include "ModuleMenu.h"
+#include "debugdraw.h"
 
 ComponentBB::ComponentBB(GameObject* my_go)
 {
+	/*
 	float3* unitaryCube = new float3[8]{
-	float3(-0.5f, -0.5f, -0.5f), 
-	float3(0.5f, -0.5f, -0.5f),
-	float3(0.5f,  0.5f, -0.5f),
-	float3(-0.5f,  0.5f, -0.5f),
-	float3(-0.5f, -0.5f,  0.5f),
-	float3(0.5f, -0.5f,  0.5f),
-	float3(0.5f,  0.5,  0.5f),
-	float3(-0.5f,  0.5f,  0.5f),
+	float3(-0.5f,  -0.5f, -0.5f), 
+	float3( 0.5f,  -0.5f, -0.5f),
+	float3( 0.5f,   0.5f, -0.5f),
+	float3(-0.5f,   0.5f, -0.5f),
+	float3(-0.5f,  -0.5f,  0.5f),
+	float3( 0.5f,  -0.5f,  0.5f),
+	float3( 0.5f,   0.5f,  0.5f),
+	float3(-0.5f,   0.5f,  0.5f)
 	};
+
+	cornersAABB = new float3[8];
 
 	type = BB;
 	Aabb = new math::AABB();
-	Aabb->SetFrom(unitaryCube, 24);
+
+	Aabb->SetFrom(unitaryCube, 8);
+	Aabb->GetCornerPoints(cornersAABB);
+	*/
+
+	cornersAABB = new float3[8];
+	Aabb = new math::AABB();
+	Aabb->SetNegativeInfinity();
 
 	this->my_go = my_go;
 }
@@ -46,15 +57,14 @@ void ComponentBB::SetAABB(std::vector<ComponentMesh*>* meshes)
 	Aabb = new math::AABB();
 	Aabb->SetFrom(total, totalPoints);
 
-	float3* corners = new float3[8];
-	Aabb->GetCornerPoints(corners);
+	Aabb->GetCornerPoints(cornersAABB);
 
 	char* b = new char[50];
 	sprintf(b, "GameObject AABB corners:\n");
 	App->menu->console.AddLog(b);
 
 	for (int i = 0; i < 8; ++i) {
-		sprintf(b, "%f, %f, %f \n", corners[i].x, corners[i].y, corners[i].z);
+		sprintf(b, "%f, %f, %f \n", cornersAABB[i].x, cornersAABB[i].y, cornersAABB[i].z);
 		App->menu->console.AddLog(b);
 	}
 }
@@ -64,9 +74,15 @@ update_status ComponentBB::Update() {
 	//const float3 center = Aabb->CenterPoint();
 
 	//Aabb->Scale(&center, my_go->transform->scale);
-	//Aabb->Translate(my_go->transform->position);
-	App->renderer->RenderBB(this);
-
+	
+	/*
+	if (Aabb->IsFinite()) {
+		Aabb->TransformAsAABB(my_go->transform->model);
+		Aabb->GetCornerPoints(cornersAABB);
+		const ddVec3 boxColor = { 0.0f, 0.8f, 0.8f };
+		dd::box(cornersAABB, boxColor);
+	}
+	*/
 	
 	return UPDATE_CONTINUE;
 
@@ -74,5 +90,6 @@ update_status ComponentBB::Update() {
 
 ComponentBB::~ComponentBB()
 {
+	delete cornersAABB;
 	delete Aabb;
 }

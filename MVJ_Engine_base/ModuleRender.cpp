@@ -132,12 +132,6 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 	return UPDATE_CONTINUE;
 }
 
-void ModuleRender::RenderBB(ComponentBB* BB) {
-	
-	
-
-	
-}
 
 // Called before render is available
 bool ModuleRender::Init()
@@ -215,6 +209,7 @@ void ModuleRender::DrawGrid() {
 		glEnd();
 	}
 
+	//Center Axis
 	const float4x4 identity_mat = float4x4::identity;
 	dd::axisTriad(identity_mat, 0.3f, 2.0f);
 
