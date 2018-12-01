@@ -14,8 +14,8 @@ public:
 	ComponentBB(GameObject* my_go);
 	~ComponentBB();
 
+	void UpdateBB();
 	update_status Update() override;
-
 	void SetAABB(std::vector<ComponentMesh*>* meshes);
 
 

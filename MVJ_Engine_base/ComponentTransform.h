@@ -20,7 +20,7 @@ public:
 	float4x4 model;
 	GameObject* my_go;
 
-	bool changed = false;
+	bool changed = true;
 	
 };
 

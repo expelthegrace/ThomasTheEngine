@@ -1,5 +1,5 @@
 #include "ComponentTransform.h"
-
+#include "ComponentBB.h"
 
 ComponentTransform::ComponentTransform()
 {
@@ -28,8 +28,11 @@ void ComponentTransform::Reset() {
 void ComponentTransform::UpdateTransform(bool updateChilds) {
 
 	if (changed || updateChilds) {
-		model.Set(float4x4::FromTRS(position, rotation, scale));
+		model.Set(float4x4::FromTRS(position, rotation, scale));		
 		if (my_go->parent != nullptr) model = my_go->parent->transform->model * model;
+
+		my_go->BB->UpdateBB();
+
 		for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(true);
 		changed = false;
 	}
