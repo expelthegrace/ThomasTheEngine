@@ -76,11 +76,9 @@ update_status ComponentBB::Update() {
 	//Aabb->Scale(&center, my_go->transform->scale);
 	
 	
-	if (Aabb->IsFinite()) {
-		//Aabb->TransformAsAABB(my_go->transform->model);
-		//Aabb->GetCornerPoints(cornersAABB);
+	if (Aabb->IsFinite() && my_go->active) {
 		const ddVec3 boxColor = { 0.0f, 0.8f, 0.8f };
-		dd::box(cornersAABB, boxColor);
+		dd::aabb(Aabb->minPoint, Aabb->maxPoint, boxColor);
 	}
 	
 	

@@ -24,6 +24,7 @@ void ComponentTransform::Reset() {
 
 }
 
+
 void ComponentTransform::UpdateTransform(bool updateChilds) {
 
 	if (changed || updateChilds) {
