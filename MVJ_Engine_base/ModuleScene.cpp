@@ -16,6 +16,7 @@ ModuleScene::ModuleScene()
 
 ModuleScene::~ModuleScene()
 {
+
 }
 
 update_status ModuleScene::Update() {

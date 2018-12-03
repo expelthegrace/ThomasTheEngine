@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _COMPMATERIAL_
+#define _COMPMATERIAL_
+
 #include "Component.h"
 class ComponentMaterial :
 	public Component
@@ -14,3 +16,4 @@ public:
 	unsigned material;
 };
 
+#endif
