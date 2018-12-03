@@ -45,7 +45,7 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 	GO->BB->SetAABB((std::vector<ComponentMesh*>*) &comps);
 	parent->children.push_back(GO);
 
-	return nullptr;
+	return GO;
 }
 
 bool ModuleScene::Init() {
@@ -54,7 +54,7 @@ bool ModuleScene::Init() {
 	GO_selected = ROOT;
 
 	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
-	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
+	GameObject* casa2 = CreateModel("Casa2", casa1, "BakerHouse.fbx");
 	
 	return true;
 }

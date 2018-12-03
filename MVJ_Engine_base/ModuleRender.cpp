@@ -190,30 +190,12 @@ void ModuleRender::DrawGrid() {
 	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programLines,
 		"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
 
-	int linesGrid = glGetUniformLocation(App->shaderProgram->programLines, "color0");
-	float white[4] = { 1, 1, 1, 1 };
-	glUniform4fv(linesGrid, 1, white);
-
-	glLineWidth(1.0f);
-
-	if (showGrid) {
-		glBegin(GL_LINES);
-		float d = 200.f;
-
-		for (float i = -d; i <= d; i += 1.0f) {
-			glVertex3f(i, 0.0f, -d);
-			glVertex3f(i, 0.0f, d);
-			glVertex3f(-d, 0.0f, i);
-			glVertex3f(d, 0.0f, i);
-		}
-		glEnd();
-	}
-
-	//Center Axis
+	// Grid
+	const float3 white2 = { 1.f,1.f,1.f};
+	dd::xzSquareGrid(-100, 100, 0, 1, white2);
+	// Center Axis
 	const float4x4 identity_mat = float4x4::identity;
-	dd::axisTriad(identity_mat, 0.3f, 2.0f);
-
-
+	dd::axisTriad(identity_mat, 0.2f, 4.0f);
 
 	glUseProgram(0);
 

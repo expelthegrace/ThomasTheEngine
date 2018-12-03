@@ -235,14 +235,3 @@ void ModuleCamera::UpdateFrustum() {
 	projection = frustum.ProjectionMatrix();
 }
 
-
-
-/*
-void ModuleCamera::setFoV(float fov){
-
-}
-
-void ModuleCamera::SetAspectRatio(float aspect) {
-
-}
-*/
