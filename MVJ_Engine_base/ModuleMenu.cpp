@@ -406,6 +406,7 @@ update_status ModuleMenu::Inspector() {
 		
 	}
 
+	
 	ImGui::End();
 	return UPDATE_CONTINUE;
 }
@@ -417,8 +418,8 @@ update_status ModuleMenu::Hierarchy() {
 	ImGui::Begin("Hierarchy", &obert);
 	
 	FillTree(App->scene->ROOT);
-
 	
+
 	ImGui::End();
 	return UPDATE_CONTINUE;
 }

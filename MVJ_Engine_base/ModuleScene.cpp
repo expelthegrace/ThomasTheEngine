@@ -36,6 +36,13 @@ void ModuleScene::NewGOSelected(GameObject* newGO) {
 	newGO->SelectGO(true);
 }
 
+void ModuleScene::NewGameObject(char* name) {
+	if (name == "") name = "Untittled";
+	GameObject* newGo = new GameObject(name, true, GO_selected);
+	GO_selected->children.push_back(newGo);	
+
+}
+
 GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path) {
 	
 	GameObject* GO = App->renderer->CreateModel(path);

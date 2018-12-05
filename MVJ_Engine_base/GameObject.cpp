@@ -14,7 +14,7 @@ GameObject::GameObject(char * name, bool active, GameObject * parent)
 	this->parent = parent;
 	this->lastFrameActive = this->active;
 
-	ComponentBB* BB = new ComponentBB(this);
+	BB = new ComponentBB(this);
 	this->BB = BB;
 	components.push_back(BB);
 

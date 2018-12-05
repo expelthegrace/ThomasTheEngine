@@ -69,6 +69,8 @@ GameObject* ModuleRender::CreateModel(char * path) {
 
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
 
+	
+
 	for (int i = 0; i < sceneAct->mNumMaterials; ++i) newGO->components.push_back(CreateComponentMaterial(newGO, i, path));
 	for (int i = 0; i < sceneAct->mNumMeshes; ++i) newGO->components.push_back(CreateComponentMesh(newGO, i, path));
 	
@@ -102,12 +104,12 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 		}
 		
 
-		unsigned vboActual = meshComp->mesh.vbo; //           <------------------ correct
+		unsigned vboActual = meshComp->mesh.vbo;
 		unsigned numVerticesActual = meshActual.numVertices;
 		unsigned numIndexesActual = meshActual.numIndexesMesh; 
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex );// App->modelLoader->materials[App->modelLoader->textures[i]]); // <- mesh.materialIndex
+		glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex );
 		glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
 
 		glEnableVertexAttribArray(0);

@@ -20,6 +20,8 @@ public:
 	GameObject* FindByName(char* name);
 	void MoveTo(GameObject* source, GameObject* newParent);
 
+	void NewGameObject(char* name);
+
 	void NewGOSelected(GameObject* GO);
 
 public:
