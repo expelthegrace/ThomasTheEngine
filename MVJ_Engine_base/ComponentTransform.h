@@ -13,6 +13,7 @@ public:
 
 	void Reset();
 	void UpdateTransform(bool updateChilds);
+	void ParentChanged(GameObject* lastParent);
 
 public:
 	float3 position, scale, eulerRot, globalPosition;

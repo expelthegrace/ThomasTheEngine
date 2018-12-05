@@ -34,9 +34,7 @@ Application::Application()
 	modules.push_back(timer = new ModuleTimer());
 	modules.push_back(scene = new ModuleScene());
 	modules.push_back(debugdraw = new ModuleDebugDraw());
-	
-	//modules.push_back(exercise = new ModuleRenderExercise());
-	
+		
 
 }
 

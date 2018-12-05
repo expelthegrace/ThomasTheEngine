@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include <vector>
-
+#include <map>
 
 class GameObject;
 
@@ -18,8 +18,8 @@ public:
 	update_status Update() override;
 	GameObject* CreateModel(char* name, GameObject* parent, char * path);
 	GameObject* FindByName(char* name);
-	void MoveTo(GameObject* source, GameObject* newParent);
 
+	GameObject* getGOByID(unsigned uid);
 	void NewGameObject(char* name);
 
 	void NewGOSelected(GameObject* GO);
@@ -29,8 +29,8 @@ public:
 	GameObject* GO_selected = nullptr;
 
 private:
-
-	//std::vector<GameObject*> gameObjects;
+	std::map<unsigned, GameObject*> gameObjects;
+	
 
 };
 

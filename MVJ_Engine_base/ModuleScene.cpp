@@ -41,6 +41,8 @@ void ModuleScene::NewGameObject(char* name) {
 	GameObject* newGo = new GameObject(name, true, GO_selected);
 	GO_selected->children.push_back(newGo);	
 
+	gameObjects[newGo->UID] = newGo;
+
 }
 
 GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path) {
@@ -52,6 +54,7 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 	std::vector<Component*> comps = GO->GetComponents(MESH);
 	GO->BB->SetAABB((std::vector<ComponentMesh*>*) &comps);
 	parent->children.push_back(GO);
+	gameObjects[GO->UID] = GO;
 
 	return GO;
 }
@@ -82,6 +85,8 @@ GameObject* ModuleScene::FindByName(char * name) {
 	return nullptr;
 }
 
-void ModuleScene::MoveTo(GameObject* source, GameObject* newParent) {
-
+GameObject* ModuleScene::getGOByID(unsigned uid) {
+	return gameObjects[uid];
 }
+
+

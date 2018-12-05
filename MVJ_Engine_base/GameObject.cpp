@@ -81,5 +81,41 @@ Component* GameObject::CreateComponent(type_comp type, int id, char * path) {
 
 	return comp;
 }
+int GameObject::GetChildIndexByUID(unsigned uid) {
+	for (int i = 0; i < children.size(); ++i) if (children[i]->UID == uid) return i;
+	return -1;
+}
+
+void GameObject::MoveToNewParent(GameObject* newParent) {
+
+	if (newParent != parent && newParent != nullptr)
+	{
+		GameObject* lastParent = this->parent;
+
+		bool isChild = false;
+		GameObject* curr = newParent;
+		while (curr->parent != nullptr)
+		{
+			if (curr->parent == this)
+				return; //If we are trying to insert a parent object inside one of its childs, ignore it
+			curr = curr->parent;
+		}
+
+		if (parent != nullptr)
+		{
+			parent->children.erase(parent->children.begin() + parent->GetChildIndexByUID(this->UID));
+			parent->child_selected = false;
+		}
+
+		parent = newParent;
+		parent->children.push_back(this);
+		parent->child_selected = true;
+
+		transform->ParentChanged(lastParent);
+		
+	}
+
+
+}
 
 

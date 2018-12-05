@@ -141,7 +141,30 @@ void ModuleMenu::FillTree(GameObject* gameobject)
 	}
 
 	bool opened = ImGui::TreeNodeEx(gameobject->name, flags);
-	
+	if (ImGui::BeginDragDropSource())
+	{
+		ImGui::SetDragDropPayload("GAME_OBJECT", &gameobject->UID, sizeof(unsigned));
+		ImGui::Text(gameobject->name);
+		ImGui::EndDragDropSource();
+	}
+	if (ImGui::BeginDragDropTarget())
+	{
+		bool isParent = false;
+		if (const ImGuiPayload* prevPayload = ImGui::GetDragDropPayload())
+		{
+			GameObject* draggedGameobject = App->scene->getGOByID(*(unsigned*)prevPayload->Data);
+			if (draggedGameobject != nullptr && draggedGameobject->parent == gameobject)
+				isParent = true;
+		}
+
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GAME_OBJECT", ImGuiDragDropFlags_SourceAllowNullID))
+		{
+			GameObject* draggedGameobject = App->scene->getGOByID(*(unsigned*)payload->Data);
+			if (draggedGameobject != nullptr)
+				draggedGameobject->MoveToNewParent((isParent) ? gameobject->parent : gameobject);
+		}
+		ImGui::EndDragDropTarget();
+	}
 	if (ImGui::IsItemClicked(0))
 	{
 		App->scene->NewGOSelected(gameobject);

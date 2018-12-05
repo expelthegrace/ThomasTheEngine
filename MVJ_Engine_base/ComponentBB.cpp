@@ -62,7 +62,7 @@ void ComponentBB::SetAABB(std::vector<ComponentMesh*>* meshes)
 
 update_status ComponentBB::Update() {
 
-	if (Aabb->IsFinite() && my_go->active) {
+	if (my_go->selected && Aabb->IsFinite() && my_go->active) {
 		const ddVec3 boxColor = { 0.0f, 0.8f, 0.8f };
 		dd::aabb(Aabb->minPoint, Aabb->maxPoint, boxColor);
 	}

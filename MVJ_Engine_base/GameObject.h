@@ -17,6 +17,10 @@ public:
 
 	Component* CreateComponent(type_comp type, int id, char * path);
 	GameObject* AddChild(GameObject * child);
+	int GetChildIndexByUID(unsigned uid);
+
+	void MoveToNewParent(GameObject* newParent);
+
 	std::vector<Component*> GetComponents(type_comp type);
 	// delete gameobject (recursiu)
 	void SetActive(bool active);
