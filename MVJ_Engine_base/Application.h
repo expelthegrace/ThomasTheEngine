@@ -6,6 +6,7 @@
 #include "Module.h"
 #include "Timers.h"
 
+
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
@@ -30,6 +31,7 @@ public:
 	bool Init();
 	update_status Update();
 	bool CleanUp();
+	unsigned generateUID();
 
 public:
 	ModuleRender* renderer = nullptr;

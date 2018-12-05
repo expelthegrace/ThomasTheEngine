@@ -28,7 +28,7 @@ ComponentBB::ComponentBB(GameObject* my_go)
 	Aabb->SetFrom(unitaryCube, 8);
 	Aabb->GetCornerPoints(cornersAABB);
 	*/
-
+	UID = App->generateUID();
 	type = BB;
 	cornersAABB = new float3[8];
 	Aabb = new math::AABB();

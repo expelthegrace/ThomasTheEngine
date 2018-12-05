@@ -1,9 +1,10 @@
 #include "ComponentCamera.h"
-
+#include "Application.h"
 
 
 ComponentCamera::ComponentCamera()
 {
+	UID = App->generateUID();
 	fboSet.fbo = 0;
 	fboSet.fb_depth = 0;
 	fboSet.fb_tex = 0;

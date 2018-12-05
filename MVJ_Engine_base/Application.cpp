@@ -12,7 +12,11 @@
 #include "ModuleScene.h"
 #include "ModuleDebugDraw.h"
 #include "Brofiler.h"
+#include "pcg_variants.h"
+#include "entropy.h"
+#include <time.h>
 
+pcg32_random_t rng;
 
 using namespace std;
 
@@ -49,11 +53,17 @@ bool Application::Init()
 	bool ret = true;
 	exit = false;
 
+	pcg32_srandom_r(&rng, time(NULL), (intptr_t)&rng);
+
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Init();
 	
 
 	return ret;
+}
+
+unsigned Application::generateUID() {
+	return pcg32_random_r(&rng);
 }
 
 update_status Application::Update()

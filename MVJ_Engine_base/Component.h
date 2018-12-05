@@ -10,7 +10,7 @@ class Component
 {
 public:
 	Component() {
-
+	
 	}
 
 	virtual ~Component() {
@@ -24,6 +24,7 @@ public:
 	}
 
 public:
+	unsigned UID;
 	type_comp type;
 	bool active;
 	GameObject* my_go;

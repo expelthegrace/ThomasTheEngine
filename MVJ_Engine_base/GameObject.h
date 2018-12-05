@@ -25,6 +25,7 @@ public:
 	void SelectGOChild(bool selected);
 
 public:
+	unsigned UID;
 	bool selected = false;
 	bool child_selected = false;
 	bool active;

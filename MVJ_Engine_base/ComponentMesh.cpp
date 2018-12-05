@@ -1,9 +1,10 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
-
+#include "Application.h"
 
 ComponentMesh::ComponentMesh( GameObject* my_go)
 {
+	UID = App->generateUID();
 	type = MESH;
 	active = true;
 	this->my_go = my_go;

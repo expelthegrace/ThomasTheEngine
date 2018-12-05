@@ -9,6 +9,8 @@
 
 GameObject::GameObject(char * name, bool active, GameObject * parent)
 {
+	UID = App->generateUID();
+
 	this->name = name;
 	this->active = active;
 	this->parent = parent;

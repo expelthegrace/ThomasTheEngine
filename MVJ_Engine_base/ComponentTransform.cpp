@@ -1,8 +1,10 @@
 #include "ComponentTransform.h"
 #include "ComponentBB.h"
+#include "Application.h"
 
 ComponentTransform::ComponentTransform()
 {
+	UID = App->generateUID();
 	scale = { 1.f,1.f,1.f };
 	eulerRot = position = globalPosition = { 0.f,0.f,0.f };
 	rotation = Quat::FromEulerXYZ(0.f, 0.f, 0.f );

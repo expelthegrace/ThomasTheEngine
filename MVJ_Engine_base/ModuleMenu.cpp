@@ -219,7 +219,7 @@ update_status ModuleMenu::MainBarMenu() {
 			bool openAbout = true;
 			ImGui::Text("Engine name: Thomas The Engine (TTE) \nCreated by : Marc Palomar Soler \nProject for the UPC University Master");
 			if (ImGui::Button("Go to GitHub")) {
-				ShellExecute(NULL, "open", "https://github.com/expelthegrace/Engine_1st_Assign", NULL, NULL, SW_SHOWNORMAL);
+				ShellExecute(NULL, "open", "https://github.com/expelthegrace/ThomasTheEngine", NULL, NULL, SW_SHOWNORMAL);
 			}
 			ImGui::EndMenu();
 		}
@@ -317,6 +317,8 @@ update_status ModuleMenu::Inspector() {
 
 	ImGui::Begin("Inspector", &obert, ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_AlwaysVerticalScrollbar);
 	ImGui::Text(GO_act->name);
+	ImGui::SameLine();
+	ImGui::Text("| UID: %u", GO_act->UID);
 	ImGui::Checkbox("Active", &GO_act->active);
 
 	if (ImGui::CollapsingHeader("Transformation"),true)
