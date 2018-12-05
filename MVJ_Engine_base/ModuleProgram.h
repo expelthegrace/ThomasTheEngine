@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULEPROG_
+#define _MODULEPROG_
+
 #include "Module.h"
 #include "GL/glew.h"
 class ModuleProgram :
@@ -17,3 +19,4 @@ public:
 	GLuint programModel, programLines;
 };
 
+#endif

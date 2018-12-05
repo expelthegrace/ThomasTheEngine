@@ -14,6 +14,7 @@
 #include "GameObject.h"
 #include "ModuleScene.h"
 #include "ComponentTransform.h"
+#include "ComponentMesh.h"
 
 #include <vector>
 
@@ -376,10 +377,22 @@ update_status ModuleMenu::Inspector() {
 		ImGui::PopItemWidth();
 		
 	}
-	if (ImGui::CollapsingHeader("Geometry"))
-	{
-		ImGui::Text("Number of triangles: %i \n", App->modelLoader->numFaces);
+
+	std::vector<Component*> meshes = GO_act->GetComponents(MESH);
+	for (int i = 0; i < meshes.size(); ++i) {
+		ComponentMesh* meshact = (ComponentMesh*)meshes[i];
+
+		ImGui::PushID(i);
+		if (ImGui::CollapsingHeader("Mesh"), true)
+		{
+			ImGui::Text("Number of triangles: %i \n", meshact->mesh.numFaces);
+			ImGui::PushID(i + 1);
+			ImGui::Checkbox("Draw mesh", &(meshact->active));
+			ImGui::PopID();			
+		}
+		ImGui::PopID();
 	}
+
 	if (ImGui::CollapsingHeader("Texture"))
 	{
 		std::vector<Component*> comps = GO_act->GetComponents(MESH);

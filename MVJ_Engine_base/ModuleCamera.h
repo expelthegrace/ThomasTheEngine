@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MODULECAMERA_
+#define _MODULECAMERA_
+
 #include "Module.h"
 #include "MathGeoLib.h"
 #include "ModuleInput.h"
@@ -38,6 +40,9 @@ public:
 	void FocusModel();
 	void ResizeFOV(unsigned newWidth, unsigned newHeight);
 
+public:
+	Frustum frustum;
+
 	int screenWidth, screenHeight = 0;
 	int editorWidth, editorHeight = 0;
 
@@ -49,7 +54,7 @@ public:
 	math::float3 Yaxis;
 	math::float3 Zaxis;
 
-	Frustum frustum;
+	
 	math::float4x4 view;
 	math::float4x4 projection;
 
@@ -59,7 +64,10 @@ public:
 	
 
 private:
+	
+
 	bool cameraChanged;
 
 };
 
+#endif
