@@ -339,7 +339,7 @@ update_status ModuleMenu::Inspector() {
 		ImGui::PopItemWidth();
 	
 		variation = 200;
-		math::float3 rotationAux = GO_act->transform->rotation.ToEulerXYZ();
+		math::float3 rotationAux = GO_act->transform->eulerRot;
 		rotationAux = RadToDeg(rotationAux);
 		ImGui::Text("Rotation");
 		ImGui::PushItemWidth(columnWidth / 4);
@@ -356,7 +356,7 @@ update_status ModuleMenu::Inspector() {
 		ImGui::PopID();
 		ImGui::PopItemWidth();
 		rotationAux = DegToRad(rotationAux);
-
+		GO_act->transform->eulerRot = rotationAux;
 		GO_act->transform->rotation = Quat::FromEulerXYZ(rotationAux.x, rotationAux.y, rotationAux.z);
 
 		variation = 2;

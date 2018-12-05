@@ -54,11 +54,10 @@ void ComponentBB::SetAABB(std::vector<ComponentMesh*>* meshes)
 			++index;
 		}
 	}
-	//Aabb = new math::AABB();
 	Aabb->SetFrom(total, totalPoints);
-
 	Aabb->GetCornerPoints(cornersAABB);
 
+	delete total;
 }
 
 update_status ComponentBB::Update() {

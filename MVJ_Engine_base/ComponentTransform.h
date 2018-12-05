@@ -15,7 +15,7 @@ public:
 	void UpdateTransform(bool updateChilds);
 
 public:
-	float3 position, scale;
+	float3 position, scale, eulerRot;
 	math::Quat rotation;
 	float4x4 model;
 	GameObject* my_go;
