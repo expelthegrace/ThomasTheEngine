@@ -6,6 +6,7 @@
 #include <map>
 
 class GameObject;
+class Quadtree;
 
 class ModuleScene :
 	public Module
@@ -27,6 +28,7 @@ public:
 public:
 	GameObject* ROOT;
 	GameObject* GO_selected = nullptr;
+	Quadtree* quadTree;
 
 private:
 	std::map<unsigned, GameObject*> gameObjects;

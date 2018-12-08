@@ -166,6 +166,7 @@
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleTimer.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Quadtree.h" />
     <ClInclude Include="Timers.h" />
     <ClInclude Include="Util\debug_draw.hpp" />
     <ClInclude Include="Util\par_shapes.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleTimer.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="Quadtree.cpp" />
     <ClCompile Include="Timers.cpp" />
   </ItemGroup>
   <ItemGroup>

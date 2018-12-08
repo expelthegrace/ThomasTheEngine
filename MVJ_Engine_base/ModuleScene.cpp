@@ -7,7 +7,7 @@
 #include "ComponentTransform.h"
 #include "ComponentBB.h"
 #include <vector>
-
+#include "Quadtree.h"
 
 ModuleScene::ModuleScene()
 {
@@ -24,6 +24,7 @@ update_status ModuleScene::Update() {
 	BROFILER_CATEGORY("Component Updates", Profiler::Color::Orchid);
 
 	ROOT->Update();
+	quadTree->Draw();
 
 	return UPDATE_CONTINUE;
 }
@@ -64,8 +65,16 @@ bool ModuleScene::Init() {
 	
 	GO_selected = ROOT;
 
+	float quadTreeSize = 20.0f;
+	quadTree = new Quadtree(float3(-quadTreeSize), float3 (quadTreeSize), 2);
+
 	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
-	GameObject* casa2 = CreateModel("Casa2", casa1, "BakerHouse.fbx");
+	quadTree->Insert(casa1);
+
+	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
+	quadTree->Insert(casa2);
+
+	
 	
 	return true;
 }
