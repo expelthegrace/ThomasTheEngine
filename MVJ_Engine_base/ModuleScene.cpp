@@ -66,13 +66,16 @@ bool ModuleScene::Init() {
 	GO_selected = ROOT;
 
 	float quadTreeSize = 20.0f;
-	quadTree = new Quadtree(float3(-quadTreeSize), float3 (quadTreeSize), 2);
+	quadTree = new Quadtree(float3(-quadTreeSize), float3 (quadTreeSize), 2, 6);
 
 	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa1);
 
 	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa2);
+
+	GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
+	quadTree->Insert(casa3);
 
 	
 	
