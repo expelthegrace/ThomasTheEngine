@@ -20,6 +20,7 @@ bool Quadtree::Intersects(GameObject* go) {
 	//return (go->BB->Aabb->Intersects(*boundaries));
 }
 
+
 void Quadtree::Divide() {
 	nodeType = TREE;
 
@@ -73,6 +74,23 @@ bool Quadtree::Insert(GameObject * go) {
 
 	return false;
 }
+
+void Quadtree::CollectIntersections(std::vector<GameObject*>& GOcollisioned, const GameObject* GO) {
+
+	if (GO->BB->Aabb->IsFinite() && boundaries->Intersects(*(GO->BB->Aabb)) ) {
+
+		if (this->nodeType == LEAF) {
+			for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) 
+				GOcollisioned.push_back(*it);
+			
+		}
+		else {
+			for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) 
+				(*it)->CollectIntersections(GOcollisioned,GO);
+		}
+	}
+}
+
 
 void Quadtree::Draw() {
 	const ddVec3 boxColor = { 0.4f, 0.4f, 0.8f };

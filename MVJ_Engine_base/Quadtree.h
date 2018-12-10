@@ -2,6 +2,7 @@
 #define _QUADTREE_
 
 #include <list>
+#include <vector>
 #include "MathGeoLib.h"
 
 class GameObject;
@@ -19,6 +20,7 @@ public:
 	bool Intersects(GameObject* go);
 	void Divide();
 	void Draw();
+	void CollectIntersections(std::vector<GameObject*>& GOcollisioned, const GameObject* GO);
 
 	~Quadtree();
 
