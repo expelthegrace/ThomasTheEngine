@@ -427,8 +427,7 @@ update_status ModuleMenu::Inspector() {
 			meshAux = (ComponentMesh*) comps[i];		
 			sprintf(titleTexture, "Draw texture %i", i);
 			ImGui::Checkbox(titleTexture, &meshAux->renderTexture);
-		}
-		
+		}	
 	}
 
 	

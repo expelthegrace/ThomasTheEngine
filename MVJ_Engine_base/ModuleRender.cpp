@@ -24,6 +24,10 @@
 #include "ModuleScene.h"
 #include "Brofiler.h"
 
+#define PAR_SHAPES_T GLuint
+#define PAR_SHAPES_IMPLEMENTATION
+#include "par_shapes.h"
+
 ModuleRender::ModuleRender()
 {
 }
@@ -40,6 +44,44 @@ ComponentMesh* ModuleRender::CreateComponentMesh( GameObject* my_go) {
 	meshComponents.push_back(meshComp);
 	return meshComp;
 }
+
+ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, par_shapes_mesh* par_mesh) {
+
+	ComponentMesh* meshComp = new ComponentMesh(my_go);
+
+	Mesh* mesh = &meshComp->mesh;
+	mesh->type = VAO;
+
+	mesh->numVertices = par_mesh->npoints;
+	mesh->numFaces = par_mesh->ntriangles;
+
+	unsigned* vaoActual = &mesh->vao;
+
+	glGenBuffers(1, vaoActual);
+	glBindBuffer(GL_ARRAY_BUFFER, *vaoActual);
+
+	glGenBuffers(3, mesh->buffer);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->buffer[0]);
+	glBufferData(GL_ARRAY_BUFFER, par_mesh->npoints * 3 * sizeof(float), par_mesh->points, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mesh->buffer[1]);
+	glBufferData(GL_ARRAY_BUFFER, par_mesh->npoints * 3 * sizeof(float), par_mesh->normals, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->buffer[2]);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, par_mesh->ntriangles * 3 * sizeof(PAR_SHAPES_T), par_mesh->triangles, GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
+
+	par_shapes_free_mesh(par_mesh);
+
+	return meshComp;
+}
+
 
 ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, char* path) {
 
@@ -82,54 +124,64 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 	Mesh meshActual = meshComp->mesh;
 
 	if (meshActual.numVertices > 0) {
-		glUseProgram(App->shaderProgram->programModel);
 
+		if (meshActual.type == VAO) {
 
-		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-			"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
-		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-			"view"), 1, GL_TRUE, &App->camera->view[0][0]);
-		glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-			"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
+			glBindVertexArray(meshActual.vao);
+			glDrawElements(GL_TRIANGLES, meshActual.numFaces * 3, GL_UNSIGNED_INT, NULL);
+			glBindVertexArray(0);
 
-
-		GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
-		GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
-
-		if (meshComp->renderTexture) glUniform1i(drawText, 1);
+		}
 		else {
-			glUniform1i(drawText, 0);
-			float color[4] = { 0.6, 1, 0.6, 1 };
-			glUniform4fv(color0, 1, color);
+			glUseProgram(App->shaderProgram->programModel);
+
+			glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+				"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
+			glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+				"view"), 1, GL_TRUE, &App->camera->view[0][0]);
+			glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+				"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
+
+
+			GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
+			GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
+
+			if (meshComp->renderTexture) glUniform1i(drawText, 1);
+			else {
+				glUniform1i(drawText, 0);
+				float color[4] = { 0.6, 1, 0.6, 1 };
+				glUniform4fv(color0, 1, color);
+			}
+
+
+			unsigned vboActual = meshComp->mesh.vbo;
+			unsigned numVerticesActual = meshActual.numVertices;
+			unsigned numIndexesActual = meshActual.numIndexesMesh;
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
+			glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
+
+			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(1);
+			glBindBuffer(GL_ARRAY_BUFFER, vboActual);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
+			glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
+
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+
+
+			glUseProgram(0);
+
 		}
 		
-
-		unsigned vboActual = meshComp->mesh.vbo;
-		unsigned numVerticesActual = meshActual.numVertices;
-		unsigned numIndexesActual = meshActual.numIndexesMesh; 
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex );
-		glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
-
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, vboActual);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
-		glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-
-		glUseProgram(0);
-
 	} 
 	return UPDATE_CONTINUE;
 }

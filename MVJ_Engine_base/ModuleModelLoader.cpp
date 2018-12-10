@@ -22,6 +22,7 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* m
 	Mesh* mesh = &meshComp->mesh;
 	const aiMesh* src_mesh = sceneActual->mMeshes[idMesh];
 
+	mesh->type = VBO;
 	mesh->numVertices = src_mesh->mNumVertices;
 	mesh->numFaces = src_mesh->mNumFaces;
 

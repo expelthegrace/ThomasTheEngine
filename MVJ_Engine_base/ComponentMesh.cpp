@@ -20,6 +20,8 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertic
 	this->mesh = mesh;
 	avaliable = true;
 	this->mesh.vertices = vertices;
+	
+
 }
 
 

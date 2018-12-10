@@ -4,6 +4,11 @@
 #include "Globals.h"
 #include <vector>
 
+#define PAR_SHAPES_T GLuint
+#define PAR_SHAPES_IMPLEMENTATION
+#include "par_shapes.h"
+
+
 class Component;
 class ComponentTransform;
 class ComponentBB;
@@ -16,6 +21,9 @@ public:
 	update_status Update();
 
 	Component* CreateComponent(type_comp type, int id, char * path);
+
+	void CreateSphere(float radius, int subdivisions);
+
 	GameObject* AddChild(GameObject * child);
 	int GetChildIndexByUID(unsigned uid);
 

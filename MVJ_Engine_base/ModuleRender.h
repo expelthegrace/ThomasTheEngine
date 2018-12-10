@@ -6,6 +6,7 @@
 #include "MathGeoLib.h"
 #include <vector>
 
+
 struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
@@ -17,6 +18,7 @@ class ComponentBB;
 
 struct Mesh;
 class ComponentMaterial;
+
 
 class ModuleRender : public Module
 {
@@ -32,9 +34,12 @@ public:
 	void WindowResized(unsigned width, unsigned height);
 	void GenerateFBOTexture(unsigned w, unsigned h, FBOset* fboset);
 
+
 	void DrawGrid();
 
+	
 	ComponentMesh* CreateComponentMesh(GameObject* my_go);
+	ComponentMesh* CreateComponentMesh(GameObject* my_go, par_shapes_mesh* par_mesh);
 	ComponentMesh* CreateComponentMesh(GameObject* my_go,int idMesh, char* path);
 	GameObject* CreateModel(char* path);
 

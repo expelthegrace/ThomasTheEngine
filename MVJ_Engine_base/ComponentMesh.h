@@ -7,14 +7,22 @@
 
 class GameObject;
 
+enum meshType {
+	VBO,
+	VAO
+};
+
 struct Mesh {
 
+	meshType type;
 	unsigned vbo;
 	unsigned ibo;
 	unsigned numIndexesMesh;
 	unsigned materialIndex;
 	unsigned numVertices;
 	unsigned numFaces;
+	unsigned vao;
+	unsigned* buffer = new unsigned[10];
 	float3* vertices;
 
 
