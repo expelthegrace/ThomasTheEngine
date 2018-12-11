@@ -5,47 +5,70 @@
 #include "ModuleMenu.h"
 #include "Application.h"
 
-Quadtree::Quadtree(float3 min, float3 max, int bucket, int maxLevels)
+Quadtree::Quadtree(Quadtree* parent, float3 min, float3 max, int bucket, int maxLevels)
 {
-	
+	this->parent = parent;
 	this->bucket = bucket;
 	boundaries = new AABB(min, max);
 	maxDepth = maxLevels;
 
 }
 
-bool Quadtree::Intersects(GameObject* go) {
+bool Quadtree::Intersects(const GameObject* go) {
 	if (!go->BB->Aabb->IsFinite()) return false;
+	
 
-	return boundaries->Contains(go->BB->Aabb->CenterPoint());
+	return (boundaries->MinX() <= go->BB->Aabb->CenterPoint().x &&
+		boundaries->MinZ() <= go->BB->Aabb->CenterPoint().z &&
+		boundaries->MaxX() >= go->BB->Aabb->CenterPoint().x &&
+		boundaries->MaxZ() >= go->BB->Aabb->CenterPoint().z);
+
+	//return boundaries->Contains(go->BB->Aabb->CenterPoint());
 	//return (go->BB->Aabb->Intersects(*boundaries));
 }
 
+Quadtree* Quadtree::Find(const GameObject* GO) {
+
+	if (!Intersects(GO)) return nullptr;
+
+	if (this->nodeType == LEAF) {
+		for (std::list<GameObject*>::iterator itGO = gameObjects.begin(); itGO != gameObjects.end(); ++itGO)
+			if ((*itGO)->UID == GO->UID) return this;
+	}
+	else {
+		for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
+			Quadtree* ret = (*it)->Find(GO);
+			if (ret != nullptr) return ret;
+		}
+			
+	}
+	return nullptr;
+
+}
 
 void Quadtree::Divide() {
 	nodeType = TREE;
 
 	float3 newMin = { boundaries->MinX(), boundaries->MinY(), (boundaries->MinZ() + boundaries->MaxZ()) / 2 };
 	float3 newMax = { (boundaries->MinX() + boundaries->MaxX()) / 2, boundaries->MaxY(), boundaries->MaxZ() };
-	Quadtree* newQuad = new Quadtree(newMin, newMax, bucket, maxDepth - 1);
+	Quadtree* newQuad = new Quadtree(this, newMin, newMax, bucket, maxDepth - 1);
 	branches.push_back(newQuad);
 
 	newMin = { (boundaries->MinX() + boundaries->MaxX()) / 2, boundaries->MinY(), (boundaries->MinZ() + boundaries->MaxZ()) / 2 };
 	newMax = boundaries->maxPoint;
-	newQuad = new Quadtree(newMin, newMax, bucket, maxDepth - 1);
+	newQuad = new Quadtree(this, newMin, newMax, bucket, maxDepth - 1);
 	branches.push_back(newQuad);
 
 	newMin = boundaries->minPoint;
 	newMax = { (boundaries->MinX() + boundaries->MaxX()) / 2, boundaries->MaxY(), (boundaries->MinZ() + boundaries->MaxZ()) / 2 };
-	newQuad = new Quadtree(newMin, newMax, bucket, maxDepth - 1);
+	newQuad = new Quadtree(this, newMin, newMax, bucket, maxDepth - 1);
 	branches.push_back(newQuad);
 
 	newMin = { (boundaries->MinX() + boundaries->MaxX()) / 2, boundaries->MinY(), boundaries->MinZ() };
 	newMax = { boundaries->MaxX(), boundaries->MaxY(), (boundaries->MinZ() + boundaries->MaxZ()) / 2 };
-	newQuad = new Quadtree(newMin, newMax, bucket, maxDepth - 1);
+	newQuad = new Quadtree(this, newMin, newMax, bucket, maxDepth - 1);
 	branches.push_back(newQuad);
 
-	
 		
 	for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
 		for (std::list<GameObject*>::iterator itGO = gameObjects.begin(); itGO != gameObjects.end(); ++itGO) if ((*it)->Insert(*itGO)) {
@@ -59,7 +82,7 @@ void Quadtree::Divide() {
 
 bool Quadtree::Insert(GameObject * go) {
 
-	if (!this->Intersects(go)) return false;
+	if (!Intersects(go)) return false;
 
 	if (nodeType == LEAF) {
 		if (gameObjects.size() < bucket) gameObjects.push_back(go);
@@ -82,9 +105,16 @@ bool Quadtree::Insert(GameObject * go) {
 	return false;
 }
 
+bool Quadtree::Collisions(const GameObject* go) {
+	return (boundaries->MinX() <= go->BB->Aabb->MinX() &&
+		boundaries->MinZ() <= go->BB->Aabb->MinZ() &&
+		boundaries->MaxX() >= go->BB->Aabb->MaxX() &&
+		boundaries->MaxZ() >= go->BB->Aabb->MaxZ());
+}
+
 void Quadtree::CollectIntersections(std::vector<GameObject*>& GOcollisioned, const GameObject* GO) {
 
-	if (GO->BB->Aabb->IsFinite() && boundaries->Intersects(*(GO->BB->Aabb)) ) {
+	if (GO->BB->Aabb->IsFinite() && Collisions(GO) ) {
 
 		if (this->nodeType == LEAF) {
 			for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) 

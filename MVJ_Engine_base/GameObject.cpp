@@ -7,8 +7,6 @@
 #include "ComponentBB.h"
 
 
-
-
 GameObject::GameObject(char * name, bool active, GameObject * parent)
 {
 	UID = App->generateUID();
@@ -84,6 +82,7 @@ Component* GameObject::CreateComponent(type_comp type, int id, char * path) {
 	return comp;
 }
 
+/*
 void GameObject::CreateSphere(float r, int subdivisions) {
 	par_shapes_mesh* sphere = par_shapes_create_subdivided_sphere(subdivisions);
 	par_shapes_scale(sphere, r, r, r);
@@ -92,6 +91,7 @@ void GameObject::CreateSphere(float r, int subdivisions) {
 	App->renderer->CreateComponentMesh(this, sphere);
 
 }
+*/
 
 int GameObject::GetChildIndexByUID(unsigned uid) {
 	for (int i = 0; i < children.size(); ++i) if (children[i]->UID == uid) return i;

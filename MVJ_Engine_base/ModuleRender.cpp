@@ -24,9 +24,8 @@
 #include "ModuleScene.h"
 #include "Brofiler.h"
 
-#define PAR_SHAPES_T GLuint
-#define PAR_SHAPES_IMPLEMENTATION
-#include "par_shapes.h"
+
+
 
 ModuleRender::ModuleRender()
 {
@@ -44,44 +43,6 @@ ComponentMesh* ModuleRender::CreateComponentMesh( GameObject* my_go) {
 	meshComponents.push_back(meshComp);
 	return meshComp;
 }
-
-ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, par_shapes_mesh* par_mesh) {
-
-	ComponentMesh* meshComp = new ComponentMesh(my_go);
-
-	Mesh* mesh = &meshComp->mesh;
-	mesh->type = VAO;
-
-	mesh->numVertices = par_mesh->npoints;
-	mesh->numFaces = par_mesh->ntriangles;
-
-	unsigned* vaoActual = &mesh->vao;
-
-	glGenBuffers(1, vaoActual);
-	glBindBuffer(GL_ARRAY_BUFFER, *vaoActual);
-
-	glGenBuffers(3, mesh->buffer);
-
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->buffer[0]);
-	glBufferData(GL_ARRAY_BUFFER, par_mesh->npoints * 3 * sizeof(float), par_mesh->points, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glEnableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, mesh->buffer[1]);
-	glBufferData(GL_ARRAY_BUFFER, par_mesh->npoints * 3 * sizeof(float), par_mesh->normals, GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->buffer[2]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, par_mesh->ntriangles * 3 * sizeof(PAR_SHAPES_T), par_mesh->triangles, GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
-
-	par_shapes_free_mesh(par_mesh);
-
-	return meshComp;
-}
-
 
 ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, char* path) {
 

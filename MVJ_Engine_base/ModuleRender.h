@@ -37,9 +37,7 @@ public:
 
 	void DrawGrid();
 
-	
 	ComponentMesh* CreateComponentMesh(GameObject* my_go);
-	ComponentMesh* CreateComponentMesh(GameObject* my_go, par_shapes_mesh* par_mesh);
 	ComponentMesh* CreateComponentMesh(GameObject* my_go,int idMesh, char* path);
 	GameObject* CreateModel(char* path);
 

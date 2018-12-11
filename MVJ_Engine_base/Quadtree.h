@@ -15,14 +15,15 @@ enum node {
 class Quadtree
 {
 public:
-	Quadtree(float3 min, float3 max, int bucket, int maxLvls);
+	Quadtree(Quadtree*  parent, float3 min, float3 max, int bucket, int maxLvls);
 	bool Insert(GameObject* go);
-	bool Intersects(GameObject* go);
+	bool Intersects(const GameObject* go);
 	void Divide();
 	void Draw();
 	void CollectIntersections(std::vector<GameObject*>& GOcollisioned, const GameObject* GO);
 	void Clear();
-
+	bool Collisions(const GameObject* GO);
+	Quadtree* Find(const GameObject* GO);
 	~Quadtree();
 
 
@@ -31,6 +32,7 @@ public:
 	node nodeType = LEAF;
 
 private:
+	Quadtree* parent = nullptr;
 	std::list<GameObject*> gameObjects;
 	std::list<Quadtree*> branches;
 	AABB* boundaries;
