@@ -24,7 +24,7 @@ update_status ModuleScene::Update() {
 	BROFILER_CATEGORY("Component Updates", Profiler::Color::Orchid);
 
 	ROOT->Update();
-	LOG("---------", );
+	LOG("-----<----", );
 	quadTree->Draw();
 
 	return UPDATE_CONTINUE;

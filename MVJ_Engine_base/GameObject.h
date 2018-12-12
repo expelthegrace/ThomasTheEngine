@@ -11,6 +11,7 @@ class ComponentBB;
 class GameObject
 {
 public:
+
 	GameObject(char * name, bool active, GameObject * parent);
 	~GameObject();
 

@@ -45,7 +45,7 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 
 	if (changed || updateChilds) {
 
-		GameObject lastFrameGO = *(this->my_go);
+		Quadtree* lastQT = App->scene->quadTree->Find(this->my_go);
 
 		model.Set(float4x4::FromTRS(position, rotation, scale));		
 		if (my_go->parent != nullptr) {
@@ -56,8 +56,9 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 
 		for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(true);
 
-		App->scene->quadTree->MoveGO(this->my_go, lastFrameGO);
+		App->scene->quadTree->MoveGO(this->my_go, lastQT);
 
+		lastQT = nullptr;
 		changed = false;
 	}
 	else for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(false);

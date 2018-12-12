@@ -115,18 +115,19 @@ void Quadtree::Remove(GameObject* GO) {
 	currentQT = nullptr;
 }
 
-void Quadtree::MoveGO(GameObject* GOact, GameObject & lastFrameGO) {
+void Quadtree::MoveGO(GameObject* GOact, Quadtree * lastQT) {
 
-	Quadtree* currentQT = Find(&lastFrameGO);
-	Remove(&lastFrameGO);
+	//Quadtree* currentQT = Find(&lastFrameGO);
+	if (lastQT != nullptr) lastQT->gameObjects.remove(GOact);
 
 	App->scene->quadTree->Insert(GOact);	
 
-	if (currentQT != nullptr) {			
-		if (currentQT->parent != nullptr) currentQT->parent->Merge();
+	
+	if (lastQT != nullptr) {
+		if (lastQT->parent != nullptr) lastQT->parent->Merge();
 	}
-
-	currentQT = nullptr;
+	
+	//currentQT = nullptr;
 }
 
 bool Quadtree::Insert(GameObject * go) {
