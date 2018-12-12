@@ -22,8 +22,11 @@ public:
 	void Draw();
 	void CollectIntersections(std::vector<GameObject*>& GOcollisioned, const GameObject* GO);
 	void Clear();
+	
 	bool Collisions(const GameObject* GO);
 	Quadtree* Find(const GameObject* GO);
+	void Merge();
+
 	~Quadtree();
 
 

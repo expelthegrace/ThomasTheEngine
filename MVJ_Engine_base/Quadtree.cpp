@@ -39,8 +39,7 @@ Quadtree* Quadtree::Find(const GameObject* GO) {
 		for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
 			Quadtree* ret = (*it)->Find(GO);
 			if (ret != nullptr) return ret;
-		}
-			
+		}		
 	}
 	return nullptr;
 
@@ -130,6 +129,21 @@ void Quadtree::CollectIntersections(std::vector<GameObject*>& GOcollisioned, con
 
 
 void Quadtree::Draw() {
+
+	if (true) {
+
+		LOG("> %i (%i)", this->maxDepth, nodeType);
+
+		if (nodeType == LEAF) {
+			for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) {
+				LOG("- %s", (*it)->name);
+			}
+		}
+
+	}
+	
+
+
 	const ddVec3 boxColor = { 0.4f, 0.4f, 0.8f };
 	dd::aabb(boundaries->minPoint, boundaries->maxPoint, boxColor);
 
