@@ -25,8 +25,11 @@ public:
 	
 	bool Collisions(const GameObject* GO);
 	Quadtree* Find(const GameObject* GO);
-	void Merge();
 
+	void MoveGO(GameObject* GO, GameObject& lastFrameGO);
+	void Merge();
+	bool IsBucketFree();
+	void Remove(GameObject* GO);
 	~Quadtree();
 
 

@@ -174,6 +174,7 @@ bool ModuleRender::Init()
 	glFrontFace(GL_CCW);
 	glEnable(GL_TEXTURE_2D);
 
+	
 	glClearDepth(1.0f);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.f);
 
@@ -205,9 +206,12 @@ void ModuleRender::DrawGrid() {
 	glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programLines,
 		"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
 
-	// Grid
-	const float3 white2 = { 1.f,1.f,1.f};
-	dd::xzSquareGrid(-100, 100, 0, 1, white2);
+	if (showGrid) {
+		// Grid
+		const float3 white2 = { 1.f,1.f,1.f };
+		dd::xzSquareGrid(-100, 100, 0, 1, white2);
+
+	}
 	// Center Axis
 	const float4x4 identity_mat = float4x4::identity;
 	dd::axisTriad(identity_mat, 0.2f, 4.0f);

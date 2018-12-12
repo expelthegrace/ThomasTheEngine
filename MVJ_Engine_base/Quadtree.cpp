@@ -4,12 +4,13 @@
 #include "debugdraw.h"
 #include "ModuleMenu.h"
 #include "Application.h"
+#include "ModuleScene.h"
 
 Quadtree::Quadtree(Quadtree* parent, float3 min, float3 max, int bucket, int maxLevels)
 {
 	this->parent = parent;
 	this->bucket = bucket;
-	boundaries = new AABB(min, max);
+	boundaries = new AABB(float3 (min.x, -5.0f, min.z), float3( max.x , 5.0f, max.z));
 	maxDepth = maxLevels;
 
 }
@@ -42,7 +43,6 @@ Quadtree* Quadtree::Find(const GameObject* GO) {
 		}		
 	}
 	return nullptr;
-
 }
 
 void Quadtree::Divide() {
@@ -79,8 +79,59 @@ void Quadtree::Divide() {
 	gameObjects.clear();
 }
 
+
+bool Quadtree::IsBucketFree() {
+
+	int bucketTotal = 0;
+	for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
+		if ((*it)->nodeType == TREE) return false;
+		bucketTotal += (*it)->gameObjects.size();
+	}
+	return bucketTotal <= bucket;
+}
+
+void Quadtree::Merge() {
+
+	if (IsBucketFree()) {
+
+		gameObjects.clear();
+
+		for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
+			for (std::list<GameObject*>::iterator itGO = (*it)->gameObjects.begin(); itGO != (*it)->gameObjects.end(); ++itGO)
+				gameObjects.push_back(*itGO);
+			(*it)->Clear();
+			*it = nullptr;			
+		}
+		branches.clear();
+		nodeType = LEAF;
+	}
+	int a = 3;
+}
+
+void Quadtree::Remove(GameObject* GO) {
+	Quadtree* currentQT = App->scene->quadTree->Find(GO);
+
+	if (currentQT != nullptr) currentQT->gameObjects.remove(GO);
+	currentQT = nullptr;
+}
+
+void Quadtree::MoveGO(GameObject* GOact, GameObject & lastFrameGO) {
+
+	Quadtree* currentQT = Find(&lastFrameGO);
+	Remove(&lastFrameGO);
+
+	App->scene->quadTree->Insert(GOact);	
+
+	if (currentQT != nullptr) {			
+		if (currentQT->parent != nullptr) currentQT->parent->Merge();
+	}
+
+	currentQT = nullptr;
+}
+
 bool Quadtree::Insert(GameObject * go) {
 
+	if (!go->BB->Aabb->IsFinite()) return false;
 	if (!Intersects(go)) return false;
 
 	if (nodeType == LEAF) {
@@ -93,8 +144,8 @@ bool Quadtree::Insert(GameObject * go) {
 			}
 		}
 		else {		
-			sprintf(b, "ERROR: Quadtree max level reached, game object %s not added to the tree. Possible infinte loop", go->name);
-			App->menu->console.AddLog(b);
+			//sprintf(b, "ERROR: Quadtree max level reached, game object %s not added to the tree. Possible infinte loop", go->name);
+		//	App->menu->console.AddLog(b);
 
 			return false;
 		}
@@ -142,8 +193,6 @@ void Quadtree::Draw() {
 
 	}
 	
-
-
 	const ddVec3 boxColor = { 0.4f, 0.4f, 0.8f };
 	dd::aabb(boundaries->minPoint, boundaries->maxPoint, boxColor);
 
@@ -151,12 +200,11 @@ void Quadtree::Draw() {
 }
 
 void Quadtree::Clear() {
-	delete b;
-	b = nullptr;
+	
 
 	if (nodeType == TREE) {
 		for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
-			delete *it;
+			(*it)->Clear();			
 			*it = nullptr;
 			branches.clear();
 		}
@@ -165,6 +213,12 @@ void Quadtree::Clear() {
 		for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) *it = nullptr;
 		gameObjects.clear();
 	}
+
+	delete boundaries;
+	boundaries = nullptr;
+
+	//delete b;
+	//b = nullptr;
 }
 
 Quadtree::~Quadtree()

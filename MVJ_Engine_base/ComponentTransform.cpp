@@ -1,6 +1,8 @@
 #include "ComponentTransform.h"
 #include "ComponentBB.h"
 #include "Application.h"
+#include "ModuleScene.h"
+#include "Quadtree.h"
 
 ComponentTransform::ComponentTransform()
 {
@@ -43,6 +45,8 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 
 	if (changed || updateChilds) {
 
+		GameObject lastFrameGO = *(this->my_go);
+
 		model.Set(float4x4::FromTRS(position, rotation, scale));		
 		if (my_go->parent != nullptr) {
 			model = my_go->parent->transform->model * model;
@@ -51,6 +55,9 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 		my_go->BB->UpdateBB();
 
 		for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(true);
+
+		App->scene->quadTree->MoveGO(this->my_go, lastFrameGO);
+
 		changed = false;
 	}
 	else for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(false);
