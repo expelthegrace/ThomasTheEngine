@@ -57,6 +57,9 @@ void ComponentBB::SetAABB(std::vector<ComponentMesh*>* meshes)
 	Aabb->SetFrom(total, totalPoints);
 	Aabb->GetCornerPoints(cornersAABB);
 
+	initialMin = Aabb->minPoint;
+	initialMax = Aabb->maxPoint;
+
 	delete total;
 }
 
@@ -72,8 +75,10 @@ update_status ComponentBB::Update() {
 void ComponentBB::UpdateBB() {
 	
 	if (Aabb->IsFinite() && my_go->active) {
-		std::vector<Component*> comps = my_go->GetComponents(MESH);
-		SetAABB((std::vector<ComponentMesh*>*) &comps);
+		//std::vector<Component*> comps = my_go->GetComponents(MESH);
+		//SetAABB((std::vector<ComponentMesh*>*) &comps);
+		delete Aabb;
+		Aabb = new math::AABB(initialMin, initialMax);
 		Aabb->TransformAsAABB(my_go->transform->model);		
 	}
 	

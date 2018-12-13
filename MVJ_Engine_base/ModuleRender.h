@@ -15,6 +15,7 @@ struct FBOset;
 class ComponentMesh;
 class GameObject;
 class ComponentBB;
+class ComponentCamera;
 
 struct Mesh;
 class ComponentMaterial;
@@ -35,6 +36,8 @@ public:
 	void GenerateFBOTexture(unsigned w, unsigned h, FBOset* fboset);
 
 
+	void RemoveCamera(ComponentCamera* cam);
+
 	void DrawGrid();
 
 	ComponentMesh* CreateComponentMesh(GameObject* my_go);
@@ -45,13 +48,15 @@ public:
 
 private:
 	update_status RenderMesh(ComponentMesh * meshComp);
-	
+	void DrawCameras();
 
 public:
 	math::float4x4 identity;
 
 	bool renderTexture, showGrid;
 	void* context;
+
+	std::vector<ComponentCamera*> cameras;
 
 private:
 	std::vector<ComponentMesh*> meshComponents;

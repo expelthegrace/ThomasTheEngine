@@ -29,7 +29,7 @@ public:
 	GameObject* ROOT;
 	GameObject* GO_selected = nullptr;
 	Quadtree* quadTree;
-
+	bool showQuad = true;
 private:
 	std::map<unsigned, GameObject*> gameObjects;
 	

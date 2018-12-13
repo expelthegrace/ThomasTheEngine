@@ -269,6 +269,15 @@ update_status ModuleMenu::Configuration() {
 		ImGui::Text("Mousewheel force: %i", App->input->mouseWheel);
 
 	}
+
+	if (ImGui::CollapsingHeader("Debug gizmos"))
+	{
+		ImGui::Checkbox("Show grid", &App->renderer->showGrid);
+		ImGui::Checkbox("Show quadtree", &App->scene->showQuad);
+		ImGui::NewLine();
+
+	}
+
 	if (ImGui::CollapsingHeader("Camera"))
 	{
 		ImGui::BulletText("Camera position: ( %f, %f, %f )", App->camera->camPos.x, App->camera->camPos.y, App->camera->camPos.z);
@@ -279,8 +288,7 @@ update_status ModuleMenu::Configuration() {
 		ImGui::InputFloat("Near Plane", &App->camera->frustum.nearPlaneDistance);
 		ImGui::InputFloat("Far Plane", &App->camera->frustum.farPlaneDistance);
 		ImGui::NewLine();
-		ImGui::Checkbox("Show grid", &App->renderer->showGrid);
-
+	
 
 	}
 	if (ImGui::CollapsingHeader("Window"))
