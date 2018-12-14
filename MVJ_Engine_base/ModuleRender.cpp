@@ -81,7 +81,7 @@ GameObject* ModuleRender::CreateModel(char * path) {
 	return newGO;
 }
 
-update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
+update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera * cameraComp) {
 	
 	Mesh meshActual = meshComp->mesh;
 
@@ -95,53 +95,99 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp) {
 
 		}
 		else {
-			glUseProgram(App->shaderProgram->programModel);
+			// If camera is editor camera
+			if (cameraComp == nullptr) {
+				glUseProgram(App->shaderProgram->programModel);
 
-			glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-				"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
-			glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-				"view"), 1, GL_TRUE, &App->camera->view[0][0]);
-			glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
-				"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"view"), 1, GL_TRUE, &App->camera->view[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
 
 
-			GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
-			GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
+				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
+				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
 
-			if (meshComp->renderTexture) glUniform1i(drawText, 1);
-			else {
-				glUniform1i(drawText, 0);
-				float color[4] = { 0.6, 1, 0.6, 1 };
-				glUniform4fv(color0, 1, color);
+				if (meshComp->renderTexture) glUniform1i(drawText, 1);
+				else {
+					glUniform1i(drawText, 0);
+					float color[4] = { 0.6, 1, 0.6, 1 };
+					glUniform4fv(color0, 1, color);
+				}
+
+
+				unsigned vboActual = meshComp->mesh.vbo;
+				unsigned numVerticesActual = meshActual.numVertices;
+				unsigned numIndexesActual = meshActual.numIndexesMesh;
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
+				glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
+
+				glEnableVertexAttribArray(0);
+				glEnableVertexAttribArray(1);
+				glBindBuffer(GL_ARRAY_BUFFER, vboActual);
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
+				glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
+
+				glDisableVertexAttribArray(0);
+				glDisableVertexAttribArray(1);
+
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+				glBindBuffer(GL_ARRAY_BUFFER, 0);
+				glBindTexture(GL_TEXTURE_2D, 0);
+
+
+				glUseProgram(0);
 			}
+			//If camera is a game camera
+			else {
+				glUseProgram(App->shaderProgram->programModel);
+
+				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"view"), 1, GL_TRUE, &cameraComp->view[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"proj"), 1, GL_TRUE, &cameraComp->projection[0][0]);
 
 
-			unsigned vboActual = meshComp->mesh.vbo;
-			unsigned numVerticesActual = meshActual.numVertices;
-			unsigned numIndexesActual = meshActual.numIndexesMesh;
+				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
+				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
 
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
-			glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
+				glUniform1i(drawText, 1);
+			
 
-			glEnableVertexAttribArray(0);
-			glEnableVertexAttribArray(1);
-			glBindBuffer(GL_ARRAY_BUFFER, vboActual);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
-			glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
+				unsigned vboActual = meshComp->mesh.vbo;
+				unsigned numVerticesActual = meshActual.numVertices;
+				unsigned numIndexesActual = meshActual.numIndexesMesh;
 
-			glDisableVertexAttribArray(0);
-			glDisableVertexAttribArray(1);
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
+				glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-			glBindTexture(GL_TEXTURE_2D, 0);
+				glEnableVertexAttribArray(0);
+				glEnableVertexAttribArray(1);
+				glBindBuffer(GL_ARRAY_BUFFER, vboActual);
+				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
+				glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
+
+				glDisableVertexAttribArray(0);
+				glDisableVertexAttribArray(1);
+
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+				glBindBuffer(GL_ARRAY_BUFFER, 0);
+				glBindTexture(GL_TEXTURE_2D, 0);
 
 
-			glUseProgram(0);
-
+				glUseProgram(0);
+			}
 		}
 		
 	} 
@@ -187,14 +233,7 @@ bool ModuleRender::Init()
 	return true;
 }
 
-update_status ModuleRender::PreUpdate()
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	App->scene->ROOT->transform->UpdateTransform(false);
-
-	return UPDATE_CONTINUE;
-}
 
 void ModuleRender::DrawGrid() {
 	
@@ -226,57 +265,72 @@ void ModuleRender::DrawCameras() {
 
 	for (int i = 0; i < cameras.size() && cameras[i]->active; ++i) {
 
-		FBOset fboset = cameras[i]->fboSet;
-		GenerateFBOTexture(cameras[i]->w, cameras[i]->h, &(fboset));
+		cameras[i]->w = App->camera->editorWidth;
+		cameras[i]->h = App->camera->editorHeight;
 
-		glBindFramebuffer(GL_FRAMEBUFFER, fboset.fbo);
-		glViewport(0, 0, fboset.fb_width, fboset.fb_height);
+		//FBOset* fbosetAux = cameras[i]->fboSet;
+		GenerateFBOTexture(cameras[i]->w, cameras[i]->h, &(cameras[i]->fboSet));
+
+		glBindFramebuffer(GL_FRAMEBUFFER, cameras[i]->fboSet.fbo);
+		glViewport(0, 0, cameras[i]->fboSet.fb_width, cameras[i]->fboSet.fb_height);
 		glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-		BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
-		for (int i = 0; i < meshComponents.size(); ++i) if (
-			meshComponents[i]->active &&
-			meshComponents[i]->avaliable &&
-			meshComponents[i]->my_go->active)
-			RenderMesh(meshComponents[i]);
+		BROFILER_CATEGORY("Render Meshes Main camera", Profiler::Color::Orchid);
+		for (int iMesh = 0; iMesh < meshComponents.size(); ++iMesh) if (
+			meshComponents[iMesh]->active &&
+			meshComponents[iMesh]->avaliable &&
+			meshComponents[iMesh]->my_go->active)
+			RenderMesh(meshComponents[iMesh], cameras[i]);
 
-		DrawGrid();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	}
 }
-// Called every draw update
-update_status ModuleRender::Update()
-{
-	//draw editor camera
+
+void ModuleRender::DrawEditorCamera() {
 	ModuleCamera* cam = App->camera;
 	GenerateFBOTexture(cam->editorWidth, cam->editorHeight, &(cam->fboSet));
 
 	glBindFramebuffer(GL_FRAMEBUFFER, cam->fboSet.fbo);
-	glViewport(0, 0, cam->fboSet.fb_width, cam->fboSet.fb_height); 
+	glViewport(0, 0, cam->fboSet.fb_width, cam->fboSet.fb_height);
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-	BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
+	BROFILER_CATEGORY("Render Meshes editor camera", Profiler::Color::Orchid);
 	for (int i = 0; i < meshComponents.size(); ++i) if (
 		meshComponents[i]->active &&
 		meshComponents[i]->avaliable &&
 		meshComponents[i]->my_go->active)
-		RenderMesh(meshComponents[i]);
+		RenderMesh(meshComponents[i], nullptr);
 
 	DrawGrid();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+update_status ModuleRender::PreUpdate()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	App->scene->ROOT->transform->UpdateTransform(false);
+
+	return UPDATE_CONTINUE;
+}
+
+// Called every draw update
+update_status ModuleRender::Update()
+{
+
+	DrawEditorCamera();
 	DrawCameras();
 
 	App->debugdraw->Draw(nullptr, &(App->camera->fboSet));
 
 	App->menu->DrawEditorCamera();
+	App->menu->DrawMainCamera();
 
-	
+	App->menu->fovChanged = false;
 	
 	return UPDATE_CONTINUE;
 }
@@ -362,6 +416,7 @@ void ModuleRender::WindowResized(unsigned width, unsigned height)
 {
     glViewport(0, 0, width, height); 
 	App->camera->ResizeFOV(width,height);
+	App->menu->fovChanged = true;
 }
 
 

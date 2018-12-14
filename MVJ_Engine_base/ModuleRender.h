@@ -47,7 +47,8 @@ public:
 	ComponentMaterial * CreateComponentMaterial(GameObject* my_go, int idMesh, char* path);
 
 private:
-	update_status RenderMesh(ComponentMesh * meshComp);
+	update_status RenderMesh(ComponentMesh * meshComp, ComponentCamera * cameraComp);
+	void DrawEditorCamera();
 	void DrawCameras();
 
 public:

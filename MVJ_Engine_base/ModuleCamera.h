@@ -40,7 +40,6 @@ public:
 	void FocusModel();
 	void ResizeFOV(unsigned newWidth, unsigned newHeight);
 
-public:
 	Frustum frustum;
 
 	int screenWidth, screenHeight = 0;
@@ -66,7 +65,7 @@ public:
 private:
 	
 
-	bool cameraChanged;
+	bool cameraChanged = false;
 
 };
 

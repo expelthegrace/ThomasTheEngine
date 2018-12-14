@@ -7,6 +7,7 @@
 
 class GameObject;
 class Quadtree;
+class ComponentCamera;
 
 class ModuleScene :
 	public Module
@@ -30,6 +31,7 @@ public:
 	GameObject* GO_selected = nullptr;
 	Quadtree* quadTree;
 	bool showQuad = true;
+	ComponentCamera* mainCamera = nullptr;
 private:
 	std::map<unsigned, GameObject*> gameObjects;
 	

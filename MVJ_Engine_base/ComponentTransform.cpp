@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include "Quadtree.h"
+#include "ComponentCamera.h"
 
 ComponentTransform::ComponentTransform()
 {
@@ -55,6 +56,8 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 		else globalPosition = position;
 
 		my_go->BB->UpdateBB();
+		std::vector<Component*> comps = my_go->GetComponents(CAMERA);
+		for (int i = 0; i < comps.size(); ++i) ((ComponentCamera*)comps[i])->UpdateFrustum();
 
 		for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(true);
 

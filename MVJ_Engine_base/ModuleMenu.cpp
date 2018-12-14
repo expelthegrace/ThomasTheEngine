@@ -15,7 +15,7 @@
 #include "ModuleScene.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
-
+#include "ComponentCamera.h"
 #include <vector>
 
 
@@ -53,7 +53,7 @@ bool ModuleMenu::Init() {
 	ImVec4 oliveLighter = { 0.7f,0.7f,0.1f,1.0f };
 	ImVec4 oliveLTrans = { 0.5f,0.5f,0.f,.7f };
 
-	columnScreenRatio = 6.f / 9.f;
+	columnScreenRatio = 6.f / 8.5f;
 
 	ImGui::GetStyle().Colors[ImGuiCol_WindowBg] = { 0.1f,0.1f,0.1f,0.7f };
 	//ImGui::GetStyle().Colors[ImGuiCol_ScrollbarBg] = { 0.05f, 0.05f,0.0f,1.0f };
@@ -198,32 +198,63 @@ void ModuleMenu::DrawEditorCamera() {
 
 	bool obert = true;
 
-	App->camera->editorWidth = App->camera->screenWidth - 2 * columnWidth;
+	App->camera->editorWidth = (App->camera->screenWidth - 2 * columnWidth) / 2;
 	App->camera->editorHeight = (App->camera->screenHeight - mainMenuSize.y) - consoleHeight;
+
+	if (!cameraInitUpdated || fovChanged) {
+		App->camera->UpdateFrustum();
+		cameraInitUpdated = true;
+	}
 
 	ImGui::SetNextWindowPos(ImVec2(0, mainMenuSize.y));
 	ImGui::SetNextWindowSize(ImVec2(App->camera->editorWidth, App->camera->editorHeight));
-
-	
 
 	if (ImGui::Begin("Editor")) {
 
 		if (ImGui::BeginChild("Editor Canvas", ImVec2(0, 0), true, ImGuiWindowFlags_NoMove))
 		{
-			
 			ImGui::GetWindowDrawList()->AddImage(
 				(void*)App->camera->fboSet.fb_tex,
 				ImVec2(ImGui::GetCursorScreenPos()),
 				ImVec2(ImGui::GetCursorScreenPos().x + App->camera->fboSet.fb_width,
 					ImGui::GetCursorScreenPos().y + App->camera->fboSet.fb_height),
-				ImVec2(0, 1), ImVec2(1, 0));
-
-				
+				ImVec2(0, 1), ImVec2(1, 0));			
 		}
 		ImGui::EndChild();
 	}
 	ImGui::End();
 
+}
+
+void ModuleMenu::DrawMainCamera() {
+
+	bool obert = true;
+
+
+	if (App->scene->mainCamera != nullptr) {
+
+		if (fovChanged)	App->scene->mainCamera->UpdateFrustum();
+	
+		
+
+		ImGui::SetNextWindowPos(ImVec2(App->camera->editorWidth, mainMenuSize.y));
+		ImGui::SetNextWindowSize(ImVec2(App->camera->editorWidth, App->camera->editorHeight));
+
+		if (ImGui::Begin("Game")) {
+
+			if (ImGui::BeginChild("Main Camera", ImVec2(0, 0), true, ImGuiWindowFlags_NoMove))
+			{
+				ImGui::GetWindowDrawList()->AddImage(
+					(void*)App->scene->mainCamera->fboSet.fb_tex,
+					ImVec2(ImGui::GetCursorScreenPos()),
+					ImVec2(ImGui::GetCursorScreenPos().x + App->scene->mainCamera->fboSet.fb_width,
+						ImGui::GetCursorScreenPos().y + App->scene->mainCamera->fboSet.fb_height),
+					ImVec2(0, 1), ImVec2(1, 0));
+			}
+			ImGui::EndChild();
+		}
+		ImGui::End();
+	}
 }
 
 update_status ModuleMenu::MainBarMenu() {

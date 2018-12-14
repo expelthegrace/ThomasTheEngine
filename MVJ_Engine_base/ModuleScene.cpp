@@ -81,7 +81,7 @@ bool ModuleScene::Init() {
 
 	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
 	gameObjects[camObject->UID] = camObject;
-	ComponentCamera* camComp = new ComponentCamera();
+	ComponentCamera* camComp = new ComponentCamera(camObject);
 	camObject->AddComponent(camComp);
 
 	

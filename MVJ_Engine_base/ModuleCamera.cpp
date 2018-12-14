@@ -29,7 +29,7 @@ ModuleCamera::~ModuleCamera()
 
 
 bool  ModuleCamera::Init() { // ----------------------------------------------------------------
-	cameraChanged = false;
+
 	speed1 = 0.1;
 	speed2 = speed1 * 3.5;
 	movementSpeed = speed1;
@@ -75,6 +75,7 @@ void ModuleCamera::ResizeFOV(unsigned newWidth, unsigned newHeight) {
 	UpdateFrustum();
 	screenWidth = newWidth;
 	screenHeight = newHeight;
+	
 }
 
 update_status   ModuleCamera::Update() {
@@ -238,6 +239,8 @@ void ModuleCamera::UpdateFrustum() {
 	frustum.front = fwd.Normalized();
 	frustum.up = up.Normalized();
 
+	float aspect = (float)editorWidth / (float)editorHeight;
+	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) *aspect);
 
 	view = frustum.ViewMatrix();
 	projection = frustum.ProjectionMatrix();

@@ -22,6 +22,7 @@ public:
 	bool            CleanUp();
 
 	void DrawEditorCamera();
+	void DrawMainCamera();
 	update_status MainBarMenu();
 	update_status Configuration();
 	update_status Inspector();
@@ -73,6 +74,7 @@ public:
 
 	char* b;
 	bool showWindows;
+	bool fovChanged = false;
 
 private:
 	void updateFramerates();
@@ -80,6 +82,9 @@ private:
 	ImVec2 mainMenuSize;
 	int columnWidth;
 	float columnScreenRatio;
+
+	bool cameraInitUpdated = false;
+
 };
 
 #endif /* __ModuleMenu_h__ */
