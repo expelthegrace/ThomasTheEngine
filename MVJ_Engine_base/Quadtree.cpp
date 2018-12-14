@@ -122,7 +122,6 @@ void Quadtree::MoveGO(GameObject* GOact, Quadtree * lastQT) {
 
 	App->scene->quadTree->Insert(GOact);	
 
-	
 	if (lastQT != nullptr) {
 		if (lastQT->parent != nullptr) lastQT->parent->Merge();
 	}
