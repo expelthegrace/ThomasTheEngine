@@ -180,7 +180,7 @@ void Quadtree::CollectIntersections(std::vector<GameObject*>& GOcollisioned, con
 
 
 void Quadtree::Draw() {
-
+	/*
 	if (true) {
 
 		LOG("> %i (%i)", this->maxDepth, nodeType);
@@ -192,7 +192,7 @@ void Quadtree::Draw() {
 		}
 
 	}
-	
+	*/
 	const ddVec3 boxColor = { 0.4f, 0.4f, 0.8f };
 	dd::aabb(boundaries->minPoint, boundaries->maxPoint, boxColor);
 

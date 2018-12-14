@@ -17,21 +17,23 @@ class Quadtree
 public:
 	Quadtree(Quadtree*  parent, float3 min, float3 max, int bucket, int maxLvls);
 	bool Insert(GameObject* go);
-	bool Intersects(const GameObject* go);
-	void Divide();
-	void Draw();
 	void CollectIntersections(std::vector<GameObject*>& GOcollisioned, const GameObject* GO);
 	void Clear();
-	
-	bool Collisions(const GameObject* GO);
+		
 	Quadtree* Find(const GameObject* GO);
-
-	void MoveGO(GameObject* GO, Quadtree * lastQT);
-	void Merge();
-	bool IsBucketFree();
+	void MoveGO(GameObject* GO, Quadtree * lastQT);	
 	void Remove(GameObject* GO);
+
+	void Draw();
+
 	~Quadtree();
 
+private:
+	bool Intersects(const GameObject* go);
+	void Divide();
+	bool Collisions(const GameObject* GO);
+	void Merge();
+	bool IsBucketFree();
 
 public:
 	int bucket = 0;

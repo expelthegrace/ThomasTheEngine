@@ -16,6 +16,8 @@ GameObject::GameObject(char * name, bool active, GameObject * parent)
 	this->parent = parent;
 	this->lastFrameActive = this->active;
 
+	if (parent != nullptr) parent->AddChild(this);
+
 	BB = new ComponentBB(this);
 	this->BB = BB;
 	components.push_back(BB);
@@ -58,6 +60,11 @@ GameObject* GameObject::AddChild(GameObject* child) {
 	return child;
 }
 
+void GameObject::AddComponent(Component* comp) {
+	components.push_back(comp);
+	
+}
+
 std::vector<Component*> GameObject::GetComponents(type_comp type) {
 	std::vector<Component*> ret;
 	for (int i = 0; i < components.size(); ++i) if (components[i]->type == type) ret.push_back(components[i]);
@@ -89,7 +96,6 @@ void GameObject::CreateSphere(float r, int subdivisions) {
 	par_shapes_translate(sphere, 0, 0, 0);
 
 	App->renderer->CreateComponentMesh(this, sphere);
-
 }
 */
 

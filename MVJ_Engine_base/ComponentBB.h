@@ -23,6 +23,10 @@ public:
 	AABB* Aabb;
 
 	float3* cornersAABB;
+
+private:
+
+	float3 initialMin, initialMax;
 };
 
 #endif

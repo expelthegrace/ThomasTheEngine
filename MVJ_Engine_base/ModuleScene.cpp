@@ -6,6 +6,7 @@
 #include <queue>
 #include "ComponentTransform.h"
 #include "ComponentBB.h"
+#include "ComponentCamera.h"
 #include <vector>
 #include "Quadtree.h"
 
@@ -24,8 +25,8 @@ update_status ModuleScene::Update() {
 	BROFILER_CATEGORY("Component Updates", Profiler::Color::Orchid);
 
 	ROOT->Update();
-	LOG("-----<----", );
-	quadTree->Draw();
+	
+	if (showQuad) quadTree->Draw();
 
 	return UPDATE_CONTINUE;
 }
@@ -77,6 +78,11 @@ bool ModuleScene::Init() {
 
 	GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa3);
+
+	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
+	gameObjects[camObject->UID] = camObject;
+	ComponentCamera* camComp = new ComponentCamera();
+	camObject->AddComponent(camComp);
 
 	
 	

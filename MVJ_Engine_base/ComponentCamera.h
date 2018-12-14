@@ -23,7 +23,7 @@ public:
 	Frustum frustum;
 	FBOset fboSet;
 
-	
+	int w, h;
 	math::float4x4 view = float4x4::identity;
 	math::float4x4 projection = float4x4::identity;
 

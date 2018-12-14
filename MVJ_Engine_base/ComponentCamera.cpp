@@ -1,5 +1,7 @@
 #include "ComponentCamera.h"
 #include "Application.h"
+#include "ModuleRender.h"
+#include "ModuleRender.h"
 
 
 ComponentCamera::ComponentCamera()
@@ -10,11 +12,15 @@ ComponentCamera::ComponentCamera()
 	fboSet.fb_tex = 0;
 	fboSet.fb_width = 0;
 	fboSet.fb_height = 0;
+
+	w = App->camera->editorWidth;
+	h = App->camera->editorHeight;
+
+	App->renderer->GenerateFBOTexture(w, h, &fboSet);
+	App->renderer->cameras.push_back(this);
 }
 
 update_status ComponentCamera::Update() {
-
-
 
 
 	if (cameraChanged) UpdateFrustum();
@@ -31,4 +37,5 @@ void ComponentCamera::UpdateFrustum() {
 
 ComponentCamera::~ComponentCamera()
 {
+	App->renderer->RemoveCamera(this);
 }

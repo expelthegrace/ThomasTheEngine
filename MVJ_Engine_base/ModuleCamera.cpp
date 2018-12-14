@@ -5,7 +5,10 @@
 #include "ModuleInput.h"
 #include "ModuleMenu.h"
 #include "SDL.h"
+#include "ModuleScene.h"
 #include "ModuleModelLoader.h"
+#include "ComponentBB.h"
+#include "ComponentTransform.h"
 
 
 ModuleCamera::ModuleCamera()
@@ -204,13 +207,18 @@ bool            ModuleCamera::CleanUp() {
 }
 
 void ModuleCamera::FocusModel() {
-	camPos = {
-		App->modelLoader->boundingBox->CenterPoint().x,
-		App->modelLoader->boundingBox->CenterPoint().y,
-		App->modelLoader->boundingBox->CenterPoint().z + App->modelLoader->boundingBox->Diagonal().Length()
-	};
 
-	LookAt(App->modelLoader->boundingBox->CenterPoint());
+	if (App->scene->GO_selected->BB->Aabb->IsFinite()) {
+		camPos = {
+			App->scene->GO_selected->BB->Aabb->CenterPoint().x,
+			App->scene->GO_selected->BB->Aabb->CenterPoint().y,
+			App->scene->GO_selected->BB->Aabb->CenterPoint().z + App->scene->GO_selected->BB->Aabb->Diagonal().Length() * 1.4f
+		};
+
+		LookAt(App->scene->GO_selected->BB->Aabb->CenterPoint());
+	}
+	else LookAt(App->scene->GO_selected->transform->globalPosition);
+	
 	UpdateFrustum();
 }
 

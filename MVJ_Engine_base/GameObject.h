@@ -22,6 +22,7 @@ public:
 	//void CreateSphere(float radius, int subdivisions);
 
 	GameObject* AddChild(GameObject * child);
+	void AddComponent(Component * comp);
 	int GetChildIndexByUID(unsigned uid);
 
 	void MoveToNewParent(GameObject* newParent);

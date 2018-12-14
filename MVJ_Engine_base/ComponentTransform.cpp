@@ -52,6 +52,8 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 			model = my_go->parent->transform->model * model;
 			globalPosition = (my_go->parent->transform->model * float4(position.x, position.y, position.z, 1.f)).xyz();
 		}
+		else globalPosition = position;
+
 		my_go->BB->UpdateBB();
 
 		for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(true);

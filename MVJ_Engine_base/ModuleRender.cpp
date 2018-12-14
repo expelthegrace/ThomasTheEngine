@@ -23,6 +23,7 @@
 #include "ModuleDebugDraw.h"
 #include "ModuleScene.h"
 #include "Brofiler.h"
+#include "ComponentCamera.h"
 
 
 
@@ -220,6 +221,32 @@ void ModuleRender::DrawGrid() {
 
 
 }
+
+void ModuleRender::DrawCameras() {
+
+	for (int i = 0; i < cameras.size() && cameras[i]->active; ++i) {
+
+		FBOset fboset = cameras[i]->fboSet;
+		GenerateFBOTexture(cameras[i]->w, cameras[i]->h, &(fboset));
+
+		glBindFramebuffer(GL_FRAMEBUFFER, fboset.fbo);
+		glViewport(0, 0, fboset.fb_width, fboset.fb_height);
+		glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+		BROFILER_CATEGORY("Render Meshes", Profiler::Color::Orchid);
+		for (int i = 0; i < meshComponents.size(); ++i) if (
+			meshComponents[i]->active &&
+			meshComponents[i]->avaliable &&
+			meshComponents[i]->my_go->active)
+			RenderMesh(meshComponents[i]);
+
+		DrawGrid();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	}
+}
 // Called every draw update
 update_status ModuleRender::Update()
 {
@@ -243,9 +270,13 @@ update_status ModuleRender::Update()
 	DrawGrid();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	DrawCameras();
+
 	App->debugdraw->Draw(nullptr, &(App->camera->fboSet));
 
 	App->menu->DrawEditorCamera();
+
+	
 	
 	return UPDATE_CONTINUE;
 }
@@ -258,6 +289,11 @@ update_status ModuleRender::PostUpdate()
 	return UPDATE_CONTINUE;
 }
 
+void ModuleRender::RemoveCamera(ComponentCamera* cam) {
+	for (int i = 0; i < cameras.size(); ++i) {
+		if (cameras[i]->UID) cameras.erase(cameras.begin() + i);
+	}
+}
 
 void ModuleRender::GenerateFBOTexture(unsigned w, unsigned h, FBOset* fboset)
 {
