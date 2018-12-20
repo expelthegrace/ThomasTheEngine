@@ -234,8 +234,6 @@ void ModuleMenu::DrawMainCamera() {
 	if (App->scene->mainCamera != nullptr) {
 
 		if (fovChanged)	App->scene->mainCamera->UpdateFrustum();
-	
-		
 
 		ImGui::SetNextWindowPos(ImVec2(App->camera->editorWidth, mainMenuSize.y));
 		ImGui::SetNextWindowSize(ImVec2(App->camera->editorWidth, App->camera->editorHeight));
@@ -255,6 +253,13 @@ void ModuleMenu::DrawMainCamera() {
 		}
 		ImGui::End();
 	}
+}
+
+void ModuleMenu::DrawCameras() {
+
+	DrawEditorCamera();
+	DrawMainCamera();
+
 }
 
 update_status ModuleMenu::MainBarMenu() {

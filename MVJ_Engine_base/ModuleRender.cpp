@@ -229,7 +229,6 @@ bool ModuleRender::Init()
     SDL_GetWindowSize(App->window->window, &width, &height);
     glViewport(0, 0, width, height);
 
-
 	return true;
 }
 
@@ -327,8 +326,8 @@ update_status ModuleRender::Update()
 
 	App->debugdraw->Draw(nullptr, &(App->camera->fboSet));
 
-	App->menu->DrawEditorCamera();
-	App->menu->DrawMainCamera();
+	App->menu->DrawCameras();
+	
 
 	App->menu->fovChanged = false;
 	
