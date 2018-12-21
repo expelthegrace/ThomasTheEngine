@@ -6,7 +6,7 @@
 #include "Module.h"
 #include "Timers.h"
 
-
+class JSONManager;
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
@@ -34,6 +34,8 @@ public:
 	unsigned generateUID();
 
 public:
+	JSONManager* JSONmanager = nullptr;
+
 	ModuleRender* renderer = nullptr;
 	ModuleWindow* window = nullptr;
 	ModuleTextures* textures = nullptr;
