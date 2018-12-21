@@ -485,7 +485,14 @@ update_status ModuleMenu::Hierarchy() {
 	bool obert = true;
 	ImGui::Begin("Hierarchy", &obert);
 	
-	if (ImGui::Button("Save Scene")) App->scene->SaveScene();
+	if (ImGui::Button("Save Scene")) {
+		App->scene->SaveScene();
+		char* b = new char[50];
+		sprintf(b, "-- sceneDefault.tte saved --");
+		App->menu->console.AddLog(b);
+	}
+
+	
 
 	FillTree(App->scene->ROOT);
 	

@@ -36,12 +36,16 @@ public:
 	ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertices);
 	~ComponentMesh();
 
+	void Save(JSON_Value* componentsJSON) override;
+
 public:
 	Mesh mesh;
 	bool avaliable;
 	bool renderTexture = true;
+	char* path = nullptr;
 
 
+private:
 };
 
 #endif

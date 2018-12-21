@@ -48,6 +48,7 @@ ComponentMesh* ModuleRender::CreateComponentMesh( GameObject* my_go) {
 ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, char* path) {
 
 	ComponentMesh* meshComp = new ComponentMesh(my_go);
+	meshComp->path = path;
 	App->modelLoader->GenerateMesh(idMesh, meshComp, path);
 	
 	if (meshComp->mesh.numVertices > 0) meshComp->avaliable = true;

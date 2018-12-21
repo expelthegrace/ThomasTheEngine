@@ -3,7 +3,7 @@
 #include "Globals.h"
 
 class Application;
-class JSON_File;
+struct JSON_File;
 
 class Module
 {

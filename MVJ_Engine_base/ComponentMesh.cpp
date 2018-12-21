@@ -1,6 +1,7 @@
 #include "ComponentMesh.h"
 #include "GameObject.h"
 #include "Application.h"
+#include "JSONManager.h"
 
 ComponentMesh::ComponentMesh( GameObject* my_go)
 {
@@ -24,9 +25,17 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertic
 
 }
 
-
-
 ComponentMesh::~ComponentMesh()
 {	
 	delete mesh.vertices;
+}
+
+void ComponentMesh::Save(JSON_Value* componentsJSON) {
+
+	JSON_Value* componentJSON = componentsJSON->createValue();
+	componentJSON->addInt("Type", type);
+	componentJSON->addString("Path", path);
+
+	componentsJSON->addValue("Mesh", componentJSON);
+
 }

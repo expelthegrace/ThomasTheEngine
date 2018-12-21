@@ -5,6 +5,7 @@
 #include "ModuleScene.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "JSONManager.h"
 
 ComponentCamera::ComponentCamera(GameObject* my_go)
 {
@@ -63,4 +64,13 @@ void ComponentCamera::UpdateFrustum() {
 ComponentCamera::~ComponentCamera()
 {
 	App->renderer->RemoveCamera(this);
+}
+
+void ComponentCamera::Save(JSON_Value* componentsJSON) {
+
+	JSON_Value* componentJSON = componentsJSON->createValue();
+	componentJSON->addInt("Type", type);
+	
+	componentsJSON->addValue("Camera", componentJSON);
+
 }

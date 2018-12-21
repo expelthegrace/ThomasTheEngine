@@ -36,6 +36,7 @@ public:
 	ComponentCamera* mainCamera = nullptr;
 private:
 	std::map<unsigned, GameObject*> gameObjects;
+
 	
 
 };

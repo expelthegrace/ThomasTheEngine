@@ -16,6 +16,7 @@ public:
 
 	void UpdateFrustum();
 	update_status Update() override;
+	void Save(JSON_Value* componentsJSON) override;
 
 
 

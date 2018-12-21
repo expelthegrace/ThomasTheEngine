@@ -7,6 +7,7 @@
 #include "ModuleMenu.h"
 #include "debugdraw.h"
 #include "ModuleScene.h"
+#include "JSONManager.h"
 
 
 ComponentBB::ComponentBB(GameObject* my_go)
@@ -89,4 +90,15 @@ ComponentBB::~ComponentBB()
 {
 	delete cornersAABB;
 	delete Aabb;
+}
+
+void ComponentBB::Save(JSON_Value* componentsJSON) {
+
+	JSON_Value* componentJSON = componentsJSON->createValue();
+	componentJSON->addInt("Type", type);
+	componentJSON->addVector3("minPoint", initialMin);
+	componentJSON->addVector3("maxPoint", initialMax);
+
+	componentsJSON->addValue("BB", componentJSON);
+
 }

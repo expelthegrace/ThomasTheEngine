@@ -8,7 +8,7 @@
 class Component;
 class ComponentTransform;
 class ComponentBB;
-class JSON_Value;
+struct JSON_Value;
 class GameObject
 {
 public:

@@ -4,8 +4,6 @@
 #include "Component.h"
 #include "MathGeoLib.h"
 
-class JSON_Value;
-
 class ComponentTransform :
 	public Component
 {

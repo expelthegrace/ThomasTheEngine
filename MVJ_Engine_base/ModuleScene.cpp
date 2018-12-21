@@ -111,7 +111,7 @@ GameObject* ModuleScene::getGOByID(unsigned uid) {
 
 void ModuleScene::SaveScene() {
 
-	JSON_File* scene = App->JSON_manager->openWriteFile("sceneDefault.json");
+	JSON_File* scene = App->JSON_manager->openWriteFile("sceneDefault.tte");
 
 	//bool ret = saveScene(scene, ROOT);
 

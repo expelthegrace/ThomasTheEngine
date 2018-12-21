@@ -5,7 +5,7 @@
 #include "GameObject.h"
 
 class GameObject;
-class JSON_Value;
+struct JSON_Value;
 
 class Component
 {
