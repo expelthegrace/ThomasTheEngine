@@ -3,9 +3,17 @@
 #include <stdio.h>
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
+typedef unsigned int uint;
 
 void log(const char file[], int line, const char* format, ...);
-
+#define RELEASE( x ) \
+    {                        \
+    if( x != NULL )        \
+	    {                      \
+      delete x;            \
+	  x = NULL;              \
+	    }                      \
+    }
 enum update_status
 {
 	UPDATE_CONTINUE = 1,

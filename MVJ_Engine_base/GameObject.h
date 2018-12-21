@@ -8,6 +8,7 @@
 class Component;
 class ComponentTransform;
 class ComponentBB;
+class JSON_Value;
 class GameObject
 {
 public:
@@ -33,6 +34,7 @@ public:
 
 	void SelectGO(bool selected);
 	void SelectGOChild(bool selected);
+	void Save(JSON_Value* gameObjectsJSON);
 
 public:
 	unsigned UID;

@@ -9,6 +9,7 @@
 #include "ComponentCamera.h"
 #include <vector>
 #include "Quadtree.h"
+#include "JSONManager.h"
 
 ModuleScene::ModuleScene()
 {
@@ -108,4 +109,20 @@ GameObject* ModuleScene::getGOByID(unsigned uid) {
 	return gameObjects[uid];
 }
 
+void ModuleScene::SaveScene() {
 
+	JSON_File* scene = App->JSON_manager->openWriteFile("sceneDefault.json");
+
+	//bool ret = saveScene(scene, ROOT);
+
+	JSON_Value* gameObjects = scene->createValue();
+	gameObjects->convertToArray();
+
+	for (int i = 0; i < ROOT->children.size(); ++i) ROOT->children[i]->Save(gameObjects);
+
+	scene->addValue("Game Objects", gameObjects);
+
+	scene->Write();
+	App->JSON_manager->closeFile(scene);
+
+}

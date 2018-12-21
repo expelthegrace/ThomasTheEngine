@@ -485,6 +485,8 @@ update_status ModuleMenu::Hierarchy() {
 	bool obert = true;
 	ImGui::Begin("Hierarchy", &obert);
 	
+	if (ImGui::Button("Save Scene")) App->scene->SaveScene();
+
 	FillTree(App->scene->ROOT);
 	
 

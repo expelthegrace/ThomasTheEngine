@@ -26,6 +26,8 @@ public:
 
 	void NewGOSelected(GameObject* GO);
 
+	void SaveScene();
+
 public:
 	GameObject* ROOT;
 	GameObject* GO_selected = nullptr;

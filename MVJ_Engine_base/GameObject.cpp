@@ -5,6 +5,8 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentBB.h"
+#include "JSONManager.h"
+#include "ModuleScene.h"
 
 
 GameObject::GameObject(char * name, bool active, GameObject * parent)
@@ -132,8 +134,28 @@ void GameObject::MoveToNewParent(GameObject* newParent) {
 		transform->ParentChanged(lastParent);
 		
 	}
+}
 
+void GameObject::Save(JSON_Value* gameObjectsJSON) {
 
+	JSON_Value* gameObject = gameObjectsJSON->createValue();
+
+	gameObject->addUint("UID", UID);
+	gameObject->addUint("ParentUID", (parent == App->scene->ROOT || parent == nullptr) ? 0 : parent->UID);
+	gameObject->addString("Name", name);
+	gameObject->addBool("Active", active);
+	//gameObject->addBool("Static", isStatic);
+
+	JSON_Value* ComponentsJSON = gameObjectsJSON->createValue();
+	ComponentsJSON->convertToArray();
+
+	for (int i = 0; i < components.size(); ++i) components[i]->Save(ComponentsJSON);
+
+	gameObject->addValue("Components", ComponentsJSON);
+
+	gameObjectsJSON->addValue("", gameObject);
+
+	for (int i = 0; i < this->children.size(); ++i) this->children[i]->Save(gameObjectsJSON);
 }
 
 

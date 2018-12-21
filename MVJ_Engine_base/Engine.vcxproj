@@ -49,7 +49,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\Assimp\include;.\DevIL\include;.\DevIL\include\IL;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\MSI\Desktop\Master\ThomasTheEngine\MVJ_Engine_base\rapidjson;.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\Assimp\include;.\DevIL\include;.\DevIL\include\IL;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -66,7 +66,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\DevIL\include\IL;.\DevIL\include;.\Assimp\include;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\MSI\Desktop\Master\ThomasTheEngine\MVJ_Engine_base\rapidjson;.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\DevIL\include\IL;.\DevIL\include;.\Assimp\include;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -96,6 +96,7 @@
     <ClInclude Include="IMGUI\imstb_truetype.h" />
     <ClInclude Include="imgui_impl_opengl3.h" />
     <ClInclude Include="imgui_impl_sdl.h" />
+    <ClInclude Include="JSONManager.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\Random\LCG.h" />
     <ClInclude Include="MathGeoLib\include\Geometry\AABB.h" />
     <ClInclude Include="MathGeoLib\include\Geometry\AABB2D.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="imgui_impl_opengl3.cpp" />
     <ClCompile Include="imgui_impl_sdl.cpp" />
+    <ClCompile Include="JSONManager.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MathGeoLib\include\Algorithm\Random\LCG.cpp" />

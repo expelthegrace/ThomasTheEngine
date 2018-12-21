@@ -4,6 +4,7 @@
 #include "ModuleScene.h"
 #include "Quadtree.h"
 #include "ComponentCamera.h"
+#include "JSONManager.h"
 
 ComponentTransform::ComponentTransform()
 {
@@ -68,4 +69,17 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 	}
 	else for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(false);
 		
+}
+
+void ComponentTransform::Save(JSON_Value * componentsJSON) {
+
+	JSON_Value* componentJSON = componentsJSON->createValue();
+	componentJSON->addInt("Type", type);
+	componentJSON->addVector3("Position", position);
+	componentJSON->addQuat("Rotation", rotation);
+	componentJSON->addVector3("Scale", scale);
+	componentJSON->addTransform("Transform", model);
+	
+	componentsJSON->addValue("Transform", componentJSON);
+
 }

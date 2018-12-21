@@ -5,6 +5,7 @@
 #include "GameObject.h"
 
 class GameObject;
+class JSON_Value;
 
 class Component
 {
@@ -21,6 +22,10 @@ public:
 	virtual void Disable() {}
 	virtual update_status Update() { 
 		return UPDATE_CONTINUE; 
+	}
+
+	virtual void Save(JSON_Value* componentsJSON) {
+
 	}
 
 public:

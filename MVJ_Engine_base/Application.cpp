@@ -15,6 +15,10 @@
 #include "pcg_variants.h"
 #include "entropy.h"
 #include <time.h>
+#include "JSONManager.h"
+#include <string>
+#include <stdio.h>
+
 
 pcg32_random_t rng;
 
@@ -51,6 +55,27 @@ bool Application::Init()
 	bool ret = true;
 	exit = false;
 
+	//std::string path = "./";
+	//path += "config.json";
+
+	//JSON_File* document = JSON_manager->openReadFile(path.c_str());
+
+	//if (document == nullptr)
+	//{
+	//	SaveDefaultConfig(path.c_str());
+	//	document = JSON_manager->openReadFile(path.c_str());
+	//}
+	//else 
+	//{
+
+	//	//// Call Init() in all modules
+	//	//for (list<Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	//	//{
+	//	//	ret = (*item)->Init(document);
+	//	//}
+	//}
+
+
 	pcg32_srandom_r(&rng, time(NULL), (intptr_t)&rng);
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
@@ -58,6 +83,20 @@ bool Application::Init()
 	
 
 	return ret;
+}
+
+void Application::SaveDefaultConfig(const char* path) {
+
+	JSON_File* document = JSON_manager->openWriteFile(path);
+
+	JSON_Value* app = document->createValue();
+	document->addValue("App", app);
+
+	JSON_Value* scena1 = document->createValue();
+	document->addValue("scene1", scena1);
+
+	document->Write();
+	JSON_manager->closeFile(document);
 }
 
 unsigned Application::generateUID() {

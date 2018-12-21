@@ -3,6 +3,7 @@
 #include "Globals.h"
 
 class Application;
+class JSON_File;
 
 class Module
 {
@@ -35,5 +36,10 @@ public:
 	virtual bool CleanUp() 
 	{ 
 		return true; 
+	}
+
+	virtual bool SaveDefaultConfig(JSON_File* document)const
+	{
+		return true;
 	}
 };

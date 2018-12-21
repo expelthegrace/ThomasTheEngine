@@ -7,7 +7,7 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/filereadstream.h"
 #include "Globals.h"
-#include "MathGeoLib\MathGeoLib.h"
+#include "MathGeoLib.h"
 
 #include <vector>
 

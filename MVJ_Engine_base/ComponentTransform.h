@@ -4,6 +4,8 @@
 #include "Component.h"
 #include "MathGeoLib.h"
 
+class JSON_Value;
+
 class ComponentTransform :
 	public Component
 {
@@ -14,6 +16,7 @@ public:
 	void Reset();
 	void UpdateTransform(bool updateChilds);
 	void ParentChanged(GameObject* lastParent);
+	void Save(JSON_Value* componentsJSON) override;
 
 public:
 	float3 position, scale, eulerRot, globalPosition;

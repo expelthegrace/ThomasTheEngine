@@ -32,9 +32,10 @@ public:
 	update_status Update();
 	bool CleanUp();
 	unsigned generateUID();
+	void SaveDefaultConfig(const char* path);
 
 public:
-	JSONManager* JSONmanager = nullptr;
+	JSONManager* JSON_manager = nullptr;
 
 	ModuleRender* renderer = nullptr;
 	ModuleWindow* window = nullptr;
