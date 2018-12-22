@@ -474,7 +474,6 @@ update_status ModuleMenu::Inspector() {
 		}	
 	}
 
-	
 	ImGui::End();
 	return UPDATE_CONTINUE;
 }
@@ -488,11 +487,13 @@ update_status ModuleMenu::Hierarchy() {
 	if (ImGui::Button("Save Scene")) {
 		App->scene->SaveScene();
 		char* b = new char[50];
-		sprintf(b, "-- sceneDefault.tte saved --");
+		sprintf(b, "-- %s saved --", App->scene->scenePath);
 		App->menu->console.AddLog(b);
-	}
+	}	
+	ImGui::SameLine();
+	if (ImGui::Button("Load Scene")) App->scene->LoadScene();
+	ImGui::Separator();
 
-	
 
 	FillTree(App->scene->ROOT);
 	

@@ -263,7 +263,7 @@ void ModuleRender::DrawGrid() {
 
 void ModuleRender::DrawCameras() {
 
-	for (int i = 0; i < cameras.size() && cameras[i]->active; ++i) {
+	for (int i = 0; i < cameras.size() && cameras[i]->active && cameras[i]->my_go->active; ++i) {
 
 		cameras[i]->w = App->camera->editorWidth;
 		cameras[i]->h = App->camera->editorHeight;

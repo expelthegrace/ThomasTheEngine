@@ -15,12 +15,13 @@ public:
 	void UpdateTransform(bool updateChilds);
 	void ParentChanged(GameObject* lastParent);
 	void Save(JSON_Value* componentsJSON) override;
+	void Load(JSON_Value* componentJSON) override;
 
 public:
 	float3 position, scale, eulerRot, globalPosition;
 	math::Quat rotation;
 	float4x4 model;
-	GameObject* my_go;
+
 
 	bool changed = true;
 	

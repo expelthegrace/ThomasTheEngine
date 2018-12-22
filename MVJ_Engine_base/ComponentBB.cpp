@@ -96,9 +96,20 @@ void ComponentBB::Save(JSON_Value* componentsJSON) {
 
 	JSON_Value* componentJSON = componentsJSON->createValue();
 	componentJSON->addInt("Type", type);
+	componentJSON->addUint("UID", UID);
 	componentJSON->addVector3("minPoint", initialMin);
 	componentJSON->addVector3("maxPoint", initialMax);
 
 	componentsJSON->addValue("BB", componentJSON);
+}
+
+void ComponentBB::Load(JSON_Value* componentJSON) {
+
+	delete Aabb;
+
+	UID = componentJSON->getUint("UID");
+	initialMin = componentJSON->getVector3("minPoint");
+	initialMax = componentJSON->getVector3("maxPoint");
+	Aabb = new AABB(initialMin, initialMax);
 
 }

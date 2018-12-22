@@ -24,14 +24,14 @@ public:
 		return UPDATE_CONTINUE; 
 	}
 
-	virtual void Save(JSON_Value* componentsJSON) {
+	virtual void Save(JSON_Value* componentsJSON) {}
 
-	}
+	virtual void Load(JSON_Value* commponentJSON) {}
 
 public:
 	unsigned UID;
 	type_comp type;
-	bool active;
+	bool active = true;
 	GameObject* my_go;
 
 };

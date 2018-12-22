@@ -12,13 +12,13 @@ struct JSON_Value;
 class GameObject
 {
 public:
-
+	GameObject();
 	GameObject(char * name, bool active, GameObject * parent);
 	~GameObject();
 
 	update_status Update();
 
-	Component* CreateComponent(type_comp type, int id, char * path);
+	Component* CreateComponent(type_comp type);
 
 	//void CreateSphere(float radius, int subdivisions);
 
@@ -35,16 +35,18 @@ public:
 	void SelectGO(bool selected);
 	void SelectGOChild(bool selected);
 	void Save(JSON_Value* gameObjectsJSON);
+	uint Load(JSON_Value* gameObjectJSON);
 
 public:
-	unsigned UID;
+	unsigned UID = 0;
+	unsigned parentUID = 0;
 	bool selected = false;
 	bool child_selected = false;
 	bool active;
 	char* name;
-	GameObject* parent;
-	ComponentTransform* transform;
-	ComponentBB* BB;
+	GameObject* parent = nullptr;
+	ComponentTransform* transform = nullptr;
+	ComponentBB* BB = nullptr;
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
 

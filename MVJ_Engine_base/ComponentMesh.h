@@ -37,6 +37,8 @@ public:
 	~ComponentMesh();
 
 	void Save(JSON_Value* componentsJSON) override;
+	//void Load(JSON_Value* componentJSON) override;
+
 
 public:
 	Mesh mesh;

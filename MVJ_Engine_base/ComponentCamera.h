@@ -19,7 +19,6 @@ public:
 	void Save(JSON_Value* componentsJSON) override;
 
 
-
 public:
 
 	Frustum frustum;
@@ -31,9 +30,6 @@ public:
 
 	bool cameraChanged = true;
 
-private:
-
-	
 	
 };
 

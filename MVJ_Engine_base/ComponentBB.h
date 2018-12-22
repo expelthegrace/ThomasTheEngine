@@ -18,6 +18,8 @@ public:
 	update_status Update() override;
 	void SetAABB(std::vector<ComponentMesh*>* meshes);
 	void Save(JSON_Value* componentsJSON) override;
+	void Load(JSON_Value* componentJSON) override;
+
 
 public:
 	AABB* Aabb;

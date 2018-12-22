@@ -4,10 +4,15 @@
 #include "Component.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 #include "ComponentBB.h"
 #include "JSONManager.h"
 #include "ModuleScene.h"
 
+
+GameObject::GameObject() {
+	
+}
 
 GameObject::GameObject(char * name, bool active, GameObject * parent)
 {
@@ -16,6 +21,7 @@ GameObject::GameObject(char * name, bool active, GameObject * parent)
 	this->name = name;
 	this->active = active;
 	this->parent = parent;
+	if (parent != nullptr) this->parentUID = parent->UID;
 	this->lastFrameActive = this->active;
 
 	if (parent != nullptr) parent->AddChild(this);
@@ -83,12 +89,47 @@ update_status GameObject::Update() {
 	return UPDATE_CONTINUE;
 }
 
-Component* GameObject::CreateComponent(type_comp type, int id, char * path) {
-	Component* comp;
+Component* GameObject::CreateComponent(type_comp type) {
+	Component* ret = nullptr;
+	bool itsNew = false;
 
+	switch (type)
+	{
+	case TRANSFORM:
+		
+		transform = new ComponentTransform();
+		itsNew = true;
+		
+		ret = transform;
+		break;
+	case MESH:
+		
+		ret = new ComponentMesh(this);
+		itsNew = true;
+	
+		break;
+	case CAMERA:
+		
+		ret = new ComponentCamera(this);
+		itsNew = true;
 
+		break;
+	case type_comp::BB:
+		BB = new ComponentBB(this);
+		itsNew = true;
+		ret = BB;
 
-	return comp;
+		break;
+	
+	}
+
+	if (itsNew) {
+		components.push_back(ret);
+		ret->my_go = this;
+	}
+
+	return ret;
+
 }
 
 /*
@@ -128,6 +169,7 @@ void GameObject::MoveToNewParent(GameObject* newParent) {
 		}
 
 		parent = newParent;
+		if (newParent != nullptr) parentUID = newParent->UID;
 		parent->children.push_back(this);
 		parent->child_selected = true;
 
@@ -156,6 +198,29 @@ void GameObject::Save(JSON_Value* gameObjectsJSON) {
 	gameObjectsJSON->addValue("", gameObject);
 
 	for (int i = 0; i < this->children.size(); ++i) this->children[i]->Save(gameObjectsJSON);
+}
+
+uint GameObject::Load(JSON_Value* gameObjectJSON) {
+
+	this->UID = gameObjectJSON->getUint("UID");
+	std::string strAux = gameObjectJSON->getString("Name");
+	this->name = new char[strAux.length()];//&strAux[0u];
+	strAux.copy(this->name, strAux.length());
+	this->active = gameObjectJSON->getBool("Active");
+
+	JSON_Value* Components = gameObjectJSON->getValue("Components"); //It is an array of values
+	if (Components->getRapidJSONValue()->IsArray()) //Just make sure
+	{
+		for (int i = 0; i < Components->getRapidJSONValue()->Size(); i++)
+		{
+			JSON_Value* componentJSON = Components->getValueFromArray(i); //Get the component data
+			Component* newComp = CreateComponent((type_comp)componentJSON->getInt("Type")); //Create the component type
+			newComp->Load(componentJSON); //Load its info
+		}
+	}
+	
+	return this->UID;
+
 }
 
 

@@ -72,5 +72,4 @@ void ComponentCamera::Save(JSON_Value* componentsJSON) {
 	componentJSON->addInt("Type", type);
 	
 	componentsJSON->addValue("Camera", componentJSON);
-
 }

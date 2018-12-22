@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Application.h"
 #include "ModuleRender.h"
+#include "ModuleMenu.h"
 #include <queue>
 #include "ComponentTransform.h"
 #include "ComponentBB.h"
@@ -71,7 +72,7 @@ bool ModuleScene::Init() {
 	float quadTreeSize = 20.0f;
 	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 2, 6);
 
-	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
+	/*GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa1);
 
 	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
@@ -83,7 +84,7 @@ bool ModuleScene::Init() {
 	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
 	gameObjects[camObject->UID] = camObject;
 	ComponentCamera* camComp = new ComponentCamera(camObject);
-	camObject->AddComponent(camComp);
+	camObject->AddComponent(camComp);*/
 
 	
 	
@@ -106,23 +107,66 @@ GameObject* ModuleScene::FindByName(char * name) {
 }
 
 GameObject* ModuleScene::getGOByID(unsigned uid) {
-	return gameObjects[uid];
+	GameObject* ret = gameObjects[uid];
+	if (ret == nullptr) return ROOT;
+	return ret;
 }
 
 void ModuleScene::SaveScene() {
 
-	JSON_File* scene = App->JSON_manager->openWriteFile("sceneDefault.tte");
+	JSON_File* scene = App->JSON_manager->openWriteFile(scenePath);
 
 	//bool ret = saveScene(scene, ROOT);
 
-	JSON_Value* gameObjects = scene->createValue();
-	gameObjects->convertToArray();
+	JSON_Value* gameObjectsJSON = scene->createValue();
+	gameObjectsJSON->convertToArray();
 
-	for (int i = 0; i < ROOT->children.size(); ++i) ROOT->children[i]->Save(gameObjects);
+	for (int i = 0; i < ROOT->children.size(); ++i) ROOT->children[i]->Save(gameObjectsJSON);
 
-	scene->addValue("Game Objects", gameObjects);
+	scene->addValue("GameObjects", gameObjectsJSON);
 
 	scene->Write();
 	App->JSON_manager->closeFile(scene);
+
+}
+
+void ModuleScene::LoadScene() {
+	
+
+	JSON_File* sceneJSON = App->JSON_manager->openReadFile(scenePath);
+
+	if (sceneJSON == nullptr) {
+		char* b = new char[50];
+		sprintf(b, "-- ERROR: %s not found, scene not loaded --", scenePath);
+		App->menu->console.AddLog(b);
+	}
+	else {
+
+		JSON_Value* gameObjectsJSON = sceneJSON->getValue("GameObjects");
+
+		if (gameObjectsJSON->getRapidJSONValue()->IsArray()) {
+
+			for (int i = 0; i < gameObjectsJSON->getRapidJSONValue()->Size(); i++)
+			{
+				GameObject* GO = new GameObject();
+				unsigned UIDTemp = GO->Load(gameObjectsJSON->getValueFromArray(i));
+				gameObjects[UIDTemp] = GO;
+			}
+
+			for (std::map<unsigned, GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) {
+				GameObject * parentAux = getGOByID(it->second->parentUID);
+				it->second->parent = parentAux;
+				parentAux->AddChild(it->second);
+
+			}
+					
+		
+		}
+
+		char* b = new char[50];
+		sprintf(b, "-- %s loaded --", App->scene->scenePath);
+		App->menu->console.AddLog(b);
+
+	}
 
 }

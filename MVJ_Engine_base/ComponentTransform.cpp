@@ -81,5 +81,13 @@ void ComponentTransform::Save(JSON_Value * componentsJSON) {
 	componentJSON->addTransform("Transform", model);
 	
 	componentsJSON->addValue("Transform", componentJSON);
+}
+
+void ComponentTransform::Load(JSON_Value * componentJSON) {
+
+	position = componentJSON->getVector3("Position");
+	rotation = componentJSON->getQuat("Rotation");
+	scale = componentJSON->getVector3("Scale");
+	changed = true;
 
 }

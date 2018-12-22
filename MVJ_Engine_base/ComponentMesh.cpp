@@ -37,5 +37,9 @@ void ComponentMesh::Save(JSON_Value* componentsJSON) {
 	componentJSON->addString("Path", path);
 
 	componentsJSON->addValue("Mesh", componentJSON);
-
 }
+
+//void ComponentMesh::Load(JSON_Value* componentJSON) {
+//
+//	App->modelLoader->GenerateMesh(idMesh, meshComp, path);
+//}

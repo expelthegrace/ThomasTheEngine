@@ -27,6 +27,7 @@ public:
 	void NewGOSelected(GameObject* GO);
 
 	void SaveScene();
+	void LoadScene();
 
 public:
 	GameObject* ROOT;
@@ -34,6 +35,8 @@ public:
 	Quadtree* quadTree;
 	bool showQuad = true;
 	ComponentCamera* mainCamera = nullptr;
+	char* scenePath = "sceneDefault.tts";
+
 private:
 	std::map<unsigned, GameObject*> gameObjects;
 
