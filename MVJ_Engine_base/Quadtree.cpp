@@ -203,18 +203,20 @@ void Quadtree::Clear() {
 	if (nodeType == TREE) {
 		for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
 			(*it)->Clear();			
-			*it = nullptr;
-			branches.clear();
+			*it = nullptr;		
 		}
+		branches.clear();
 	}
 	else {
 		for (std::list<GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it) *it = nullptr;
 		gameObjects.clear();
 	}
 
-	delete boundaries;
-	boundaries = nullptr;
-
+	//we want to keep the outer QT
+	if (parent != nullptr) {
+		delete boundaries;
+		boundaries = nullptr;
+	}
 	//delete b;
 	//b = nullptr;
 }

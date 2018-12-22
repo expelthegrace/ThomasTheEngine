@@ -412,6 +412,16 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
+void ModuleRender::DeleteMesh(unsigned UID) {
+	for (int i = 0; i < meshComponents.size(); ++i) {
+		if (meshComponents[i]->UID == UID) {
+			meshComponents.erase(meshComponents.begin() + i);
+			return;
+		}
+	}
+
+}
+
 void ModuleRender::WindowResized(unsigned width, unsigned height)
 {
     glViewport(0, 0, width, height); 

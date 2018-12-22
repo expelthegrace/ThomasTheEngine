@@ -29,6 +29,8 @@ public:
 	void SaveScene();
 	void LoadScene();
 
+	void ClearScene();
+
 public:
 	GameObject* ROOT;
 	GameObject* GO_selected = nullptr;

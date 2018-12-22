@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Application.h"
 #include "JSONManager.h"
+#include "ModuleRender.h"
 
 ComponentMesh::ComponentMesh( GameObject* my_go)
 {
@@ -27,6 +28,7 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertic
 
 ComponentMesh::~ComponentMesh()
 {	
+	App->renderer->DeleteMesh(this->UID);
 	delete mesh.vertices;
 }
 

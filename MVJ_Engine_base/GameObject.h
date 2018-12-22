@@ -37,6 +37,7 @@ public:
 	void Save(JSON_Value* gameObjectsJSON);
 	uint Load(JSON_Value* gameObjectJSON);
 
+
 public:
 	unsigned UID = 0;
 	unsigned parentUID = 0;

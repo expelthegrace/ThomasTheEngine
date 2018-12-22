@@ -35,7 +35,7 @@ public:
 	void WindowResized(unsigned width, unsigned height);
 	void GenerateFBOTexture(unsigned w, unsigned h, FBOset* fboset);
 
-
+	void DeleteMesh(unsigned UID);
 	void RemoveCamera(ComponentCamera* cam);
 
 	void DrawGrid();

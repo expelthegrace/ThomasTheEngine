@@ -72,7 +72,7 @@ bool ModuleScene::Init() {
 	float quadTreeSize = 20.0f;
 	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 2, 6);
 
-	/*GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
+	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa1);
 
 	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
@@ -84,7 +84,7 @@ bool ModuleScene::Init() {
 	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
 	gameObjects[camObject->UID] = camObject;
 	ComponentCamera* camComp = new ComponentCamera(camObject);
-	camObject->AddComponent(camComp);*/
+	camObject->AddComponent(camComp);
 
 	
 	
@@ -112,11 +112,20 @@ GameObject* ModuleScene::getGOByID(unsigned uid) {
 	return ret;
 }
 
+void ModuleScene::ClearScene() {
+	quadTree->Clear();
+	for (int i = 0; i < ROOT->children.size(); ++i) delete ROOT->children[i];
+	
+	ROOT->children.clear();
+	gameObjects.clear();
+	GO_selected = ROOT;
+	mainCamera = nullptr;
+}
+
 void ModuleScene::SaveScene() {
 
 	JSON_File* scene = App->JSON_manager->openWriteFile(scenePath);
 
-	//bool ret = saveScene(scene, ROOT);
 
 	JSON_Value* gameObjectsJSON = scene->createValue();
 	gameObjectsJSON->convertToArray();
@@ -132,6 +141,7 @@ void ModuleScene::SaveScene() {
 
 void ModuleScene::LoadScene() {
 	
+	ClearScene();
 
 	JSON_File* sceneJSON = App->JSON_manager->openReadFile(scenePath);
 
