@@ -74,8 +74,6 @@ GameObject* ModuleRender::CreateModel(char * path) {
 
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
 
-	
-
 	for (int i = 0; i < sceneAct->mNumMaterials; ++i) newGO->components.push_back(CreateComponentMaterial(newGO, i, path));
 	for (int i = 0; i < sceneAct->mNumMeshes; ++i) newGO->components.push_back(CreateComponentMesh(newGO, i, path));
 	
