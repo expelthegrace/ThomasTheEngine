@@ -24,7 +24,6 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertic
 	this->mesh = mesh;
 	avaliable = true;
 	this->mesh.vertices = vertices;
-	
 
 }
 
@@ -47,9 +46,6 @@ void ComponentMesh::Save(JSON_Value* componentsJSON) {
 void ComponentMesh::Load(JSON_Value* componentJSON) {
 	path = componentJSON->getString("Path");
 
-	//std::string strAux = componentJSON->getString("Path");
-	//path = new char[strAux.length()];//&strAux[0u];
-	//strAux.copy(path, strAux.length());
 	idMesh = componentJSON->getInt("idMesh");
 
 	//first generate material, this will be moved to the ComponentMaterial
@@ -63,8 +59,4 @@ void ComponentMesh::Load(JSON_Value* componentJSON) {
 	this->avaliable = true;
 	App->renderer->meshComponents.push_back(this);
 	
-
-
-
-	//App->modelLoader->GenerateMesh(idMesh, meshComp, path);
 }
