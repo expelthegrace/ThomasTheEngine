@@ -7,6 +7,7 @@
 #include "ModuleCamera.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "GameObject.h"
 
 ModuleModelLoader::ModuleModelLoader()
 {
@@ -18,7 +19,7 @@ ModuleModelLoader::~ModuleModelLoader()
 }
 
 
-bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* meshComp, int idMesh) {
+bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual, ComponentMesh* meshComp, int idMesh) {
 	Mesh* mesh = &meshComp->mesh;
 	const aiMesh* src_mesh = sceneActual->mMeshes[idMesh];
 
@@ -69,8 +70,9 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* m
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	int numMaterials = sceneActual->mNumMaterials;
-	int index = meshComp->my_go->components.size()  - idMesh;
-	ComponentMaterial* compMat = (ComponentMaterial*)meshComp->my_go->components[index - numMaterials + src_mesh->mMaterialIndex];
+	//int index = meshComp->my_go->components.size()  - idMesh;
+	//ComponentMaterial* compMat = (ComponentMaterial*)meshComp->my_go->components[index - numMaterials + src_mesh->mMaterialIndex];
+	ComponentMaterial* compMat = GO->material;
 
 	mesh->materialIndex = compMat->material;
 	mesh->numVertices = src_mesh->mNumVertices;
@@ -95,7 +97,7 @@ bool ModuleModelLoader::LoadBuffers(const aiScene* sceneActual, ComponentMesh* m
 	return true;
 }
 
-void ModuleModelLoader::GenerateMesh(int idMesh, ComponentMesh * compMesh, const char* path) {
+void ModuleModelLoader::GenerateMesh(GameObject* GO, int idMesh, ComponentMesh * compMesh, const char* path) {
 
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
 	const char* errorMesage;
@@ -109,7 +111,7 @@ void ModuleModelLoader::GenerateMesh(int idMesh, ComponentMesh * compMesh, const
 		App->menu->console.AddLog(b);
 		compMesh->mesh.numVertices = 0;
 	}
-	else LoadBuffers(sceneAct, compMesh, idMesh);
+	else LoadBuffers(GO, sceneAct, compMesh, idMesh);
 
 
 }
@@ -118,8 +120,9 @@ unsigned ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
 
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
 
-	const aiMaterial* src_material = sceneAct->mMaterials[idMaterial];
-	unsigned dst_material;
+	int indexMaterial = sceneAct->mMeshes[idMaterial]->mMaterialIndex;
+	const aiMaterial* src_material = sceneAct->mMaterials[indexMaterial];
+	unsigned dst_material = 0;
 
 	aiString file;
 	aiTextureMapping mapping;

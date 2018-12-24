@@ -49,16 +49,26 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, 
 
 	ComponentMesh* meshComp = new ComponentMesh(my_go);
 	meshComp->path = path;
-	App->modelLoader->GenerateMesh(idMesh, meshComp, path);
-	
+	App->modelLoader->GenerateMesh(my_go, idMesh, meshComp, path);
 	if (meshComp->mesh.numVertices > 0) meshComp->avaliable = true;
 	else {
 		char* b = new char[50];
 		sprintf(b, "A mesh of <%s> has 0 vertices. It will not be rendered\n",my_go->name);
 		App->menu->console.AddLog(b);
 	}
+	meshComponents.push_back(meshComp);
+	//ComponentMesh* meshComp = new ComponentMesh(my_go);
+	//meshComp->path = path;
+	//App->modelLoader->GenerateMesh(idMesh, meshComp, path);
+	//
+	//if (meshComp->mesh.numVertices > 0) meshComp->avaliable = true;
+	//else {
+	//	char* b = new char[50];
+	//	sprintf(b, "A mesh of <%s> has 0 vertices. It will not be rendered\n",my_go->name);
+	//	App->menu->console.AddLog(b);
+	//}
 
-	meshComponents.push_back(meshComp); // saved in the render module
+	//meshComponents.push_back(meshComp); // saved in the render module
 	return meshComp;
 }
 
@@ -70,14 +80,48 @@ ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int 
 }
 
 GameObject* ModuleRender::CreateModel(char * path) {
-	GameObject* newGO = new GameObject("", true, nullptr);
+	GameObject* rootGO = new GameObject("", true, nullptr);
 
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
 
-	for (int i = 0; i < sceneAct->mNumMaterials; ++i) newGO->components.push_back(CreateComponentMaterial(newGO, i, path));
-	for (int i = 0; i < sceneAct->mNumMeshes; ++i) newGO->components.push_back(CreateComponentMesh(newGO, i, path));
+	if (sceneAct->mNumMeshes == 1) {
+		rootGO->material = CreateComponentMaterial(rootGO, 0, path);
+		rootGO->components.push_back(rootGO->material);
+
+		rootGO->mesh = CreateComponentMesh(rootGO, 0, path);
+		rootGO->components.push_back(rootGO->mesh);
+
+		rootGO->BB->SetAABB(rootGO->mesh);
+
+	}
+	else {
+		for (int i = 0; i < sceneAct->mNumMeshes; ++i) {
+
+			std::string strAux = sceneAct->mMeshes[i]->mName.C_Str();
+			char* nameAux = new char[strAux.length()];
+			strAux.copy(nameAux, strAux.length());
+
+			GameObject* child = new GameObject(nameAux, true, rootGO);
+
+			child->material = CreateComponentMaterial(child, i, path);
+			child->components.push_back(child->material);
+
+			child->mesh = CreateComponentMesh(child, i, path);
+			child->components.push_back(child->mesh);
+
+			child->BB->SetAABB(child->mesh);
+		}
+
+	//	std::vector<ComponentMesh*> meshComps;
+	//	for (int i = 0; i < )
+
+	}
 	
-	return newGO;
+
+	/*for (int i = 0; i < sceneAct->mNumMaterials; ++i) newGO->components.push_back(CreateComponentMaterial(newGO, i, path));
+	for (int i = 0; i < sceneAct->mNumMeshes; ++i) newGO->components.push_back(CreateComponentMesh(newGO, i, path));*/
+	
+	return rootGO;
 }
 
 update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera * cameraComp) {

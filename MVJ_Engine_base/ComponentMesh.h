@@ -45,6 +45,7 @@ public:
 	bool avaliable;
 	bool renderTexture = true;
 	char* path = nullptr;
+	int idMesh;
 
 
 private:

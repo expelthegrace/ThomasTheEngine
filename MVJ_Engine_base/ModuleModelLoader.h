@@ -10,6 +10,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 
+class GameObject;
 
 class ModuleModelLoader :
 	public Module
@@ -25,10 +26,10 @@ public:
 
 	bool LoadNewModel(char* path);
 
-	void GenerateMesh(int idMesh, ComponentMesh* compMesh, const char* path);
+	void GenerateMesh(GameObject* GO, int idMesh, ComponentMesh* compMesh, const char* path);
 	unsigned GenerateMaterial(int idMaterial, const char* path);
 
-	bool LoadBuffers(const aiScene* scene, ComponentMesh* meshComp, int idMesh);
+	bool LoadBuffers(GameObject*  GO, const aiScene* scene, ComponentMesh* meshComp, int idMesh);
 
 public:
 

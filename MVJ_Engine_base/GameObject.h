@@ -8,6 +8,8 @@
 class Component;
 class ComponentTransform;
 class ComponentBB;
+class ComponentMesh;
+class ComponentMaterial;
 struct JSON_Value;
 class GameObject
 {
@@ -48,6 +50,8 @@ public:
 	GameObject* parent = nullptr;
 	ComponentTransform* transform = nullptr;
 	ComponentBB* BB = nullptr;
+	ComponentMesh* mesh = nullptr;
+	ComponentMaterial* material = nullptr;
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
 

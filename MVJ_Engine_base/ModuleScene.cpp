@@ -52,14 +52,23 @@ void ModuleScene::NewGameObject(char* name) {
 
 GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path) {
 	
+
 	GameObject* GO = App->renderer->CreateModel(path);
 	GO->name = name;
+	GO->parent = parent;
+	parent->children.push_back(GO);
+	gameObjects[GO->UID] = GO;
+
+	/*GO->name = name;
 	GO->parent = parent;
 	
 	std::vector<Component*> comps = GO->GetComponents(MESH);
 	GO->BB->SetAABB((std::vector<ComponentMesh*>*) &comps);
 	parent->children.push_back(GO);
-	gameObjects[GO->UID] = GO;
+	gameObjects[GO->UID] = GO;*/
+
+
+
 
 	return GO;
 }

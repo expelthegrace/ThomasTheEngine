@@ -64,6 +64,25 @@ void ComponentBB::SetAABB(std::vector<ComponentMesh*>* meshes)
 	delete total;
 }
 
+void ComponentBB::SetAABB(ComponentMesh* meshComp)
+{
+	Aabb->SetNegativeInfinity();
+
+	//for (int i = 0; i < meshesActual.size(); ++i) totalPoints += meshesActual[i]->mesh.numVertices;
+	float3* total = new float3[meshComp->mesh.numVertices];
+
+	for (int i = 0; i  <meshComp->mesh.numVertices; ++i) 
+			total[i] = meshComp->mesh.vertices[i];
+		
+	Aabb->SetFrom(total, meshComp->mesh.numVertices);
+	Aabb->GetCornerPoints(cornersAABB);
+
+	initialMin = Aabb->minPoint;
+	initialMax = Aabb->maxPoint;
+
+	delete total;
+}
+
 update_status ComponentBB::Update() {
 
 	if (my_go->selected && Aabb->IsFinite() && my_go->active) {
