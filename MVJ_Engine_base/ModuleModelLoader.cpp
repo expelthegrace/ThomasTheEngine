@@ -97,6 +97,7 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	return true;
 }
 
+/** Takes a mesh and loads on it all the mesh information **/
 void ModuleModelLoader::GenerateMesh(GameObject* GO, int idMesh, ComponentMesh * compMesh, const char* path) {
 
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);

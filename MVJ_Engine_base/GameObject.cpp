@@ -107,8 +107,9 @@ Component* GameObject::CreateComponent(type_comp type) {
 		break;
 	case MESH:
 		
-		ret = new ComponentMesh(this);
+		mesh = new ComponentMesh(this);
 		itsNew = true;
+		ret = mesh;
 	
 		break;
 	case CAMERA:

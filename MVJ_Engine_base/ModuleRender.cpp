@@ -48,6 +48,7 @@ ComponentMesh* ModuleRender::CreateComponentMesh( GameObject* my_go) {
 ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, char* path) {
 
 	ComponentMesh* meshComp = new ComponentMesh(my_go);
+	meshComp->idMesh = idMesh;
 	meshComp->path = path;
 	App->modelLoader->GenerateMesh(my_go, idMesh, meshComp, path);
 	if (meshComp->mesh.numVertices > 0) meshComp->avaliable = true;
@@ -109,11 +110,12 @@ GameObject* ModuleRender::CreateModel(char * path) {
 			child->mesh = CreateComponentMesh(child, i, path);
 			child->components.push_back(child->mesh);
 
-			child->BB->SetAABB(child->mesh);
+			//child->BB->SetAABB(child->mesh);
 		}
 
-	//	std::vector<ComponentMesh*> meshComps;
-	//	for (int i = 0; i < )
+		std::vector<ComponentMesh*> meshCompsAux;
+		for (int i = 0; i < rootGO->children.size(); ++i) meshCompsAux.push_back(rootGO->children[i]->mesh);
+		rootGO->BB->SetAABB(&meshCompsAux);
 
 	}
 	

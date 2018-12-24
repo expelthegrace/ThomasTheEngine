@@ -58,8 +58,6 @@ public:
 	void* context;
 
 	std::vector<ComponentCamera*> cameras;
-
-private:
 	std::vector<ComponentMesh*> meshComponents;
 };
 

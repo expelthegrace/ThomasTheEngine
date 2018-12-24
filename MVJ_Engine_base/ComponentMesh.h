@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "MathGeoLib.h"
 #include <vector>
+#include <string>
 
 class GameObject;
 
@@ -44,7 +45,7 @@ public:
 	Mesh mesh;
 	bool avaliable;
 	bool renderTexture = true;
-	char* path = nullptr;
+	std::string path = "";
 	int idMesh;
 
 
