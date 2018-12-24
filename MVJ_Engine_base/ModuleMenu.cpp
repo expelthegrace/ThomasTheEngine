@@ -388,7 +388,7 @@ update_status ModuleMenu::Inspector() {
 	ImGui::Text("| UID: %u", GO_act->UID);
 	ImGui::Checkbox("Active", &GO_act->active);
 
-	if (ImGui::CollapsingHeader("Transformation"),true)
+	if (ImGui::CollapsingHeader("Transformation", true) && GO_act->name != "ROOT")
 	{
 		if (ImGui::Button("Reset")) GO_act->transform->Reset();
 
@@ -487,7 +487,7 @@ update_status ModuleMenu::Hierarchy() {
 	if (ImGui::Button("Save Scene")) {
 		App->scene->SaveScene();
 		char* b = new char[50];
-		sprintf(b, "-- %s saved --", App->scene->scenePath);
+		sprintf(b, "-- %s saved --\n", App->scene->scenePath);
 		App->menu->console.AddLog(b);
 	}	
 	ImGui::SameLine();
@@ -521,7 +521,6 @@ update_status ModuleMenu::Update() {
 		if ((ret = Inspector()) != UPDATE_CONTINUE) return ret;
 		if ((ret = Configuration()) != UPDATE_CONTINUE) return ret;
 		if ((ret = Hierarchy()) != UPDATE_CONTINUE) return ret;
-	
 		
 	}
 	

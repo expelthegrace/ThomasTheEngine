@@ -96,6 +96,7 @@ void ComponentBB::Save(JSON_Value* componentsJSON) {
 
 	JSON_Value* componentJSON = componentsJSON->createValue();
 	componentJSON->addInt("Type", type);
+	componentJSON->addBool("isFinite", Aabb->IsFinite());
 	componentJSON->addUint("UID", UID);
 	componentJSON->addVector3("minPoint", initialMin);
 	componentJSON->addVector3("maxPoint", initialMax);
@@ -105,11 +106,13 @@ void ComponentBB::Save(JSON_Value* componentsJSON) {
 
 void ComponentBB::Load(JSON_Value* componentJSON) {
 
-	delete Aabb;
-
 	UID = componentJSON->getUint("UID");
-	initialMin = componentJSON->getVector3("minPoint");
-	initialMax = componentJSON->getVector3("maxPoint");
-	Aabb = new AABB(initialMin, initialMax);
 
+	if (componentJSON->getBool("isFinite")) {
+		delete Aabb;
+		initialMin = componentJSON->getVector3("minPoint");
+		initialMax = componentJSON->getVector3("maxPoint");
+		Aabb = new AABB(initialMin, initialMax);
+	}
+	
 }

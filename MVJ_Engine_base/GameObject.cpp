@@ -207,6 +207,7 @@ void GameObject::Save(JSON_Value* gameObjectsJSON) {
 uint GameObject::Load(JSON_Value* gameObjectJSON) {
 
 	this->UID = gameObjectJSON->getUint("UID");
+	this->parentUID = gameObjectJSON->getUint("ParentUID");
 	std::string strAux = gameObjectJSON->getString("Name");
 	this->name = new char[strAux.length()];//&strAux[0u];
 	strAux.copy(this->name, strAux.length());

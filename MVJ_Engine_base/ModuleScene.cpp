@@ -129,7 +129,7 @@ void ModuleScene::SaveScene() {
 
 	JSON_Value* gameObjectsJSON = scene->createValue();
 	gameObjectsJSON->convertToArray();
-
+	
 	for (int i = 0; i < ROOT->children.size(); ++i) ROOT->children[i]->Save(gameObjectsJSON);
 
 	scene->addValue("GameObjects", gameObjectsJSON);
@@ -147,7 +147,7 @@ void ModuleScene::LoadScene() {
 
 	if (sceneJSON == nullptr) {
 		char* b = new char[50];
-		sprintf(b, "-- ERROR: %s not found, scene not loaded --", scenePath);
+		sprintf(b, "-- ERROR: %s not found, scene not loaded -- \n", scenePath);
 		App->menu->console.AddLog(b);
 	}
 	else {
@@ -174,7 +174,7 @@ void ModuleScene::LoadScene() {
 		}
 
 		char* b = new char[50];
-		sprintf(b, "-- %s loaded --", App->scene->scenePath);
+		sprintf(b, "-- %s loaded --\n", App->scene->scenePath);
 		App->menu->console.AddLog(b);
 
 	}
