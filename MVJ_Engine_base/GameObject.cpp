@@ -209,7 +209,7 @@ uint GameObject::Load(JSON_Value* gameObjectJSON) {
 	this->UID = gameObjectJSON->getUint("UID");
 	this->parentUID = gameObjectJSON->getUint("ParentUID");
 	std::string strAux = gameObjectJSON->getString("Name");
-	this->name = new char[strAux.length()];//&strAux[0u];
+	this->name = new char[strAux.length()];
 	strAux.copy(this->name, strAux.length());
 	this->active = gameObjectJSON->getBool("Active");
 

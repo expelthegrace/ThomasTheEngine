@@ -203,7 +203,8 @@ void Quadtree::Clear() {
 	if (nodeType == TREE) {
 		for (std::list<Quadtree*>::iterator it = branches.begin(); it != branches.end(); ++it) {
 			(*it)->Clear();			
-			*it = nullptr;		
+			*it = nullptr;	
+			nodeType = LEAF;
 		}
 		branches.clear();
 	}
