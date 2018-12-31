@@ -26,8 +26,6 @@
 #include "ComponentCamera.h"
 
 
-
-
 ModuleRender::ModuleRender()
 {
 }
@@ -58,18 +56,7 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, 
 		App->menu->console.AddLog(b);
 	}
 	meshComponents.push_back(meshComp);
-	//ComponentMesh* meshComp = new ComponentMesh(my_go);
-	//meshComp->path = path;
-	//App->modelLoader->GenerateMesh(idMesh, meshComp, path);
-	//
-	//if (meshComp->mesh.numVertices > 0) meshComp->avaliable = true;
-	//else {
-	//	char* b = new char[50];
-	//	sprintf(b, "A mesh of <%s> has 0 vertices. It will not be rendered\n",my_go->name);
-	//	App->menu->console.AddLog(b);
-	//}
 
-	//meshComponents.push_back(meshComp); // saved in the render module
 	return meshComp;
 }
 

@@ -81,7 +81,7 @@ void ModuleScene::DeleteSelected() {
 void ModuleScene::DuplicateSelected() {
 	if (GO_selected != nullptr && GO_selected != ROOT) {
 
-		
+		 
 	}
 }
 

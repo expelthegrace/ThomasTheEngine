@@ -12,5 +12,4 @@ void main()
 {
     if (drawTexture == 1) color = texture2D(texture0, uv0);
 	else color = color0;
-	//else color = vec4(1,1,1,1);
 }
