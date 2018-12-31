@@ -115,6 +115,17 @@ void Quadtree::Remove(GameObject* GO) {
 	currentQT = nullptr;
 }
 
+void Quadtree::RemoveAndMerge(GameObject* GO) {
+	Quadtree* currentQT = App->scene->quadTree->Find(GO);
+
+	if (currentQT != nullptr) {
+		currentQT->gameObjects.remove(GO);
+		if (currentQT->parent != nullptr) currentQT->parent->Merge();
+	}
+
+	currentQT = nullptr;
+}
+
 void Quadtree::MoveGO(GameObject* GOact, Quadtree * lastQT) {
 
 	if (lastQT != nullptr) lastQT->gameObjects.remove(GOact);
@@ -178,8 +189,8 @@ void Quadtree::CollectIntersections(std::vector<GameObject*>& GOcollisioned, con
 
 
 void Quadtree::Draw() {
-	/*
-	if (true) {
+	
+	/*if (true) {
 
 		LOG("> %i (%i)", this->maxDepth, nodeType);
 
@@ -189,8 +200,8 @@ void Quadtree::Draw() {
 			}
 		}
 
-	}
-	*/
+	}*/
+	
 	const ddVec3 boxColor = { 0.4f, 0.4f, 0.8f };
 	dd::aabb(boundaries->minPoint, boundaries->maxPoint, boxColor);
 

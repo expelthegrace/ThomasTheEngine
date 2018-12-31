@@ -31,6 +31,9 @@ public:
 
 	void ClearScene();
 
+	void DeleteSelected();
+	void DuplicateSelected();
+
 public:
 	GameObject* ROOT;
 	GameObject* GO_selected = nullptr;

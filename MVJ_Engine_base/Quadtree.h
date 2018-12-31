@@ -23,6 +23,7 @@ public:
 	Quadtree* Find(const GameObject* GO);
 	void MoveGO(GameObject* GO, Quadtree * lastQT);	
 	void Remove(GameObject* GO);
+	void RemoveAndMerge(GameObject* GO);
 
 	void Draw();
 

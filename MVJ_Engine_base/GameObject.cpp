@@ -43,10 +43,21 @@ GameObject::~GameObject()
 	for (int i = 0; i < components.size(); ++i) delete components[i];
 	for (int i = 0; i < children.size(); ++i) delete children[i];
 
-	//App->scene->quadTree->Remove(this);
-
 	components.clear();
 	children.clear();
+
+	
+}
+
+void GameObject::RemoveFromParent() {
+
+	if (parent != nullptr) {
+		for (int i = 0; i < parent->children.size(); ++i) {
+			if (parent->children[i]->UID == this->UID)
+				parent->children.erase(parent->children.begin() + i);
+
+		}
+	}
 }
 
 void GameObject::SetActive(bool active) {

@@ -26,6 +26,9 @@ update_status ModuleScene::Update() {
 	
 	BROFILER_CATEGORY("Component Updates", Profiler::Color::Orchid);
 
+	if (App->input->keyboard[SDL_SCANCODE_DELETE]) DeleteSelected();
+
+
 	ROOT->Update();
 	
 	if (showQuad) quadTree->Draw();
@@ -59,18 +62,27 @@ GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path
 	parent->children.push_back(GO);
 	gameObjects[GO->UID] = GO;
 
-	/*GO->name = name;
-	GO->parent = parent;
-	
-	std::vector<Component*> comps = GO->GetComponents(MESH);
-	GO->BB->SetAABB((std::vector<ComponentMesh*>*) &comps);
-	parent->children.push_back(GO);
-	gameObjects[GO->UID] = GO;*/
-
-
-
-
 	return GO;
+}
+
+void ModuleScene::DeleteSelected() {
+	if (GO_selected != nullptr && GO_selected != ROOT) {
+
+		quadTree->RemoveAndMerge(GO_selected);
+		gameObjects.erase(GO_selected->UID);
+
+		GO_selected->RemoveFromParent();
+
+		delete GO_selected;
+		NewGOSelected(ROOT);
+	}
+}
+
+void ModuleScene::DuplicateSelected() {
+	if (GO_selected != nullptr && GO_selected != ROOT) {
+
+		
+	}
 }
 
 bool ModuleScene::Init() {

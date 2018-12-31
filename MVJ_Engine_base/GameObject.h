@@ -34,6 +34,8 @@ public:
 	// delete gameobject (recursiu)
 	void SetActive(bool active);
 
+	void RemoveFromParent();
+
 	void SelectGO(bool selected);
 	void SelectGOChild(bool selected);
 	void Save(JSON_Value* gameObjectsJSON);
