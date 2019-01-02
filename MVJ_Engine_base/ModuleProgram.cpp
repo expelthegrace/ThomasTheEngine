@@ -59,7 +59,7 @@ void ModuleProgram::CreateProgram(GLuint& variable, char* vsName, char* fsName) 
 	glShaderSource(fs, 1, &dataFragment, 0);
 	glCompileShader(fs);
 	params = GL_TRUE;
-	maxLength = 0;
+	maxLength = 1000;
 	//case compilation error fs
 	glGetShaderiv(fs, GL_COMPILE_STATUS, &params);
 	if (params == GL_FALSE) {

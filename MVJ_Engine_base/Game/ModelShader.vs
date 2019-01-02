@@ -10,10 +10,16 @@ uniform mat4 model;
 
 out vec2 uv0;
 out vec3 normal0;
+out vec4 vertexPos;
 
 void main()
 {
-    gl_Position = proj*view*model*vec4(vertex_position, 1.0);
+	vertexPos = view * model * vec4(vertex_position, 1.0);
+    gl_Position = proj * vertexPos;
+
     uv0 = vertex_uv0;
+
+	//mat3 normalMatrix = inverse(transpose(mat3 (view * model)));
+   // normal0 = normalize(vec3(normalMatrix * vertex_normal));
 	normal0 = vertex_normal;
 }

@@ -134,6 +134,11 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
 
+				
+				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"viewDirection"), 1, &App->camera->frustum.front[0]);
+				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"viewPosition"), 1, &App->camera->frustum.pos[0]);
 
 				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
 				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
@@ -187,6 +192,10 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"proj"), 1, GL_TRUE, &cameraComp->projection[0][0]);
 
+				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"viewDirection"), 1, &cameraComp->frustum.front[0]);
+				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"viewPosition"), 1, &cameraComp->frustum.pos[0]);
 
 				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
 				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
@@ -204,14 +213,18 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 
 				glEnableVertexAttribArray(0);
 				glEnableVertexAttribArray(1);
+				glEnableVertexAttribArray(2);
 				glBindBuffer(GL_ARRAY_BUFFER, vboActual);
 				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
+				glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)((sizeof(float) * 3 + sizeof(float) * 2)* numVerticesActual));
+
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
 				glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
 
 				glDisableVertexAttribArray(0);
 				glDisableVertexAttribArray(1);
+				glDisableVertexAttribArray(2);
 
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
