@@ -14,12 +14,12 @@ out vec4 vertexPos;
 
 void main()
 {
-	vertexPos = view * model * vec4(vertex_position, 1.0);
-    gl_Position = proj * vertexPos;
+	vertexPos =  model * vec4(vertex_position, 1.0);
+    gl_Position = proj * view * vertexPos;
 
     uv0 = vertex_uv0;
 
 	//mat3 normalMatrix = inverse(transpose(mat3 (view * model)));
-   // normal0 = normalize(vec3(normalMatrix * vertex_normal));
-	normal0 = vertex_normal;
+    //normal0 = normalize(vec3(normalMatrix * vertex_normal));
+	normal0 = (model*vec4(vertex_normal, 0.0)).xyz;
 }

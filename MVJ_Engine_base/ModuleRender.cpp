@@ -136,8 +136,6 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 
 				
 				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"viewDirection"), 1, &App->camera->frustum.front[0]);
-				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"viewPosition"), 1, &App->camera->frustum.pos[0]);
 
 				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
@@ -192,8 +190,6 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"proj"), 1, GL_TRUE, &cameraComp->projection[0][0]);
 
-				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"viewDirection"), 1, &cameraComp->frustum.front[0]);
 				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"viewPosition"), 1, &cameraComp->frustum.pos[0]);
 
