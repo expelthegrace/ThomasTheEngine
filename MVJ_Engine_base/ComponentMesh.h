@@ -25,8 +25,10 @@ struct Mesh {
 	unsigned vao;
 	unsigned numTexCoords;
 	unsigned* buffer = new unsigned[10];
+	bool hasNormals = false;
 	float3 * vertices;
 	float3 * indices;
+	float3 * normals;
 
 
 };

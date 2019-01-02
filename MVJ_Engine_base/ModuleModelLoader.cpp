@@ -23,6 +23,11 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	Mesh* mesh = &meshComp->mesh;
 	const aiMesh* src_mesh = sceneActual->mMeshes[idMesh];
 
+	// copies to assign to the mesh
+	float3 * verticesAux = new float3[src_mesh->mNumVertices];
+	float3 * indicesAux = new float3[src_mesh->mNumFaces];
+	float3 * normalsAux = new float3[src_mesh->mNumVertices];
+
 	mesh->type = VBO;
 	mesh->numVertices = src_mesh->mNumVertices;
 	mesh->numFaces = src_mesh->mNumFaces;
@@ -32,9 +37,8 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	glGenBuffers(1, vboActual);
 	glBindBuffer(GL_ARRAY_BUFFER, *vboActual);
 
-	// Positions
-
-	glBufferData(GL_ARRAY_BUFFER, (sizeof(float) * 3 + sizeof(float) * 2)*src_mesh->mNumVertices, nullptr, GL_STATIC_DRAW);
+	// Vertices & texture coords & normals
+	glBufferData(GL_ARRAY_BUFFER, (sizeof(float) * 3 + sizeof(float) * 2 + sizeof(float) * 3)*src_mesh->mNumVertices, nullptr, GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 3 * src_mesh->mNumVertices, src_mesh->mVertices);
 
 	math::float2* texture_coords = (math::float2*)glMapBufferRange(GL_ARRAY_BUFFER, sizeof(float) * 3 * src_mesh->mNumVertices,
@@ -44,9 +48,20 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 		texture_coords[i] = math::float2(src_mesh->mTextureCoords[0][i].x, src_mesh->mTextureCoords[0][i].y);
 	}
 
+	mesh->hasNormals = src_mesh->HasNormals();
+
+	if (mesh->hasNormals) glBufferSubData(GL_ARRAY_BUFFER, (sizeof(float) * 3 + sizeof(float) * 2 )*src_mesh->mNumVertices, sizeof(float) * 3 * src_mesh->mNumVertices, src_mesh->mNormals);
+
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	
+	for (int i = 0; i < src_mesh->mNumVertices; ++i) {
+		verticesAux[i] = float3(src_mesh->mVertices[i].x, src_mesh->mVertices[i].y, src_mesh->mVertices[i].z);
+		if (src_mesh->HasNormals()) normalsAux[i] = float3(src_mesh->mNormals[i].x, src_mesh->mNormals[i].y, src_mesh->mNormals[i].z);
+	}
+
+	// indices
 	unsigned* iboActual = &mesh->ibo;
 
 	glGenBuffers(1, iboActual);
@@ -57,7 +72,7 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	unsigned* indices = (unsigned*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0,
 		sizeof(unsigned)*src_mesh->mNumFaces * 3, GL_MAP_WRITE_BIT);
 
-	float3 * indicesAux = new float3[src_mesh->mNumFaces];
+	
 
 	for (unsigned i = 0; i < src_mesh->mNumFaces; ++i)
 	{
@@ -83,21 +98,18 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	mesh->numVertices = src_mesh->mNumVertices;
 	mesh->numFaces = src_mesh->mNumFaces;
 	mesh->numIndexesMesh = src_mesh->mNumFaces * 3;
-
-	float3 * verticesAux = new float3[src_mesh->mNumVertices];
-	
-
-	for (int i = 0; i < src_mesh->mNumVertices; ++i) 
-		verticesAux[i] = float3(src_mesh->mVertices[i].x, src_mesh->mVertices[i].y, src_mesh->mVertices[i].z);
 	
 	mesh->vertices = verticesAux;
 	mesh->indices = indicesAux;
+	mesh->normals = normalsAux;
 
 	sprintf(b, ">Mesh loaded \n");
 	App->menu->console.AddLog(b);
 	sprintf(b, "Number of vertices: %u \n", mesh->numVertices);
 	App->menu->console.AddLog(b);
 	sprintf(b, "Number of faces: %u \n", mesh->numFaces);
+	App->menu->console.AddLog(b);
+	sprintf(b, "Has normals: %i \n", mesh->hasNormals);
 	App->menu->console.AddLog(b);
 
 	

@@ -32,6 +32,7 @@ ComponentMesh::~ComponentMesh()
 	App->renderer->DeleteMesh(this->UID);
 	delete[] mesh.vertices;
 	delete[] mesh.indices;
+	delete[] mesh.normals;
 }
 
 void ComponentMesh::Save(JSON_Value* componentsJSON) {
