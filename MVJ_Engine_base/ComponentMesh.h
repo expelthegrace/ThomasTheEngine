@@ -23,8 +23,10 @@ struct Mesh {
 	unsigned numVertices;
 	unsigned numFaces;
 	unsigned vao;
+	unsigned numTexCoords;
 	unsigned* buffer = new unsigned[10];
-	float3* vertices;
+	float3 * vertices;
+	float3 * indices;
 
 
 };

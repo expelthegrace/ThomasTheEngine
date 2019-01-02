@@ -57,9 +57,13 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	unsigned* indices = (unsigned*)glMapBufferRange(GL_ELEMENT_ARRAY_BUFFER, 0,
 		sizeof(unsigned)*src_mesh->mNumFaces * 3, GL_MAP_WRITE_BIT);
 
+	float3 * indicesAux = new float3[src_mesh->mNumFaces];
+
 	for (unsigned i = 0; i < src_mesh->mNumFaces; ++i)
 	{
 		assert(src_mesh->mFaces[i].mNumIndices == 3);
+
+		indicesAux[i] = float3(src_mesh->mFaces[i].mIndices[0], src_mesh->mFaces[i].mIndices[1], src_mesh->mFaces[i].mIndices[2]);
 
 		*(indices++) = src_mesh->mFaces[i].mIndices[0];
 		*(indices++) = src_mesh->mFaces[i].mIndices[1];
@@ -74,17 +78,20 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	//ComponentMaterial* compMat = (ComponentMaterial*)meshComp->my_go->components[index - numMaterials + src_mesh->mMaterialIndex];
 	ComponentMaterial* compMat = GO->material;
 
+	mesh->numTexCoords = src_mesh->mNumVertices;
 	mesh->materialIndex = compMat->material;
 	mesh->numVertices = src_mesh->mNumVertices;
 	mesh->numFaces = src_mesh->mNumFaces;
 	mesh->numIndexesMesh = src_mesh->mNumFaces * 3;
 
 	float3 * verticesAux = new float3[src_mesh->mNumVertices];
+	
 
 	for (int i = 0; i < src_mesh->mNumVertices; ++i) 
 		verticesAux[i] = float3(src_mesh->mVertices[i].x, src_mesh->mVertices[i].y, src_mesh->mVertices[i].z);
 	
 	mesh->vertices = verticesAux;
+	mesh->indices = indicesAux;
 
 	sprintf(b, ">Mesh loaded \n");
 	App->menu->console.AddLog(b);
