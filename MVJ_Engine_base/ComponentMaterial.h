@@ -2,20 +2,30 @@
 #define _COMPMATERIAL_
 
 #include "Component.h"
+#include <string>
+
+class GameObject;
+
 class ComponentMaterial :
 	public Component
 {
 public:
-	ComponentMaterial();
-	ComponentMaterial(unsigned material);
+	ComponentMaterial(GameObject * my_go);
+	ComponentMaterial(GameObject * my_go, unsigned material);
 	~ComponentMaterial();
+
+	void Save(JSON_Value* componentsJSON) override;
+	void Load(JSON_Value* componentJSON) override;
 
 
 public:
 	unsigned texture;
-	float diffuse_k = 0.5f;
+	float diffuse_k = 1.f;
 	float specular_k = 0.5f;
 	float shininess = 64.f;
+
+	std::string path = "";
+	unsigned idMaterial = 0;
 
 };
 

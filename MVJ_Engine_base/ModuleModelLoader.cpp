@@ -88,10 +88,10 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	int numMaterials = sceneActual->mNumMaterials;
+	//int numMaterials = sceneActual->mNumMaterials;
 	//int index = meshComp->my_go->components.size()  - idMesh;
 	//ComponentMaterial* compMat = (ComponentMaterial*)meshComp->my_go->components[index - numMaterials + src_mesh->mMaterialIndex];
-	ComponentMaterial* compMat = GO->material;
+	//ComponentMaterial* compMat = GO->material;
 
 	mesh->numTexCoords = src_mesh->mNumVertices;
 	//mesh->texture = compMat->texture; // change

@@ -96,11 +96,11 @@ bool ModuleScene::Init() {
 	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa1);
 
-	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
-	quadTree->Insert(casa2);
+	//GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
+	//quadTree->Insert(casa2);
 
-	GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
-	quadTree->Insert(casa3);
+	//GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
+	//quadTree->Insert(casa3);
 
 	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
 	gameObjects[camObject->UID] = camObject;

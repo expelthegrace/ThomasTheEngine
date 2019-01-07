@@ -463,6 +463,7 @@ update_status ModuleMenu::Inspector() {
 			ImGui::SliderFloat("Specular_k", &GO_act->material->specular_k, 0, 1);
 			ImGui::SliderFloat("Shininess", &GO_act->material->shininess, 1, 254);
 
+			ImGui::Text("NUm materials: %i", GO_act->GetComponents(MATERIAL).size());
 
 
 		/*	char* titleTexture = new char[50];		

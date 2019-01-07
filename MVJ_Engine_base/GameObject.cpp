@@ -5,6 +5,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "ComponentMaterial.h"
 #include "ComponentBB.h"
 #include "JSONManager.h"
 #include "ModuleScene.h"
@@ -133,6 +134,12 @@ Component* GameObject::CreateComponent(type_comp type) {
 		BB = new ComponentBB(this);
 		itsNew = true;
 		ret = BB;
+
+		break;
+	case type_comp::MATERIAL:
+		material = new ComponentMaterial(this);
+		itsNew = true;
+		ret = material;
 
 		break;
 	

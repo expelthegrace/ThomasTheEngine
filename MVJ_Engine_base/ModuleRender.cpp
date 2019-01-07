@@ -62,7 +62,9 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, 
 
 ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int idMaterial, char* path) {
 	unsigned mat = App->modelLoader->GenerateMaterial(idMaterial, path);
-	ComponentMaterial* materialComp = new ComponentMaterial(mat);
+	ComponentMaterial* materialComp = new ComponentMaterial(my_go, mat);
+	materialComp->idMaterial = idMaterial;
+	materialComp->path = path;
 
 	return materialComp;
 }

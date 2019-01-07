@@ -47,14 +47,7 @@ void ComponentMesh::Save(JSON_Value* componentsJSON) {
 
 void ComponentMesh::Load(JSON_Value* componentJSON) {
 	path = componentJSON->getString("Path");
-
 	idMesh = componentJSON->getInt("idMesh");
-
-	//first generate material, this will be moved to the ComponentMaterial
-	unsigned mat = App->modelLoader->GenerateMaterial(idMesh, path.c_str());
-	ComponentMaterial* materialComp = new ComponentMaterial(mat);
-	my_go->material = materialComp;
-	my_go->components.push_back(materialComp);
 
 	//Load mesh
 	App->modelLoader->GenerateMesh(my_go, idMesh, this, path.c_str());
