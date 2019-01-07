@@ -16,6 +16,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentCamera.h"
+#include "ComponentMaterial.h"
 #include <vector>
 
 
@@ -447,32 +448,32 @@ update_status ModuleMenu::Inspector() {
 		
 	}
 
-	std::vector<Component*> meshes = GO_act->GetComponents(MESH);
-	for (int i = 0; i < meshes.size(); ++i) {
-		ComponentMesh* meshact = (ComponentMesh*)meshes[i];
-
-		ImGui::PushID(i);
+	if (GO_act->mesh != nullptr) {	
 		if (ImGui::CollapsingHeader("Mesh"), true)
 		{
-			ImGui::Text("Number of triangles: %i \n", meshact->mesh.numFaces);
-			ImGui::PushID(i + 1);
-			ImGui::Checkbox("Draw mesh", &(meshact->active));
-			ImGui::PopID();			
+			ImGui::Text("Number of triangles: %i \n", GO_act->mesh->mesh.numFaces);
+			ImGui::PushID("Mesh__");
+			ImGui::Checkbox("Draw mesh", &(GO_act->mesh->active));
+			ImGui::PopID();
 		}
-		ImGui::PopID();
+
+		if (ImGui::CollapsingHeader("Material"))
+		{
+			ImGui::SliderFloat("Diffuse_k",  &GO_act->material->diffuse_k, 0, 1);
+			ImGui::SliderFloat("Specular_k", &GO_act->material->specular_k, 0, 1);
+			ImGui::SliderFloat("Shininess", &GO_act->material->shininess, 1, 254);
+
+
+
+		/*	char* titleTexture = new char[50];		
+			meshAux = (ComponentMesh*)comps[i];
+			sprintf(titleTexture, "Draw texture %i", i);
+			ImGui::Checkbox(titleTexture, &meshAux->renderTexture);*/
+			
+		}
 	}
 
-	if (ImGui::CollapsingHeader("Texture"))
-	{
-		std::vector<Component*> comps = GO_act->GetComponents(MESH);
-		ComponentMesh* meshAux;
-		char* titleTexture = new char[50];
-		for (int i = 0; i < comps.size(); ++i) {		
-			meshAux = (ComponentMesh*) comps[i];		
-			sprintf(titleTexture, "Draw texture %i", i);
-			ImGui::Checkbox(titleTexture, &meshAux->renderTexture);
-		}	
-	}
+	
 
 	ImGui::End();
 	return UPDATE_CONTINUE;

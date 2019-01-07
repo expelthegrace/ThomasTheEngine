@@ -11,9 +11,12 @@ public:
 	~ComponentMaterial();
 
 
-
 public:
-	unsigned material;
+	unsigned texture;
+	float diffuse_k = 0.5f;
+	float specular_k = 0.5f;
+	float shininess = 64.f;
+
 };
 
 #endif

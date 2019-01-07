@@ -16,25 +16,25 @@ vec3 lightDirection = vec3 (0, -1, 0);
 vec3 lightPosition  = vec3 (0, 1, 5);
 vec3 lightAmbient = vec3(0.2, 0.2, 0.2);
 
-vec3 materialDiffuseReflectances = vec3 (1);
-vec3 materialSpecularReflectances = vec3 (1);
-vec3 materialAmbientReflectances = vec3 (1);
-uniform float u_matShininess = 1;
+uniform float k_diffuse;
+uniform float k_specular;
+uniform float u_matShininess;
+
 
 vec3 BlinPhong(vec3 L, vec3 V, vec3 N, vec3 HD, vec3 diffuseColor) {
 	//Diffuse = Dirlight · Normalsurface · Colorsurface
 	float diffuseTerm = clamp(dot(N, L), 0, 1) ;
-	vec3 diffuse =  materialDiffuseReflectances * 1 * diffuseTerm;
+	vec3 diffuse =  vec3(k_diffuse) * diffuseTerm;
 
 	//Specular = (Half · Normalsurface)^shininess
 	float specularTerm = 0;
 
-	float sp  = max(dot(N, HD), 0.0);
+	float sp  = max(dot(V, HD), 0.0);
 	if(sp > 0)
 	{
 		specularTerm = pow(sp, u_matShininess);
 	}
-	vec3 specular = 1 * materialSpecularReflectances * specularTerm;
+	vec3 specular =  vec3(k_specular) * specularTerm;
 
 	//Ambient
 	vec3 ambient =  lightAmbient * 1;

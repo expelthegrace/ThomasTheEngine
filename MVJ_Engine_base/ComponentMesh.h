@@ -19,7 +19,7 @@ struct Mesh {
 	unsigned vbo;
 	unsigned ibo;
 	unsigned numIndexesMesh;
-	unsigned materialIndex;
+	//unsigned texture;
 	unsigned numVertices;
 	unsigned numFaces;
 	unsigned vao;

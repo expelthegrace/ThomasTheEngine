@@ -94,7 +94,7 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	ComponentMaterial* compMat = GO->material;
 
 	mesh->numTexCoords = src_mesh->mNumVertices;
-	mesh->materialIndex = compMat->material;
+	//mesh->texture = compMat->texture; // change
 	mesh->numVertices = src_mesh->mNumVertices;
 	mesh->numFaces = src_mesh->mNumFaces;
 	mesh->numIndexesMesh = src_mesh->mNumFaces * 3;

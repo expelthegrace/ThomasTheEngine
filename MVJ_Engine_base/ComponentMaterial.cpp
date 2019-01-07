@@ -5,9 +5,9 @@ ComponentMaterial::ComponentMaterial()
 	UID = App->generateUID();
 }
 
-ComponentMaterial::ComponentMaterial(unsigned material)
+ComponentMaterial::ComponentMaterial(unsigned texture)
 {
-	this->material = material;
+	this->texture = texture;
 }
 
 

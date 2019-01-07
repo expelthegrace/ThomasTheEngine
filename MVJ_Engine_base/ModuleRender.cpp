@@ -133,10 +133,17 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 					"view"), 1, GL_TRUE, &App->camera->view[0][0]);
 				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
-
 				
 				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"viewPosition"), 1, &App->camera->frustum.pos[0]);
+
+				//Material
+				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"k_diffuse"), 1, &meshComp->my_go->material->diffuse_k);
+				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"k_specular"), 1, &meshComp->my_go->material->specular_k);
+				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"u_matShininess"), 1, &meshComp->my_go->material->shininess);
 
 				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
 				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
@@ -154,7 +161,8 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 				unsigned numIndexesActual = meshActual.numIndexesMesh;
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
+				//glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
+				glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->texture);
 				glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
 
 				glEnableVertexAttribArray(0);
@@ -193,6 +201,14 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"viewPosition"), 1, &cameraComp->frustum.pos[0]);
 
+				//Material
+				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"k_diffuse"), 1, &meshComp->my_go->material->diffuse_k);
+				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"k_specular"), 1, &meshComp->my_go->material->specular_k);
+				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"u_matShininess"), 1, &meshComp->my_go->material->shininess);
+
 				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
 				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
 
@@ -204,7 +220,9 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 				unsigned numIndexesActual = meshActual.numIndexesMesh;
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
+				//glBindTexture(GL_TEXTURE_2D, meshComp->mesh.texture); // change
+				glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->texture);
+
 				glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
 
 				glEnableVertexAttribArray(0);
