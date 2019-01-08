@@ -30,7 +30,9 @@ public:
 
 	bool cameraChanged = true;
 
-	
+private:
+	float3 initialFront = math::float3(0, 0, -1);
+	float3 initialUp    = math::float3(0, 1, 0);
 };
 
 #endif

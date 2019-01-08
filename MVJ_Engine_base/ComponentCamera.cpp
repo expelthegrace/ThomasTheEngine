@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "ComponentTransform.h"
 #include "JSONManager.h"
+#include "debugdraw.h"
 
 ComponentCamera::ComponentCamera(GameObject* my_go)
 {
@@ -20,8 +21,8 @@ ComponentCamera::ComponentCamera(GameObject* my_go)
 
 	frustum.type = FrustumType::PerspectiveFrustum;
 	frustum.pos = my_go->transform->globalPosition;
-	frustum.front = math::float3(0, 0, -1);
-	frustum.up = math::float3(0, 1, 0);
+	frustum.front = initialFront;
+	frustum.up = initialUp;
 	frustum.nearPlaneDistance = 0.1f;
 	frustum.farPlaneDistance = 100.0f;
 	frustum.verticalFov = math::pi / 4.0f;
@@ -44,12 +45,19 @@ update_status ComponentCamera::Update() {
 		UpdateFrustum();
 		cameraChanged = false;
 	}
+
+	const ddVec3 boxColor = { 0.2f, 0.8f, 0.8f };
+	dd::frustum( (projection * view).Inverted(), boxColor);
+	
 	return UPDATE_CONTINUE;
 }
 
 void ComponentCamera::UpdateFrustum() {
 
 	frustum.pos = my_go->transform->globalPosition;
+
+	frustum.front = (my_go->transform->rotation * initialFront).Normalized();
+	frustum.up = (my_go->transform->rotation * initialUp).Normalized();
 
 	w = App->camera->editorWidth;
 	h = App->camera->editorHeight;

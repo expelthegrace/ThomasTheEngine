@@ -337,7 +337,7 @@ void ModuleRender::DrawCameras() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-		BROFILER_CATEGORY("Render Meshes Main camera", Profiler::Color::Orchid);
+		BROFILER_CATEGORY("Render Meshes game cameras", Profiler::Color::Orchid);
 		for (int iMesh = 0; iMesh < meshComponents.size(); ++iMesh) if (
 			meshComponents[iMesh]->active &&
 			meshComponents[iMesh]->avaliable &&

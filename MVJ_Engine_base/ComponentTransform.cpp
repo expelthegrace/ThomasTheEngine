@@ -56,12 +56,17 @@ void ComponentTransform::UpdateTransform(bool updateChilds) {
 		}
 		else globalPosition = position;
 
+		// Update BB
 		my_go->BB->UpdateBB();
+
+		//Update Camera components
 		std::vector<Component*> comps = my_go->GetComponents(CAMERA);
 		for (int i = 0; i < comps.size(); ++i) ((ComponentCamera*)comps[i])->UpdateFrustum();
 
+		//Update children
 		for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->UpdateTransform(true);
 
+		//Update QuadTree
 		App->scene->quadTree->MoveGO(this->my_go, lastQT);
 
 		lastQT = nullptr;
