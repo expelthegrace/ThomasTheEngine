@@ -23,8 +23,8 @@ ComponentCamera::ComponentCamera(GameObject* my_go)
 	frustum.pos = my_go->transform->globalPosition;
 	frustum.front = initialFront;
 	frustum.up = initialUp;
-	frustum.nearPlaneDistance = 0.1f;
-	frustum.farPlaneDistance = 100.0f;
+	frustum.nearPlaneDistance = 0.1f * App->GameScale;
+	frustum.farPlaneDistance = 100.0f * App->GameScale;
 	frustum.verticalFov = math::pi / 4.0f;
 	
 	w = App->camera->editorWidth;
@@ -36,6 +36,14 @@ ComponentCamera::ComponentCamera(GameObject* my_go)
 	App->renderer->cameras.push_back(this);
 
 	if (App->scene->mainCamera == nullptr) App->scene->mainCamera = this;
+}
+
+void ComponentCamera::Reset() {
+	frustum.nearPlaneDistance = 0.1f * App->GameScale;
+	frustum.farPlaneDistance = 100.0f * App->GameScale;
+
+	UpdateFrustum();
+
 }
 
 update_status ComponentCamera::Update() {
@@ -78,6 +86,15 @@ void ComponentCamera::Save(JSON_Value* componentsJSON) {
 
 	JSON_Value* componentJSON = componentsJSON->createValue();
 	componentJSON->addInt("Type", type);
+	componentJSON->addFloat("NearPlane", frustum.nearPlaneDistance);
+	componentJSON->addFloat("FarPlane",  frustum.farPlaneDistance);
 	
 	componentsJSON->addValue("Camera", componentJSON);
+}
+
+void ComponentCamera::Load(JSON_Value* componentJSON) {
+
+	frustum.nearPlaneDistance = componentJSON->getFloat("NearPlane");
+	frustum.farPlaneDistance = componentJSON->getFloat("FarPlane");
+
 }

@@ -312,22 +312,17 @@ update_status ModuleMenu::Configuration() {
 		ImGui::Checkbox("Show grid", &App->renderer->showGrid);
 		ImGui::Checkbox("Show quadtree", &App->scene->showQuad);
 		ImGui::NewLine();
-
+		ImGui::Text("Game Scale");
+		ImGui::SameLine();
+		if (ImGui::Button("Reset scale")) {
+			App->GameScale = 1.f;
+			App->camera->UpdateFrustum();
+		}
+		ImGui::PushID("GameScale");
+		if (ImGui::SliderFloat("", &App->GameScale, 0.1f, 200.f)) App->camera->UpdateFrustum();
+		ImGui::PopID();
 	}
 
-	if (ImGui::CollapsingHeader("Camera"))
-	{
-		ImGui::BulletText("Camera position: ( %f, %f, %f )", App->camera->camPos.x, App->camera->camPos.y, App->camera->camPos.z);
-		ImGui::BulletText("Up directions: ( %f, %f, %f )", App->camera->up.x, App->camera->up.y, App->camera->up.z);
-		ImGui::BulletText("Forward directions: ( %f, %f, %f )", App->camera->fwd.x, App->camera->fwd.y, App->camera->fwd.z);
-		ImGui::BulletText("Side directions: ( %f, %f, %f )", App->camera->side.x, App->camera->side.y, App->camera->side.z);
-		ImGui::NewLine();
-		ImGui::InputFloat("Near Plane", &App->camera->frustum.nearPlaneDistance);
-		ImGui::InputFloat("Far Plane", &App->camera->frustum.farPlaneDistance);
-		ImGui::NewLine();
-	
-
-	}
 	if (ImGui::CollapsingHeader("Window"))
 	{
 		int lastW = App->camera->screenWidth;
@@ -463,16 +458,32 @@ update_status ModuleMenu::Inspector() {
 			ImGui::SliderFloat("Specular_k", &GO_act->material->specular_k, 0, 1);
 			ImGui::SliderFloat("Shininess", &GO_act->material->shininess, 1, 254);
 
-			ImGui::Text("NUm materials: %i", GO_act->GetComponents(MATERIAL).size());
-
-
-		/*	char* titleTexture = new char[50];		
-			meshAux = (ComponentMesh*)comps[i];
-			sprintf(titleTexture, "Draw texture %i", i);
-			ImGui::Checkbox(titleTexture, &meshAux->renderTexture);*/
+			ImGui::Text("Num materials: %i", GO_act->GetComponents(MATERIAL).size());
 			
 		}
 	}
+
+	for (int i = 0; i < GO_act->components.size(); ++i) {
+
+		switch (GO_act->components[i]->type) {
+		case (CAMERA):
+			if (ImGui::CollapsingHeader("Camera"))
+			{
+				ComponentCamera * camComp = (ComponentCamera*)GO_act->components[i];
+				bool camCompChanged = false;
+
+				if (ImGui::Button("Reset")) camComp->Reset();
+				if (ImGui::SliderFloat("Near", &camComp->frustum.nearPlaneDistance, 0, App->GameScale * 100.f)) camCompChanged = true;
+				if (ImGui::SliderFloat("Far", &camComp->frustum.farPlaneDistance, 0, 100.f * App->GameScale * 3.f))    camCompChanged = true;
+
+				if (camCompChanged) camComp->UpdateFrustum();
+				break;
+			}
+
+		}
+
+	}
+
 
 	
 

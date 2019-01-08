@@ -309,12 +309,12 @@ void ModuleRender::DrawGrid() {
 	if (showGrid) {
 		// Grid
 		const float3 white2 = { 1.f,1.f,1.f };
-		dd::xzSquareGrid(-100, 100, 0, 1, white2);
+		dd::xzSquareGrid(-100 * App->GameScale, 100 * App->GameScale, 0, App->GameScale, white2);
 
 	}
 	// Center Axis
 	const float4x4 identity_mat = float4x4::identity;
-	dd::axisTriad(identity_mat, 0.2f, 4.0f);
+	dd::axisTriad(identity_mat, 0.2f * App->GameScale, 4.0f * App->GameScale);
 
 	glUseProgram(0);
 

@@ -17,6 +17,10 @@ public:
 	void UpdateFrustum();
 	update_status Update() override;
 	void Save(JSON_Value* componentsJSON) override;
+	void Load(JSON_Value* componentJSON) override;
+
+
+	void Reset();
 
 
 public:

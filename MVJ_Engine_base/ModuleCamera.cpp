@@ -44,8 +44,8 @@ bool  ModuleCamera::Init() { // ------------------------------------------------
 	frustum.pos = camPos;//cam;
 	frustum.front = fwd.Normalized();
 	frustum.up = up.Normalized();
-	frustum.nearPlaneDistance = 0.1f;
-	frustum.farPlaneDistance = 100.0f;
+	frustum.nearPlaneDistance = 0.1f * App->GameScale;
+	frustum.farPlaneDistance = 100.0 * App->GameScale;
 	frustum.verticalFov = math::pi / 4.0f;
 
 	screenWidth = SCREEN_WIDTH;
@@ -83,9 +83,9 @@ update_status   ModuleCamera::Update() {
 	//const Uint8 *keyboard = NULL;
 	//keyboard listeners
 	if (App->input->keyboard[SDL_SCANCODE_LSHIFT]) {
-		movementSpeed = speed2;
+		movementSpeed = speed2 * App->GameScale;
 	}
-	else movementSpeed = speed1;
+	else movementSpeed = speed1 * App->GameScale;
 	
 	if (App->input->keyboard[SDL_SCANCODE_F]) FocusModel();
 	
@@ -238,6 +238,9 @@ void ModuleCamera::UpdateFrustum() {
 	frustum.pos = camPos;
 	frustum.front = fwd.Normalized();
 	frustum.up = up.Normalized();
+
+	frustum.nearPlaneDistance = 0.1f * App->GameScale;
+	frustum.farPlaneDistance = 100.0 * App->GameScale;
 
 	float aspect = (float)editorWidth / (float)editorHeight;
 	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) *aspect);
