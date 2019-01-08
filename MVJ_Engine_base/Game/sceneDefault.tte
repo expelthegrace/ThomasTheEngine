@@ -3,7 +3,7 @@
         {
             "UID": 580631880,
             "ParentUID": 0,
-            "Name": "Casa1ııııİİİİİİİ¡ã×§ıııı&š\u000F‡",
+            "Name": "Casa1ııııİİİİİİİ¡ã×§ıııı&š\u000F‡ıııı'×£º",
             "Active": true,
             "Components": [
                 {
@@ -63,7 +63,7 @@
         {
             "UID": 1254573772,
             "ParentUID": 580631880,
-            "Name": "Untitledııııİİİİr\u000Be¶ıııı†œo„ııııõÆÔ",
+            "Name": "Untitledııııİİİİr\u000Be¶ıııı†œo„ııııõÆÔıııı¦¦,£",
             "Active": true,
             "Components": [
                 {
@@ -122,7 +122,7 @@
                     "Type": 3,
                     "Path": "BakerHouse.fbx",
                     "idMaterial": 1,
-                    "diffuse_k": 1.0,
+                    "diffuse_k": 0.0,
                     "specular_k": 1.0,
                     "shininess": 1.0
                 },
@@ -136,7 +136,7 @@
         {
             "UID": 3419673293,
             "ParentUID": 580631880,
-            "Name": "Untitled.001ııııV\u000BA¶ııııœW„ııııoÀ^ƒ",
+            "Name": "Untitled.001ııııV\u000BA¶ııııœW„ııııoÀ^ƒıııı\u001C¡ªœ",
             "Active": true,
             "Components": [
                 {
@@ -195,9 +195,9 @@
                     "Type": 3,
                     "Path": "BakerHouse.fbx",
                     "idMaterial": 0,
-                    "diffuse_k": 1.0,
-                    "specular_k": 1.0,
-                    "shininess": 64.0
+                    "diffuse_k": 0.703000009059906,
+                    "specular_k": 0.8700000047683716,
+                    "shininess": 24.83300018310547
                 },
                 {
                     "Type": 2,
@@ -209,7 +209,7 @@
         {
             "UID": 2711899577,
             "ParentUID": 0,
-            "Name": "Casa3ıııııııı",
+            "Name": "Casa3ıııııııııııı¯\u0015¼uf\u0006\u0004„\u0018ñ¦„\\\u0003Œ\u0001",
             "Active": true,
             "Components": [
                 {
@@ -269,7 +269,7 @@
         {
             "UID": 2347362263,
             "ParentUID": 2711899577,
-            "Name": "Untitledııııııııìöb²ııııÎ™'‰",
+            "Name": "Untitledııııııııìöb²ııııÎ™'‰ııııÁ©A¼",
             "Active": true,
             "Components": [
                 {
@@ -342,7 +342,7 @@
         {
             "UID": 3057245534,
             "ParentUID": 2711899577,
-            "Name": "Untitled.001ııııØ\bÏ²ııııöš?†ıııı)0",
+            "Name": "Untitled.001ııııØ\bÏ²ııııöš?†ıııı)0ıııı",
             "Active": true,
             "Components": [
                 {
@@ -415,7 +415,7 @@
         {
             "UID": 3042623671,
             "ParentUID": 0,
-            "Name": "Casa2ııııİİİıııı‘ó‡·",
+            "Name": "Casa2ııııİİİıııı‘ó‡·ııııD\u00181¦ßt\u0003Œ0ñ \npŸ­\u0004",
             "Active": true,
             "Components": [
                 {
@@ -475,7 +475,7 @@
         {
             "UID": 804595420,
             "ParentUID": 3042623671,
-            "Name": "Untitledııııİİİİë\tÜ³ııııv¿…ıııı;ı\u0012†",
+            "Name": "Untitledııııİİİİë\tÜ³ııııv¿…ıııı;ı\u0012†ııııJ¦À£",
             "Active": true,
             "Components": [
                 {
@@ -548,7 +548,7 @@
         {
             "UID": 825548515,
             "ParentUID": 3042623671,
-            "Name": "Untitled.001ıııı\n\t}´ıııı†o…ııııW,v·",
+            "Name": "Untitled.001ıııı\n\t}´ıııı†o…ııııW,v·ıııı\\ ê",
             "Active": true,
             "Components": [
                 {
@@ -621,7 +621,7 @@
         {
             "UID": 3494826657,
             "ParentUID": 0,
-            "Name": "ObjectCameraııııEöû²ıııı\u0016–ßŠ",
+            "Name": "ObjectCameraııııEöû²ıııı\u0016–ßŠıııı\u0001èı",
             "Active": true,
             "Components": [
                 {

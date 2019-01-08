@@ -40,7 +40,7 @@ void ComponentMaterial::Load(JSON_Value* componentJSON) {
 	path = componentJSON->getString("Path");
 	idMaterial = componentJSON->getInt("idMaterial");
 	texture = App->modelLoader->GenerateMaterial(idMaterial, path.c_str());
-	diffuse_k = componentJSON->getFloat("diffuse_K");
+	diffuse_k = componentJSON->getFloat("diffuse_k");
 	specular_k = componentJSON->getFloat("specular_k");
 	shininess = componentJSON->getFloat("shininess");
 
