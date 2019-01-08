@@ -118,7 +118,7 @@ update_status   ModuleCamera::Update() {
 	}
 
 	if (App->input->mouseWheel != 0) {
-		camPos += fwd * App->input->mouseWheel * 1.1f;
+		camPos += fwd * App->input->mouseWheel * 1.1f * App->GameScale;
 		cameraChanged = true;
 	}
 

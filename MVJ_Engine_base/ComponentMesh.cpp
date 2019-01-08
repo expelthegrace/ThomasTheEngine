@@ -30,9 +30,10 @@ ComponentMesh::ComponentMesh(GameObject* my_go, const Mesh& mesh, float3* vertic
 ComponentMesh::~ComponentMesh()
 {	
 	App->renderer->DeleteMesh(this->UID);
-	delete[] mesh.vertices;
-	delete[] mesh.indices;
-	delete[] mesh.normals;
+	RELEASEARRAY(mesh.vertices);
+	RELEASEARRAY(mesh.indices);
+	RELEASEARRAY(mesh.normals);
+
 }
 
 void ComponentMesh::Save(JSON_Value* componentsJSON) {

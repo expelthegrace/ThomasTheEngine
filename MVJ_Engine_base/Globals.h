@@ -14,6 +14,15 @@ void log(const char file[], int line, const char* format, ...);
 	  x = NULL;              \
 	    }                      \
     }
+
+#define RELEASEARRAY( x ) \
+    {                        \
+    if( x != NULL )        \
+	    {                      \
+      delete[] x;            \
+	  x = NULL;              \
+	    }                      \
+    }
 enum update_status
 {
 	UPDATE_CONTINUE = 1,

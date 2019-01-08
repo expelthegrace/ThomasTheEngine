@@ -41,12 +41,11 @@ GameObject::GameObject(char * name, bool active, GameObject * parent)
 GameObject::~GameObject()
 {
 	//delete name;
-	for (int i = 0; i < components.size(); ++i) delete components[i];
-	for (int i = 0; i < children.size(); ++i) delete children[i];
+	for (int i = 0; i < components.size(); ++i) RELEASE( components[i]);
+	for (int i = 0; i < children.size(); ++i) RELEASE( children[i]);
 
 	components.clear();
 	children.clear();
-
 	
 }
 

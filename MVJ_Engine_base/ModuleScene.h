@@ -40,7 +40,7 @@ public:
 	Quadtree* quadTree;
 	bool showQuad = true;
 	ComponentCamera* mainCamera = nullptr;
-	char* scenePath = "sceneDefault.tte";
+	char* scenePath = "JSON/sceneDefault.tte";
 
 private:
 	std::map<unsigned, GameObject*> gameObjects;

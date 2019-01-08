@@ -3,7 +3,7 @@
         {
             "UID": 580631880,
             "ParentUID": 0,
-            "Name": "Casa1ııııİİİİİİİ¡ã×§ıııı&š\u000F‡ıııı'×£º",
+            "Name": "Casa1ııııİİİİİİİ¡ã×§ıııı&š\u000F‡ıııı'×£ºıııı-î(ıııı¾“\u0014",
             "Active": true,
             "Components": [
                 {
@@ -63,7 +63,7 @@
         {
             "UID": 1254573772,
             "ParentUID": 580631880,
-            "Name": "Untitledııııİİİİr\u000Be¶ıııı†œo„ııııõÆÔıııı¦¦,£",
+            "Name": "Untitledııııİİİİr\u000Be¶ıııı†œo„ııııõÆÔıııı¦¦,£ıııı­ğ\n\fııııŠğF\u0011",
             "Active": true,
             "Components": [
                 {
@@ -136,7 +136,7 @@
         {
             "UID": 3419673293,
             "ParentUID": 580631880,
-            "Name": "Untitled.001ııııV\u000BA¶ııııœW„ııııoÀ^ƒıııı\u001C¡ªœ",
+            "Name": "Untitled.001ııııV\u000BA¶ııııœW„ııııoÀ^ƒıııı\u001C¡ªœıııı)ó¶\u000Fıııı\u0016óÒ\u0012",
             "Active": true,
             "Components": [
                 {
@@ -209,7 +209,7 @@
         {
             "UID": 2711899577,
             "ParentUID": 0,
-            "Name": "Casa3ıııııııııııı¯\u0015¼uf\u0006\u0004„\u0018ñ¦„\\\u0003Œ\u0001",
+            "Name": "Casa3ıııııııııııı¯\u0015¼uf\u0006\u0004„\u0018ñ¦„\\\u0003Œ\u0001ıııııııı\u0004\u0004",
             "Active": true,
             "Components": [
                 {
@@ -269,7 +269,7 @@
         {
             "UID": 2347362263,
             "ParentUID": 2711899577,
-            "Name": "Untitledııııııııìöb²ııııÎ™'‰ııııÁ©A¼",
+            "Name": "Untitledııııııııìöb²ııııÎ™'‰ııııÁ©A¼ııııÑ*²'ııııg“¦\u0014",
             "Active": true,
             "Components": [
                 {
@@ -342,7 +342,7 @@
         {
             "UID": 3057245534,
             "ParentUID": 2711899577,
-            "Name": "Untitled.001ııııØ\bÏ²ııııöš?†ıııı)0ıııı",
+            "Name": "Untitled.001ııııØ\bÏ²ııııöš?†ıııı)0ıııııııı–\u000B¸C–\u000B?ğ¸\fıııı¶ór\u0012`5",
             "Active": true,
             "Components": [
                 {
@@ -414,8 +414,8 @@
         },
         {
             "UID": 3042623671,
-            "ParentUID": 0,
-            "Name": "Casa2ııııİİİıııı‘ó‡·ııııD\u00181¦ßt\u0003Œ0ñ \npŸ­\u0004",
+            "ParentUID": 2711899577,
+            "Name": "Casa2ııııİİİıııı‘ó‡·ııııD\u00181¦ßt\u0003Œ0ñ \npŸ­\u0004ıııııııı¯üä\u0010",
             "Active": true,
             "Components": [
                 {
@@ -436,7 +436,7 @@
                 {
                     "Type": 4,
                     "Position": [
-                        -2.0450000762939455,
+                        -5.453999996185303,
                         0.0,
                         0.0
                     ],
@@ -475,7 +475,7 @@
         {
             "UID": 804595420,
             "ParentUID": 3042623671,
-            "Name": "Untitledııııİİİİë\tÜ³ııııv¿…ıııı;ı\u0012†ııııJ¦À£",
+            "Name": "Untitledııııİİİİë\tÜ³ııııv¿…ıııı;ı\u0012†ııııJ¦À£ıııı7ñ°\rııııŞò\u001A\u0013¸S",
             "Active": true,
             "Components": [
                 {
@@ -548,7 +548,7 @@
         {
             "UID": 825548515,
             "ParentUID": 3042623671,
-            "Name": "Untitled.001ıııı\n\t}´ıııı†o…ııııW,v·ıııı\\ ê",
+            "Name": "Untitled.001ıııı\n\t}´ıııı†o…ııııW,v·ıııı\\ êıııı³ñ<\rıııı²ò\u0013€J",
             "Active": true,
             "Components": [
                 {
@@ -607,7 +607,7 @@
                     "Type": 3,
                     "Path": "BakerHouse.fbx",
                     "idMaterial": 0,
-                    "diffuse_k": 0.0,
+                    "diffuse_k": 0.7540000081062317,
                     "specular_k": 0.5,
                     "shininess": 64.0
                 },
@@ -621,7 +621,7 @@
         {
             "UID": 3494826657,
             "ParentUID": 0,
-            "Name": "ObjectCameraııııEöû²ıııı\u0016–ßŠıııı\u0001èı",
+            "Name": "ObjectCameraııııEöû²ıııı\u0016–ßŠıııı\u0001èııııı*â'ııııD÷~\u0015î",
             "Active": true,
             "Components": [
                 {
