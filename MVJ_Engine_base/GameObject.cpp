@@ -7,6 +7,7 @@
 #include "ComponentCamera.h"
 #include "ComponentMaterial.h"
 #include "ComponentBB.h"
+#include "ComponentLight.h"
 #include "JSONManager.h"
 #include "ModuleScene.h"
 #include "Quadtree.h"
@@ -139,6 +140,11 @@ Component* GameObject::CreateComponent(type_comp type) {
 		material = new ComponentMaterial(this);
 		itsNew = true;
 		ret = material;
+
+		break;
+	case type_comp::LIGHT:
+		ret = new ComponentLight(this);
+		itsNew = true;
 
 		break;
 	

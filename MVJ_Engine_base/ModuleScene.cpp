@@ -93,21 +93,25 @@ bool ModuleScene::Init() {
 	float quadTreeSize = 20.0f * App->GameScale;
 	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 2, 8);
 
-	//GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
-	//quadTree->Insert(casa1);
+	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
+	quadTree->Insert(casa1);
 
-	//GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
-	//quadTree->Insert(casa2);
+	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
+	quadTree->Insert(casa2);
 
-	//GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
-	//quadTree->Insert(casa3);
+	GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
+	quadTree->Insert(casa3);
 
-	//GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
-	//gameObjects[camObject->UID] = camObject;
-	//ComponentCamera* camComp = new ComponentCamera(camObject);
-	//camObject->AddComponent(camComp);
+	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
+	gameObjects[camObject->UID] = camObject;
+	ComponentCamera* camComp = new ComponentCamera(camObject);
+	camObject->AddComponent(camComp);
 
-	LoadScene();
+	GameObject* lightObject = new GameObject("ObjectLight", true, ROOT);
+	gameObjects[lightObject->UID] = lightObject;
+	lightObject->CreateComponent(LIGHT);
+
+	//LoadScene();
 	
 	return true;
 }
@@ -135,12 +139,13 @@ GameObject* ModuleScene::getGOByID(unsigned uid) {
 
 void ModuleScene::ClearScene() {
 	quadTree->Clear();
-	for (int i = 0; i < ROOT->children.size(); ++i) delete ROOT->children[i];
+	for (int i = 0; i < ROOT->children.size(); ++i) RELEASE( ROOT->children[i]);
 	
 	ROOT->children.clear();
 	gameObjects.clear();
 	GO_selected = ROOT;
 	mainCamera = nullptr;
+	mainLight = nullptr;
 }
 
 void ModuleScene::SaveScene() {

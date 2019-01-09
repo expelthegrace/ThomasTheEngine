@@ -54,8 +54,10 @@ update_status ComponentCamera::Update() {
 		cameraChanged = false;
 	}
 
-	const ddVec3 boxColor = { 0.2f, 0.8f, 0.8f };
-	dd::frustum( (projection * view).Inverted(), boxColor);
+	if (my_go->active) {
+		const ddVec3 boxColor = { 0.2f, 0.8f, 0.8f };
+		dd::frustum((projection * view).Inverted(), boxColor);
+	}
 	
 	return UPDATE_CONTINUE;
 }

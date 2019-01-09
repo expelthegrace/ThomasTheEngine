@@ -8,6 +8,7 @@
 class GameObject;
 class Quadtree;
 class ComponentCamera;
+class ComponentLight;
 
 class ModuleScene :
 	public Module
@@ -40,6 +41,7 @@ public:
 	Quadtree* quadTree;
 	bool showQuad = true;
 	ComponentCamera* mainCamera = nullptr;
+	ComponentLight* mainLight = nullptr;
 	char* scenePath = "JSON/sceneDefault.tte";
 
 private:

@@ -36,7 +36,8 @@ enum type_comp
 	MESH,
 	MATERIAL,
 	TRANSFORM,
-	BB
+	BB,
+	LIGHT
 };
 
 // Configuration -----------

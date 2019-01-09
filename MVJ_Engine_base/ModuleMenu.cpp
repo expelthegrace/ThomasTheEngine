@@ -17,6 +17,7 @@
 #include "ComponentMesh.h"
 #include "ComponentCamera.h"
 #include "ComponentMaterial.h"
+#include "ComponentLight.h"
 #include <vector>
 
 
@@ -479,7 +480,17 @@ update_status ModuleMenu::Inspector() {
 				if (camCompChanged) camComp->UpdateFrustum();
 				break;
 			}
+		case (LIGHT):
+			if (ImGui::CollapsingHeader("Light"))
+			{
+				ComponentLight * lightComp = (ComponentLight*)GO_act->components[i];
+				ImGui::SliderFloat("R",&lightComp->colorLight.x, 0.f, 1.f);
+				ImGui::SliderFloat("G", &lightComp->colorLight.y, 0.f, 1.f);
+				ImGui::SliderFloat("B", &lightComp->colorLight.z, 0.f, 1.f);
+				ImGui::SliderFloat("Instensity", &lightComp->intensity, 0.f, 1.f);
 
+			}
+			break;
 		}
 
 	}
