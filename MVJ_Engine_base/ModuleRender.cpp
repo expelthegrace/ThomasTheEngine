@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
+#include "ComponentLight.h"
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 #include <assimp/material.h>
@@ -125,9 +126,11 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 
 		}
 		else {
-			// If camera is editor camera
+			glUseProgram(App->shaderProgram->programModel);
+
 			if (cameraComp == nullptr) {
-				glUseProgram(App->shaderProgram->programModel);
+				
+				// If camera is editor camera
 
 				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
@@ -135,63 +138,12 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 					"view"), 1, GL_TRUE, &App->camera->view[0][0]);
 				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"proj"), 1, GL_TRUE, &App->camera->projection[0][0]);
-				
+
 				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"viewPosition"), 1, &App->camera->frustum.pos[0]);
-
-				//Material
-				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"k_diffuse"), 1, &meshComp->my_go->material->diffuse_k);
-				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"k_specular"), 1, &meshComp->my_go->material->specular_k);
-				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"u_matShininess"), 1, &meshComp->my_go->material->shininess);
-
-				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
-				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
-
-				if (meshComp->renderTexture) glUniform1i(drawText, 1);
-				else {
-					glUniform1i(drawText, 0);
-					float color[4] = { 0.6, 1, 0.6, 1 };
-					glUniform4fv(color0, 1, color);
-				}
-
-
-				unsigned vboActual = meshComp->mesh.vbo;
-				unsigned numVerticesActual = meshActual.numVertices;
-				unsigned numIndexesActual = meshActual.numIndexesMesh;
-
-				glActiveTexture(GL_TEXTURE0);
-				//glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
-				glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->texture);
-				glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
-
-				glEnableVertexAttribArray(0);
-				glEnableVertexAttribArray(1);
-				glEnableVertexAttribArray(2);
-				glBindBuffer(GL_ARRAY_BUFFER, vboActual);
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
-				glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)( (sizeof(float) * 3 + sizeof(float) * 2)* numVerticesActual));
-
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
-				glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
-
-				glDisableVertexAttribArray(0);
-				glDisableVertexAttribArray(1);
-				glDisableVertexAttribArray(2);
-
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
-				glBindTexture(GL_TEXTURE_2D, 0);
-
-
-				glUseProgram(0);
 			}
-			//If camera is a game camera
 			else {
-				glUseProgram(App->shaderProgram->programModel);
+				// If camera is a game camera
 
 				glUniformMatrix4fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"model"), 1, GL_TRUE, &meshComp->my_go->transform->model[0][0]);
@@ -202,53 +154,71 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 
 				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
 					"viewPosition"), 1, &cameraComp->frustum.pos[0]);
-
-				//Material
-				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"k_diffuse"), 1, &meshComp->my_go->material->diffuse_k);
-				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"k_specular"), 1, &meshComp->my_go->material->specular_k);
-				glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
-					"u_matShininess"), 1, &meshComp->my_go->material->shininess);
-
-				GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
-				GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
-
-				glUniform1i(drawText, 1);
-			
-
-				unsigned vboActual = meshComp->mesh.vbo;
-				unsigned numVerticesActual = meshActual.numVertices;
-				unsigned numIndexesActual = meshActual.numIndexesMesh;
-
-				glActiveTexture(GL_TEXTURE0);
-				//glBindTexture(GL_TEXTURE_2D, meshComp->mesh.texture); // change
-				glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->texture);
-
-				glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
-
-				glEnableVertexAttribArray(0);
-				glEnableVertexAttribArray(1);
-				glEnableVertexAttribArray(2);
-				glBindBuffer(GL_ARRAY_BUFFER, vboActual);
-				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-				glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
-				glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)((sizeof(float) * 3 + sizeof(float) * 2)* numVerticesActual));
-
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
-				glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
-
-				glDisableVertexAttribArray(0);
-				glDisableVertexAttribArray(1);
-				glDisableVertexAttribArray(2);
-
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
-				glBindTexture(GL_TEXTURE_2D, 0);
-
-
-				glUseProgram(0);
 			}
+
+			assert(meshComp->my_go->material != nullptr);
+
+			//Material
+			glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+				"k_diffuse"), 1, &meshComp->my_go->material->diffuse_k);
+			glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+				"k_specular"), 1, &meshComp->my_go->material->specular_k);
+			glUniform1fv(glGetUniformLocation(App->shaderProgram->programModel,
+				"u_matShininess"), 1, &meshComp->my_go->material->shininess);
+
+			// Light
+			if (App->scene->mainLight != nullptr) {
+				/*glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"lightDirection"), 1, &App->scene->mainLight->direction[0]);*/
+				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"lightPosition"), 1, &App->scene->mainLight->position[0]);
+				glUniform3fv(glGetUniformLocation(App->shaderProgram->programModel,
+					"lightAmbient"), 1, &App->scene->mainLight->colorLight_Intensity[0]);
+			}
+
+			GLint drawText = glGetUniformLocation(App->shaderProgram->programModel, "drawTexture");
+			GLint color0 = glGetUniformLocation(App->shaderProgram->programModel, "color0");
+
+			if (meshComp->renderTexture) glUniform1i(drawText, 1);
+			else {
+				glUniform1i(drawText, 0);
+				float color[4] = { 0.6, 1, 0.6, 1 };
+				glUniform4fv(color0, 1, color);
+			}
+
+
+			unsigned vboActual = meshComp->mesh.vbo;
+			unsigned numVerticesActual = meshActual.numVertices;
+			unsigned numIndexesActual = meshActual.numIndexesMesh;
+
+			glActiveTexture(GL_TEXTURE0);
+			//glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
+			glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->texture);
+			glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
+
+			glEnableVertexAttribArray(0);
+			glEnableVertexAttribArray(1);
+			glEnableVertexAttribArray(2);
+			glBindBuffer(GL_ARRAY_BUFFER, vboActual);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * numVerticesActual));
+			glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)( (sizeof(float) * 3 + sizeof(float) * 2)* numVerticesActual));
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshComp->mesh.ibo);
+			glDrawElements(GL_TRIANGLES, numIndexesActual, GL_UNSIGNED_INT, nullptr);
+
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
+			glDisableVertexAttribArray(2);
+
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+
+
+			glUseProgram(0);
+			
+			
 		}
 		
 	} 

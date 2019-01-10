@@ -98,8 +98,10 @@ update_status GameObject::Update() {
 
 	if (lastFrameActive != active) SetActive(active);
 
-	for (int i = 0; i < components.size(); ++i) components[i]->Update();
-	for (int i = 0; i < children.size(); ++i) children[i]->Update();
+	if (active) {
+		for (int i = 0; i < components.size(); ++i) components[i]->Update();
+		for (int i = 0; i < children.size(); ++i) children[i]->Update();
+	}
 
 	return UPDATE_CONTINUE;
 }

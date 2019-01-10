@@ -22,12 +22,11 @@ ComponentLight::~ComponentLight()
 update_status ComponentLight::Update() {
 	position = my_go->transform->globalPosition;
 	
-	direction = (my_go->transform->rotation * initialDirection).Normalized();
-	colorLight = float3(min(colorLight.x * intensity, 1.f), min(colorLight.y * intensity, 1.f), min(colorLight.z * intensity, 1.f));
+	//direction = (my_go->transform->rotation * initialDirection).Normalized();
+	colorLight_Intensity = float3(min(colorLight.x * intensity, 1.f), min(colorLight.y * intensity, 1.f), min(colorLight.z * intensity, 1.f));
 
-	const ddVec3 boxColor = { 0.f, 0.8f, 0.8f };
-	dd::cone(position, direction, boxColor, 0.f * App->GameScale, 0.5f * App->GameScale);
-	//dd::line(position, direction, boxColor);
+	const ddVec3 boxColor = { 0.f, 0.6f, 0.8f };
+	dd::sphere(position, boxColor, 0.7 * App->GameScale);
 
 	return UPDATE_CONTINUE;
 }

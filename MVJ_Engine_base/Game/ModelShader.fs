@@ -12,9 +12,9 @@ uniform vec4 color0;
 
 uniform mat4 view;
 
-vec3 lightDirection = vec3 (0, -1, 0);
-vec3 lightPosition  = vec3 (0, 1, 5);
-vec3 lightAmbient = vec3(0.5);
+//uniform vec3 lightDirection; //= vec3 (0, -1, 0);
+uniform vec3 lightPosition;  //= vec3 (0, 1, 5);
+uniform vec3 lightAmbient; //= vec3(0.5);
 
 uniform float k_diffuse;
 uniform float k_specular;

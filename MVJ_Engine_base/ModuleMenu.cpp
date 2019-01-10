@@ -466,8 +466,7 @@ update_status ModuleMenu::Inspector() {
 
 	for (int i = 0; i < GO_act->components.size(); ++i) {
 
-		switch (GO_act->components[i]->type) {
-		case (CAMERA):
+		if (GO_act->components[i]->type == type_comp::CAMERA){
 			if (ImGui::CollapsingHeader("Camera"))
 			{
 				ComponentCamera * camComp = (ComponentCamera*)GO_act->components[i];
@@ -478,25 +477,21 @@ update_status ModuleMenu::Inspector() {
 				if (ImGui::SliderFloat("Far", &camComp->frustum.farPlaneDistance, 0, 100.f * App->GameScale * 3.f))    camCompChanged = true;
 
 				if (camCompChanged) camComp->UpdateFrustum();
-				break;
 			}
-		case (LIGHT):
+		}
+
+		else if (GO_act->components[i]->type == type_comp::LIGHT) {
 			if (ImGui::CollapsingHeader("Light"))
 			{
 				ComponentLight * lightComp = (ComponentLight*)GO_act->components[i];
-				ImGui::SliderFloat("R",&lightComp->colorLight.x, 0.f, 1.f);
+				ImGui::SliderFloat("R", &lightComp->colorLight.x, 0.f, 1.f);
 				ImGui::SliderFloat("G", &lightComp->colorLight.y, 0.f, 1.f);
 				ImGui::SliderFloat("B", &lightComp->colorLight.z, 0.f, 1.f);
-				ImGui::SliderFloat("Instensity", &lightComp->intensity, 0.f, 1.f);
+				ImGui::SliderFloat("Instensity", &lightComp->intensity, 0.f, 2.f);
 
 			}
-			break;
 		}
-
 	}
-
-
-	
 
 	ImGui::End();
 	return UPDATE_CONTINUE;
