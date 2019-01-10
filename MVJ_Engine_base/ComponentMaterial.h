@@ -5,6 +5,7 @@
 #include <string>
 
 class GameObject;
+class JSON_Value;
 
 class ComponentMaterial :
 	public Component

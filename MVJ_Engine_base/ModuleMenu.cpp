@@ -488,7 +488,7 @@ update_status ModuleMenu::Inspector() {
 				ImGui::SliderFloat("G", &lightComp->colorLight.y, 0.f, 1.f);
 				ImGui::SliderFloat("B", &lightComp->colorLight.z, 0.f, 1.f);
 				ImGui::SliderFloat("Instensity", &lightComp->intensity, 0.f, 2.f);
-
+				if (ImGui::Button("Reset")) lightComp->Reset();
 			}
 		}
 	}

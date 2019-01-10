@@ -4,7 +4,7 @@
 #include "ModuleScene.h"
 #include "Application.h"
 #include "debugdraw.h"
-
+#include "JSONManager.h"
 
 ComponentLight::ComponentLight(GameObject * my_go)
 {
@@ -23,7 +23,7 @@ update_status ComponentLight::Update() {
 	position = my_go->transform->globalPosition;
 	
 	//direction = (my_go->transform->rotation * initialDirection).Normalized();
-	colorLight_Intensity = float3(min(colorLight.x * intensity, 1.f), min(colorLight.y * intensity, 1.f), min(colorLight.z * intensity, 1.f));
+	colorLight_Intensity = float3(colorLight.x * intensity, colorLight.y * intensity, colorLight.z * intensity);
 
 	const ddVec3 boxColor = { 0.f, 0.6f, 0.8f };
 	dd::sphere(position, boxColor, 0.7 * App->GameScale);
@@ -31,3 +31,22 @@ update_status ComponentLight::Update() {
 	return UPDATE_CONTINUE;
 }
 
+void ComponentLight::Reset() {
+	colorLight = { 0.5f, 0.5f, 0.5f };
+	intensity = 1.f;
+}
+
+void ComponentLight::Save(JSON_Value* componentsJSON) {
+	JSON_Value* componentJSON = componentsJSON->createValue();
+	componentJSON->addInt("Type", type);
+	componentJSON->addVector3("colorLight", colorLight);
+	componentJSON->addFloat("Intensity", intensity);
+
+	componentsJSON->addValue("Light", componentJSON);
+}
+
+void ComponentLight::Load(JSON_Value* componentJSON) {
+	colorLight = componentJSON->getVector3("colorLight");
+	intensity  = componentJSON->getFloat("Intensity");
+
+}
