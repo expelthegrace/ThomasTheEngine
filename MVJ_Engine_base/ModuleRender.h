@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "MathGeoLib.h"
 #include <vector>
+#include <string>
 
 
 struct SDL_Texture;

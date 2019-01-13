@@ -26,7 +26,10 @@ public:
 	float shininess = 64.f;
 
 	std::string path = "";
+	/**  idMaterial indexes the mesh that is vinculated with */
 	unsigned idMaterial = 0;
+
+	bool hasTexture = false;
 
 };
 

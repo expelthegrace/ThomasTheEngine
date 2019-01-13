@@ -26,6 +26,7 @@
 #include "Brofiler.h"
 #include "ComponentCamera.h"
 
+using namespace std;
 
 ModuleRender::ModuleRender()
 {
@@ -62,8 +63,9 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, 
 }
 
 ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int idMaterial, char* path) {
-	unsigned mat = App->modelLoader->GenerateMaterial(idMaterial, path);
+	unsigned mat = App->modelLoader->GenerateMaterial(idMaterial, path); 
 	ComponentMaterial* materialComp = new ComponentMaterial(my_go, mat);
+	if (mat != -1) materialComp->hasTexture = true;
 	materialComp->idMaterial = idMaterial;
 	materialComp->path = path;
 
@@ -89,8 +91,11 @@ GameObject* ModuleRender::CreateModel(char * path) {
 		for (int i = 0; i < sceneAct->mNumMeshes; ++i) {
 
 			std::string strAux = sceneAct->mMeshes[i]->mName.C_Str();
+			if (strAux == "") strAux = "Child_" + std::to_string(i);
 			char* nameAux = new char[strAux.length()];
 			strAux.copy(nameAux, strAux.length());
+
+			std::string aa = std::string(nameAux);
 
 			GameObject* child = new GameObject(nameAux, true, rootGO);
 
@@ -192,7 +197,6 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 			unsigned numIndexesActual = meshActual.numIndexesMesh;
 
 			glActiveTexture(GL_TEXTURE0);
-			//glBindTexture(GL_TEXTURE_2D, meshComp->mesh.materialIndex);
 			glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->texture);
 			glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
 

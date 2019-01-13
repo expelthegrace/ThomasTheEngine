@@ -27,14 +27,14 @@ public:
 	bool LoadNewModel(char* path);
 
 	void GenerateMesh(GameObject* GO, int idMesh, ComponentMesh* compMesh, const char* path);
-	unsigned GenerateMaterial(int idMaterial, const char* path);
+	int GenerateMaterial(int idMaterial, const char* path);
 
 	bool LoadBuffers(GameObject*  GO, const aiScene* scene, ComponentMesh* meshComp, int idMesh);
 
 public:
+	char* b = new char[50];
 
-
-	unsigned* vbos;
+	/*unsigned* vbos;
 	unsigned* ibos;
 	unsigned* textures;
 	unsigned* materials;
@@ -43,7 +43,7 @@ public:
 
 	float3 modelRotation, modelScale, modelPosition;
 
-	char* b = new char[50];
+	
 
 	unsigned numMeshes;
 	unsigned numVertices;
@@ -55,7 +55,7 @@ public:
 
 	AABB* boundingBox;
 
-	const aiScene* scene;
+	const aiScene* scene;*/
 
 };
 

@@ -5,7 +5,10 @@
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleModelLoader.h"
+#include "ModuleScene.h"
+#include <string>
 
+using namespace std;
 
 
 ModuleInput::ModuleInput()
@@ -82,8 +85,16 @@ update_status ModuleInput::PreUpdate()
 		
 		case (SDL_DROPFILE):      // In case if dropped file
 			dropped_filedir = event.drop.file;
-			SDL_free(dropped_filedir);    // Free dropped_filedir memory
-			App->modelLoader->LoadNewModel(dropped_filedir);
+			// fn.substr(fn.find_last_of(".") + 1) == "conf"
+
+			string pathString = dropped_filedir;
+			char* newPath = new char[pathString.size() + 1];
+			strcpy(newPath, dropped_filedir);
+
+			SDL_free(dropped_filedir);
+			  
+			App->scene->CreateModel("New model", App->scene->ROOT, newPath);
+			
 			
 			break;
 		}

@@ -158,7 +158,7 @@ update_status   ModuleCamera::Update() {
 		else {
 			actualMouse = App->input->mouse_position;
 			Punt restaMouse = { actualMouse.x - lastMouse.x, actualMouse.y - lastMouse.y };
-			float3 distance = camPos - App->modelLoader->modelPosition;
+			float3 distance = camPos - App->scene->GO_selected->transform->position;
 			Quat rot;
 			// orbit
 			if (App->input->keyboard[SDL_SCANCODE_LALT]) {				
@@ -170,8 +170,8 @@ update_status   ModuleCamera::Update() {
 					rot = Quat::RotateAxisAngle(side, -restaMouse.y * rotationSpeed);
 					distance = rot * distance;
 				}
-				camPos = App->modelLoader->modelPosition + distance;
-				LookAt(App->modelLoader->modelPosition);
+				camPos = App->scene->GO_selected->transform->position + distance;
+				LookAt(App->scene->GO_selected->transform->position);
 			}
 			else {		
 				if (restaMouse.x != 0) {

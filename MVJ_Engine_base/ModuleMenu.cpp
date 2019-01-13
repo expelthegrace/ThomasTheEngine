@@ -141,12 +141,16 @@ void ModuleMenu::FillTree(GameObject* gameobject)
 	{
 		ImGui::SetNextTreeNodeOpen(true);
 	}
-
+	ImGui::PushID(gameobject->UID);
 	bool opened = ImGui::TreeNodeEx(gameobject->name, flags);
+	ImGui::PopID();
+
 	if (ImGui::BeginDragDropSource())
 	{
 		ImGui::SetDragDropPayload("GAME_OBJECT", &gameobject->UID, sizeof(unsigned));
+		ImGui::PushID(gameobject->UID + 1);
 		ImGui::Text(gameobject->name);
+		ImGui::PopID();
 		ImGui::EndDragDropSource();
 	}
 	if (ImGui::BeginDragDropTarget())
@@ -389,7 +393,7 @@ update_status ModuleMenu::Inspector() {
 	{
 		if (ImGui::Button("Reset")) GO_act->transform->Reset();
 
-		float variation = 15;	
+		float variation = 15 * App->GameScale;	
 		ImGui::Text("Position");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("1");
@@ -458,7 +462,8 @@ update_status ModuleMenu::Inspector() {
 			ImGui::SliderFloat("Diffuse_k",  &GO_act->material->diffuse_k, 0, 1);
 			ImGui::SliderFloat("Specular_k", &GO_act->material->specular_k, 0, 1);
 			ImGui::SliderFloat("Shininess", &GO_act->material->shininess, 1, 254);
-
+		
+			ImGui::Text("Has texture: %i", GO_act->material->hasTexture);
 			ImGui::Text("Num materials: %i", GO_act->GetComponents(MATERIAL).size());
 			
 		}

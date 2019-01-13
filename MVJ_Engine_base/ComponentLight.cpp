@@ -26,7 +26,7 @@ update_status ComponentLight::Update() {
 	colorLight_Intensity = float3(colorLight.x * intensity, colorLight.y * intensity, colorLight.z * intensity);
 
 	const ddVec3 boxColor = { 0.f, 0.6f, 0.8f };
-	dd::sphere(position, boxColor, 0.7 * App->GameScale);
+	dd::sphere(position, boxColor, 0.4 * App->GameScale);
 
 	return UPDATE_CONTINUE;
 }

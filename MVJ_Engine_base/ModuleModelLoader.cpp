@@ -125,7 +125,7 @@ void ModuleModelLoader::GenerateMesh(GameObject* GO, int idMesh, ComponentMesh *
 	sprintf(b, "Loading model with path: %s \n", path);
 	App->menu->console.AddLog(b);
 
-	if (scene == nullptr) {
+	if (sceneAct == nullptr) {
 		errorMesage = aiGetErrorString();
 		sprintf(b, "Error loading model: %s", errorMesage);
 		App->menu->console.AddLog(b);
@@ -136,7 +136,7 @@ void ModuleModelLoader::GenerateMesh(GameObject* GO, int idMesh, ComponentMesh *
 
 }
 
-unsigned ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
+int ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
 
 	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
 
@@ -152,84 +152,86 @@ unsigned ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
 	{
 		dst_material = App->textures->Load(file.C_Str(), false);
 	}
+	else return -1;
+	
 
 	return dst_material;
 }
 
 
-
-bool ModuleModelLoader::LoadNewModel(char* path) {
-
-	if (modelLoaded) {
-		delete[] vbos;
-		delete[] ibos;
-		delete[] textures;
-		delete[] materials;
-		delete[] numVerticesMesh;
-		delete[] numIndexesMesh;
-	}
-
-	numVertices = 0;
-	numFaces = 0;
-
-	scene = aiImportFile(path, aiProcess_Triangulate);
-	const char* errorMesage;
-
-	if (scene == nullptr) {
-		errorMesage = aiGetErrorString();
-		sprintf(b, "Error loading model: %s", errorMesage);
-		App->menu->console.AddLog(b);
-	}
-	else {
-		numMeshes = scene->mNumMeshes;
-
-		vbos = new unsigned[numMeshes];
-		ibos = new unsigned[numMeshes];
-		textures = new unsigned[numMeshes];
-		materials = new unsigned[numMeshes];
-		numVerticesMesh = new unsigned[numMeshes];
-		numIndexesMesh = new unsigned[numMeshes];
-
-
-		//GenerateMeshes(scene);
-		//GenerateMaterials(scene);
-	}
-
-	modelPosition = boundingBox->CenterPoint();
-	modelScale = { 1,1,1 };
-	modelRotation = { 0,0,0 };
-
-
-	//Console data update
-
-	sprintf(b, "------------------ Model loaded ------------------ \n");
-	App->menu->console.AddLog(b);
-	sprintf(b, "Model loaded with path: %s \n", path);
-	App->menu->console.AddLog(b);
-	sprintf(b, "Number of meshes: %u \n", numMeshes);
-	App->menu->console.AddLog(b);
-	sprintf(b, "Number of vertices: %u \n", numVertices);
-	App->menu->console.AddLog(b);
-	sprintf(b, "Number of faces: %u \n", numFaces);
-	App->menu->console.AddLog(b);
-	sprintf(b, "Bounding box max: (%f, %f, %f) \n", boundingBox->MaxX(), boundingBox->MaxY(), boundingBox->MaxZ());
-	App->menu->console.AddLog(b);
-	sprintf(b, "Bounding box min: (%f, %f, %f) \n", boundingBox->MinX(), boundingBox->MinY(), boundingBox->MinZ());
-	App->menu->console.AddLog(b);
-	sprintf(b, "Center point: (%f, %f, %f) \n", boundingBox->CenterPoint().x, boundingBox->CenterPoint().y, boundingBox->CenterPoint().z);
-	App->menu->console.AddLog(b);
-
-	App->camera->FocusModel();
-
-	modelLoaded = true;
-	return true;
-
-}
+//
+//bool ModuleModelLoader::LoadNewModel(char* path) {
+//
+//	if (modelLoaded) {
+//		delete[] vbos;
+//		delete[] ibos;
+//		delete[] textures;
+//		delete[] materials;
+//		delete[] numVerticesMesh;
+//		delete[] numIndexesMesh;
+//	}
+//
+//	numVertices = 0;
+//	numFaces = 0;
+//
+//	scene = aiImportFile(path, aiProcess_Triangulate);
+//	const char* errorMesage;
+//
+//	if (scene == nullptr) {
+//		errorMesage = aiGetErrorString();
+//		sprintf(b, "Error loading model: %s", errorMesage);
+//		App->menu->console.AddLog(b);
+//	}
+//	else {
+//		numMeshes = scene->mNumMeshes;
+//
+//		vbos = new unsigned[numMeshes];
+//		ibos = new unsigned[numMeshes];
+//		textures = new unsigned[numMeshes];
+//		materials = new unsigned[numMeshes];
+//		numVerticesMesh = new unsigned[numMeshes];
+//		numIndexesMesh = new unsigned[numMeshes];
+//
+//
+//		//GenerateMeshes(scene);
+//		//GenerateMaterials(scene);
+//	}
+//
+//	modelPosition = boundingBox->CenterPoint();
+//	modelScale = { 1,1,1 };
+//	modelRotation = { 0,0,0 };
+//
+//
+//	//Console data update
+//
+//	sprintf(b, "------------------ Model loaded ------------------ \n");
+//	App->menu->console.AddLog(b);
+//	sprintf(b, "Model loaded with path: %s \n", path);
+//	App->menu->console.AddLog(b);
+//	sprintf(b, "Number of meshes: %u \n", numMeshes);
+//	App->menu->console.AddLog(b);
+//	sprintf(b, "Number of vertices: %u \n", numVertices);
+//	App->menu->console.AddLog(b);
+//	sprintf(b, "Number of faces: %u \n", numFaces);
+//	App->menu->console.AddLog(b);
+//	sprintf(b, "Bounding box max: (%f, %f, %f) \n", boundingBox->MaxX(), boundingBox->MaxY(), boundingBox->MaxZ());
+//	App->menu->console.AddLog(b);
+//	sprintf(b, "Bounding box min: (%f, %f, %f) \n", boundingBox->MinX(), boundingBox->MinY(), boundingBox->MinZ());
+//	App->menu->console.AddLog(b);
+//	sprintf(b, "Center point: (%f, %f, %f) \n", boundingBox->CenterPoint().x, boundingBox->CenterPoint().y, boundingBox->CenterPoint().z);
+//	App->menu->console.AddLog(b);
+//
+//	App->camera->FocusModel();
+//
+//	modelLoaded = true;
+//	return true;
+//
+//}
 
 
 
 bool ModuleModelLoader::Init() {
-	modelLoaded = false;
+	//modelLoaded = false;
 	//LoadNewModel("BakerHouse.fbx");
 
 	return true;

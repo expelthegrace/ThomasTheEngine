@@ -11,6 +11,9 @@
 #include <vector>
 #include "Quadtree.h"
 #include "JSONManager.h"
+#include <string>
+
+using namespace std;
 
 ModuleScene::ModuleScene()
 {
@@ -55,13 +58,12 @@ void ModuleScene::NewGameObject(char* name) {
 
 GameObject* ModuleScene::CreateModel(char* name, GameObject* parent, char * path) {
 	
-
 	GameObject* GO = App->renderer->CreateModel(path);
 	GO->name = name;
 	GO->parent = parent;
-	parent->children.push_back(GO);
+	if (parent == nullptr) GO->parent = ROOT;
+	GO->parent->children.push_back(GO);
 	gameObjects[GO->UID] = GO;
-
 	return GO;
 }
 
@@ -93,14 +95,19 @@ bool ModuleScene::Init() {
 	float quadTreeSize = 20.0f * App->GameScale;
 	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 2, 8);
 
-	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
+	/*GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa1);
 
 	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa2);
 
 	GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
-	quadTree->Insert(casa3);
+	quadTree->Insert(casa3);*/
+
+	//GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
+	//quadTree->Insert(bunny1);
+
+	App->GameScale = 80.f;
 
 	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
 	gameObjects[camObject->UID] = camObject;
