@@ -20,11 +20,8 @@ public:
 	~ModuleModelLoader();
 
 	bool            Init();
-	//update_status   Update();
 	bool            CleanUp();
 
-
-	bool LoadNewModel(char* path);
 
 	void GenerateMesh(GameObject* GO, int idMesh, ComponentMesh* compMesh, const char* path);
 	int GenerateMaterial(int idMaterial, const char* path);
@@ -34,28 +31,6 @@ public:
 public:
 	char* b = new char[50];
 
-	/*unsigned* vbos;
-	unsigned* ibos;
-	unsigned* textures;
-	unsigned* materials;
-	unsigned*  numVerticesMesh;
-	unsigned*  numIndexesMesh;
-
-	float3 modelRotation, modelScale, modelPosition;
-
-	
-
-	unsigned numMeshes;
-	unsigned numVertices;
-	unsigned numFaces;
-
-	bool modelLoaded;
-
-	float minY, maxY, minX, maxX, minZ, maxZ;
-
-	AABB* boundingBox;
-
-	const aiScene* scene;*/
 
 };
 
