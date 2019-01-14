@@ -92,12 +92,12 @@ bool ModuleScene::Init() {
 	ROOT = new GameObject("ROOT", true, nullptr);
 	App->GameScale = 40.f;
 
-	//LoadScene();
-
 	GO_selected = ROOT;
 
 	float quadTreeSize = 20.0f * App->GameScale;
 	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 2, 8);
+
+	//LoadScene();
 
 	/*GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa1);
