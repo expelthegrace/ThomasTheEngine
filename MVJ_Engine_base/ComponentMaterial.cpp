@@ -50,5 +50,4 @@ void ComponentMaterial::Load(JSON_Value* componentJSON) {
 	specular_k = componentJSON->getFloat("specular_k");
 	shininess = componentJSON->getFloat("shininess");
 
-
 }

@@ -1,7 +1,7 @@
 {
     "GameObjects": [
         {
-            "UID": 3500622430,
+            "UID": 2965533754,
             "ParentUID": 0,
             "Name": "Bunny1",
             "Active": true,
@@ -9,7 +9,7 @@
                 {
                     "Type": 5,
                     "isFinite": true,
-                    "UID": 2176295262,
+                    "UID": 1096087994,
                     "minPoint": [
                         -76.11719512939453,
                         -0.33393901586532595,
@@ -61,15 +61,15 @@
             ]
         },
         {
-            "UID": 2015601200,
-            "ParentUID": 3500622430,
-            "Name": "Child_0ýýýý",
+            "UID": 2948257754,
+            "ParentUID": 2965533754,
+            "Name": "Child_0ýýýýÝ",
             "Active": true,
             "Components": [
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 3943077732,
+                    "UID": 4231548113,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,
@@ -134,15 +134,15 @@
             ]
         },
         {
-            "UID": 4083312782,
-            "ParentUID": 3500622430,
+            "UID": 3398347431,
+            "ParentUID": 2965533754,
             "Name": "Child_1ýýýýÝ",
             "Active": true,
             "Components": [
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 1043703609,
+                    "UID": 3473122826,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,
@@ -207,7 +207,7 @@
             ]
         },
         {
-            "UID": 3061303739,
+            "UID": 2794336031,
             "ParentUID": 0,
             "Name": "ObjectCamera",
             "Active": true,
@@ -215,7 +215,7 @@
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 4106044766,
+                    "UID": 1677283830,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,
@@ -266,13 +266,13 @@
                 },
                 {
                     "Type": 1,
-                    "NearPlane": 8.0,
-                    "FarPlane": 8000.0
+                    "NearPlane": 4.0,
+                    "FarPlane": 4000.0
                 }
             ]
         },
         {
-            "UID": 2882531906,
+            "UID": 80674094,
             "ParentUID": 0,
             "Name": "ObjectLight",
             "Active": true,
@@ -280,7 +280,7 @@
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 2254238860,
+                    "UID": 2775357977,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,
@@ -296,8 +296,8 @@
                     "Type": 4,
                     "Position": [
                         0.0,
-                        0.0,
-                        0.0
+                        190.90899658203126,
+                        190.90899658203126
                     ],
                     "Rotation": [
                         0.0,
@@ -318,11 +318,11 @@
                         0.0,
                         1.0,
                         0.0,
-                        0.0,
+                        190.90899658203126,
                         0.0,
                         0.0,
                         1.0,
-                        0.0,
+                        190.90899658203126,
                         0.0,
                         0.0,
                         0.0,
@@ -340,5 +340,8 @@
                 }
             ]
         }
-    ]
+    ],
+    "Scene_properties": {
+        "GameScale": 66.73300170898438
+    }
 }

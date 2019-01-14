@@ -15,6 +15,11 @@ Quadtree::Quadtree(Quadtree* parent, float3 min, float3 max, int bucket, int max
 
 }
 
+void Quadtree::Resize(float3 min, float3 max) {
+	RELEASE(boundaries);
+	boundaries = new AABB(float3(min.x, -5.0f, min.z), float3(max.x, 5.0f, max.z));
+}
+
 bool Quadtree::Intersects(const GameObject* go) {
 	if (!go->BB->Aabb->IsFinite()) return false;
 	

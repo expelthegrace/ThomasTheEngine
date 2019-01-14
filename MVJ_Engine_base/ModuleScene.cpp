@@ -90,7 +90,10 @@ void ModuleScene::DuplicateSelected() {
 
 bool ModuleScene::Init() {
 	ROOT = new GameObject("ROOT", true, nullptr);
-	
+	App->GameScale = 40.f;
+
+	//LoadScene();
+
 	GO_selected = ROOT;
 
 	float quadTreeSize = 20.0f * App->GameScale;
@@ -106,9 +109,9 @@ bool ModuleScene::Init() {
 	quadTree->Insert(casa3);*/
 
 	GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
-	//quadTree->Insert(bunny1);
+	quadTree->Insert(bunny1);
 
-	App->GameScale = 80.f;
+	
 
 	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
 	gameObjects[camObject->UID] = camObject;
@@ -119,7 +122,7 @@ bool ModuleScene::Init() {
 	gameObjects[lightObject->UID] = lightObject;
 	lightObject->CreateComponent(LIGHT);
 
-	//LoadScene();
+	
 	
 	return true;
 }
@@ -196,6 +199,11 @@ void ModuleScene::SaveScene() {
 	for (int i = 0; i < ROOT->children.size(); ++i) ROOT->children[i]->Save(gameObjectsJSON);
 
 	scene->addValue("GameObjects", gameObjectsJSON);
+	
+	//Scene Properties
+	JSON_Value* sceneProperties = scene->createValue();
+	sceneProperties->addFloat("GameScale", App->GameScale);
+	scene->addValue("Scene_properties", sceneProperties);
 
 	scene->Write();
 	App->JSON_manager->closeFile(scene);
@@ -216,6 +224,10 @@ void ModuleScene::LoadScene() {
 	else {
 
 		JSON_Value* gameObjectsJSON = sceneJSON->getValue("GameObjects");
+		App->GameScale = sceneJSON->getValue("Scene_properties")->getFloat("GameScale");
+
+		float quadTreeSize = 20.0f * App->GameScale;
+		quadTree->Resize(float3(-quadTreeSize), float3(quadTreeSize));
 
 		if (gameObjectsJSON->getRapidJSONValue()->IsArray()) {
 

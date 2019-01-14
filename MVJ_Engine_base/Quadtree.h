@@ -24,7 +24,7 @@ public:
 	void MoveGO(GameObject* GO, Quadtree * lastQT);	
 	void Remove(GameObject* GO);
 	void RemoveAndMerge(GameObject* GO);
-
+	void Resize(float3 min, float3 max);
 	void Draw();
 
 	~Quadtree();
