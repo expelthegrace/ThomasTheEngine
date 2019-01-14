@@ -93,8 +93,8 @@ update_status ModuleInput::PreUpdate()
 
 			SDL_free(dropped_filedir);
 			  
-			App->scene->CreateModel("New model", App->scene->ROOT, newPath);
-			
+			//App->scene->CreateModel("New model", App->scene->ROOT, newPath);
+			App->scene->DragInputManager(newPath);
 			
 			break;
 		}

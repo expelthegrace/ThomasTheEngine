@@ -33,6 +33,8 @@ ComponentMesh::~ComponentMesh()
 	RELEASEARRAY(mesh.vertices);
 	RELEASEARRAY(mesh.indices);
 	RELEASEARRAY(mesh.normals);
+	RELEASEARRAY(mesh.buffer);
+
 
 }
 

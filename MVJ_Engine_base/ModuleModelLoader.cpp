@@ -88,13 +88,7 @@ bool ModuleModelLoader::LoadBuffers(GameObject*  GO, const aiScene* sceneActual,
 	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	//int numMaterials = sceneActual->mNumMaterials;
-	//int index = meshComp->my_go->components.size()  - idMesh;
-	//ComponentMaterial* compMat = (ComponentMaterial*)meshComp->my_go->components[index - numMaterials + src_mesh->mMaterialIndex];
-	//ComponentMaterial* compMat = GO->material;
-
 	mesh->numTexCoords = src_mesh->mNumVertices;
-	//mesh->texture = compMat->texture; // change
 	mesh->numVertices = src_mesh->mNumVertices;
 	mesh->numFaces = src_mesh->mNumFaces;
 	mesh->numIndexesMesh = src_mesh->mNumFaces * 3;
@@ -133,15 +127,15 @@ void ModuleModelLoader::GenerateMesh(GameObject* GO, int idMesh, ComponentMesh *
 	}
 	else LoadBuffers(GO, sceneAct, compMesh, idMesh);
 
-
+	sceneAct->~aiScene();
 }
 
 int ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
 
-	const aiScene* sceneAct = aiImportFile(path, aiProcess_Triangulate);
+	const aiScene* sceneActM = aiImportFile(path, aiProcess_Triangulate);
 
-	int indexMaterial = sceneAct->mMeshes[idMaterial]->mMaterialIndex;
-	const aiMaterial* src_material = sceneAct->mMaterials[indexMaterial];
+	int indexMaterial = sceneActM->mMeshes[idMaterial]->mMaterialIndex;
+	const aiMaterial* src_material = sceneActM->mMaterials[indexMaterial];
 	unsigned dst_material = 0;
 
 	aiString file;
@@ -154,11 +148,16 @@ int ModuleModelLoader::GenerateMaterial(int idMaterial, const char* path) {
 	}
 	else return -1;
 	
+	sceneActM->~aiScene();
 
 	return dst_material;
 }
 
-
+int ModuleModelLoader::LoadTexture(const char * path) {
+	int dst_material = -1;
+	dst_material = App->textures->Load(path, false);
+	return dst_material;
+}
 
 
 bool ModuleModelLoader::Init() {

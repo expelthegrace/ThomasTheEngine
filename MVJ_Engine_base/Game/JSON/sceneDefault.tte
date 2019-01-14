@@ -1,15 +1,15 @@
 {
     "GameObjects": [
         {
-            "UID": 1517861483,
+            "UID": 3500622430,
             "ParentUID": 0,
-            "Name": "New modelýýýý",
+            "Name": "Bunny1",
             "Active": true,
             "Components": [
                 {
                     "Type": 5,
                     "isFinite": true,
-                    "UID": 3361955315,
+                    "UID": 2176295262,
                     "minPoint": [
                         -76.11719512939453,
                         -0.33393901586532595,
@@ -26,7 +26,7 @@
                     "Position": [
                         0.0,
                         0.0,
-                        -327.27301025390627
+                        0.0
                     ],
                     "Rotation": [
                         0.0,
@@ -51,7 +51,7 @@
                         0.0,
                         0.0,
                         1.0,
-                        -327.27301025390627,
+                        0.0,
                         0.0,
                         0.0,
                         0.0,
@@ -61,15 +61,15 @@
             ]
         },
         {
-            "UID": 1364944761,
-            "ParentUID": 1517861483,
-            "Name": "Child_1ýýýýÝýýýý«Ú\rS",
+            "UID": 2015601200,
+            "ParentUID": 3500622430,
+            "Name": "Child_0ýýýý",
             "Active": true,
             "Components": [
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 2808302929,
+                    "UID": 3943077732,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,
@@ -111,7 +111,7 @@
                         0.0,
                         0.0,
                         1.0,
-                        -327.27301025390627,
+                        0.0,
                         0.0,
                         0.0,
                         0.0,
@@ -120,80 +120,7 @@
                 },
                 {
                     "Type": 3,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
-                    "idMaterial": 1,
-                    "diffuse_k": 1.0,
-                    "specular_k": 0.6809999942779541,
-                    "shininess": 64.0
-                },
-                {
-                    "Type": 2,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
-                    "idMesh": 1
-                }
-            ]
-        },
-        {
-            "UID": 3175499315,
-            "ParentUID": 1517861483,
-            "Name": "Child_0ýýýý\rýýýý‡Ú!S",
-            "Active": true,
-            "Components": [
-                {
-                    "Type": 5,
-                    "isFinite": false,
-                    "UID": 427947935,
-                    "minPoint": [
-                        -431602080.0,
-                        -431602080.0,
-                        -431602080.0
-                    ],
-                    "maxPoint": [
-                        -431602080.0,
-                        -431602080.0,
-                        -431602080.0
-                    ]
-                },
-                {
-                    "Type": 4,
-                    "Position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "Scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "Transform": [
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0,
-                        -327.27301025390627,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
+                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\ZomBunnyDiffuse.png",
                     "idMaterial": 0,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -201,81 +128,21 @@
                 },
                 {
                     "Type": 2,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
+                    "Path": "Assets/Zombunny.fbx",
                     "idMesh": 0
                 }
             ]
         },
         {
-            "UID": 1590448846,
-            "ParentUID": 0,
-            "Name": "New modelýýýýÝÝÝ§å\u0001P",
-            "Active": true,
-            "Components": [
-                {
-                    "Type": 5,
-                    "isFinite": true,
-                    "UID": 617906252,
-                    "minPoint": [
-                        -76.11719512939453,
-                        -0.33393901586532595,
-                        -35.7611083984375
-                    ],
-                    "maxPoint": [
-                        76.11719512939453,
-                        148.1706085205078,
-                        37.818817138671878
-                    ]
-                },
-                {
-                    "Type": 4,
-                    "Position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "Scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "Transform": [
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ]
-                }
-            ]
-        },
-        {
-            "UID": 270776624,
-            "ParentUID": 1590448846,
-            "Name": "Child_1ýýýýÝýýýý÷äQQ",
+            "UID": 4083312782,
+            "ParentUID": 3500622430,
+            "Name": "Child_1ýýýýÝ",
             "Active": true,
             "Components": [
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 2412342785,
+                    "UID": 1043703609,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,
@@ -326,102 +193,29 @@
                 },
                 {
                     "Type": 3,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
+                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\ZomBunnyDiffuse.png",
                     "idMaterial": 1,
                     "diffuse_k": 1.0,
-                    "specular_k": 0.21699999272823335,
+                    "specular_k": 0.5,
                     "shininess": 64.0
                 },
                 {
                     "Type": 2,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
+                    "Path": "Assets/Zombunny.fbx",
                     "idMesh": 1
                 }
             ]
         },
         {
-            "UID": 2146003073,
-            "ParentUID": 1590448846,
-            "Name": "Child_0ýýýýýýýý",
-            "Active": true,
-            "Components": [
-                {
-                    "Type": 5,
-                    "isFinite": false,
-                    "UID": 1736383266,
-                    "minPoint": [
-                        -431602080.0,
-                        -431602080.0,
-                        -431602080.0
-                    ],
-                    "maxPoint": [
-                        -431602080.0,
-                        -431602080.0,
-                        -431602080.0
-                    ]
-                },
-                {
-                    "Type": 4,
-                    "Position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "Rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "Scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "Transform": [
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ]
-                },
-                {
-                    "Type": 3,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
-                    "idMaterial": 0,
-                    "diffuse_k": 0.2029999941587448,
-                    "specular_k": 0.7829999923706055,
-                    "shininess": 138.5
-                },
-                {
-                    "Type": 2,
-                    "Path": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\Zombunny.fbx",
-                    "idMesh": 0
-                }
-            ]
-        },
-        {
-            "UID": 1809440334,
+            "UID": 3061303739,
             "ParentUID": 0,
-            "Name": "ObjectCameraýýýý\u0006ø¢M",
+            "Name": "ObjectCamera",
             "Active": true,
             "Components": [
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 1536924460,
+                    "UID": 4106044766,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,
@@ -478,15 +272,15 @@
             ]
         },
         {
-            "UID": 3626388752,
+            "UID": 2882531906,
             "ParentUID": 0,
-            "Name": "ObjectLightýýýýÝ?Û™R",
+            "Name": "ObjectLight",
             "Active": true,
             "Components": [
                 {
                     "Type": 5,
                     "isFinite": false,
-                    "UID": 2511626794,
+                    "UID": 2254238860,
                     "minPoint": [
                         -431602080.0,
                         -431602080.0,

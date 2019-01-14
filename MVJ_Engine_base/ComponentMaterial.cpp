@@ -15,9 +15,14 @@ ComponentMaterial::ComponentMaterial(GameObject * my_go, unsigned texture)
 {
 	this->type = MATERIAL;
 	this->my_go = my_go;
-	this->texture = texture;
+	this->textureDiff = texture;
 }
 
+void ComponentMaterial::LoadTexture(char * pathText) {
+	textureDiff = App->modelLoader->LoadTexture(pathText);
+	if (textureDiff != -1) hasTexture = true;
+	pathDiffuse = pathText;
+}
 
 ComponentMaterial::~ComponentMaterial()
 {
@@ -26,7 +31,7 @@ ComponentMaterial::~ComponentMaterial()
 void ComponentMaterial::Save(JSON_Value* componentsJSON) {
 	JSON_Value* componentJSON = componentsJSON->createValue();
 	componentJSON->addInt("Type", type);
-	componentJSON->addString("Path", path.c_str());
+	componentJSON->addString("PathDiffuse", pathDiffuse.c_str());
 	componentJSON->addInt("idMaterial", idMaterial);
 	componentJSON->addFloat("diffuse_k", diffuse_k);
 	componentJSON->addFloat("specular_k", specular_k);
@@ -37,10 +42,10 @@ void ComponentMaterial::Save(JSON_Value* componentsJSON) {
 }
 
 void ComponentMaterial::Load(JSON_Value* componentJSON) {
-	path = componentJSON->getString("Path");
+	pathDiffuse = componentJSON->getString("PathDiffuse");
 	idMaterial = componentJSON->getInt("idMaterial");
-	texture = App->modelLoader->GenerateMaterial(idMaterial, path.c_str());
-	if (texture != -1) hasTexture = true;
+	textureDiff = App->modelLoader->LoadTexture(pathDiffuse.c_str());
+	if (textureDiff != -1) hasTexture = true;
 	diffuse_k = componentJSON->getFloat("diffuse_k");
 	specular_k = componentJSON->getFloat("specular_k");
 	shininess = componentJSON->getFloat("shininess");

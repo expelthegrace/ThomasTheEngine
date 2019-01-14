@@ -25,6 +25,7 @@ public:
 
 	void GenerateMesh(GameObject* GO, int idMesh, ComponentMesh* compMesh, const char* path);
 	int GenerateMaterial(int idMaterial, const char* path);
+	int LoadTexture(const char * path);
 
 	bool LoadBuffers(GameObject*  GO, const aiScene* scene, ComponentMesh* meshComp, int idMesh);
 

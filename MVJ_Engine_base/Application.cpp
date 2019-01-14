@@ -55,27 +55,6 @@ bool Application::Init()
 	bool ret = true;
 	exit = false;
 
-	//std::string path = "./";
-	//path += "config.json";
-
-	//JSON_File* document = JSON_manager->openReadFile(path.c_str());
-
-	//if (document == nullptr)
-	//{
-	//	SaveDefaultConfig(path.c_str());
-	//	document = JSON_manager->openReadFile(path.c_str());
-	//}
-	//else 
-	//{
-
-	//	//// Call Init() in all modules
-	//	//for (list<Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
-	//	//{
-	//	//	ret = (*item)->Init(document);
-	//	//}
-	//}
-
-
 	pcg32_srandom_r(&rng, time(NULL), (intptr_t)&rng);
 
 	for(list<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)

@@ -32,6 +32,8 @@ public:
 
 	void ClearScene();
 
+	void DragInputManager(char * path);
+
 	void DeleteSelected();
 	void DuplicateSelected();
 

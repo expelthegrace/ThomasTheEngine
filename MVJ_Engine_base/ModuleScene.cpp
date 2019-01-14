@@ -8,6 +8,7 @@
 #include "ComponentTransform.h"
 #include "ComponentBB.h"
 #include "ComponentCamera.h"
+#include "ComponentMaterial.h"
 #include <vector>
 #include "Quadtree.h"
 #include "JSONManager.h"
@@ -104,7 +105,7 @@ bool ModuleScene::Init() {
 	GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa3);*/
 
-	//GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
+	GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
 	//quadTree->Insert(bunny1);
 
 	App->GameScale = 80.f;
@@ -122,6 +123,35 @@ bool ModuleScene::Init() {
 	
 	return true;
 }
+
+void ModuleScene::DragInputManager(char * path) {
+	string pathString = path;
+
+	for (int i = 0; i < pathString.length(); i++)
+	{
+		if (pathString[i] == '\\')
+			pathString[i] = '/';
+	}
+
+	uint pos_slash = pathString.find_last_of('/');
+	uint pos_dot = pathString.find_last_of('.');
+
+	string extension = pathString.substr(pos_dot + 1);
+	string name = pathString.substr(pos_slash + 1, pos_dot - pos_slash - 1);
+
+	if (extension == "fbx" || extension == "FBX" || extension == "obj" || extension == "OBJ")
+	{
+		char * newName = new char[name.size() + 1];
+		strcpy(newName, name.c_str());
+		CreateModel(newName, App->scene->ROOT, path);
+	}
+
+	else if (extension == "png" || extension == "dds" || extension == "tga")
+	{
+		if (GO_selected->material != nullptr) GO_selected->material->LoadTexture(path);
+	}
+}
+
 
 /**Find game object by name **/
 GameObject* ModuleScene::FindByName(char * name) {

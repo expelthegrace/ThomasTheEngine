@@ -67,7 +67,7 @@ ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int 
 	ComponentMaterial* materialComp = new ComponentMaterial(my_go, mat);
 	if (mat != -1) materialComp->hasTexture = true;
 	materialComp->idMaterial = idMaterial;
-	materialComp->path = path;
+	materialComp->pathDiffuse = path;
 
 	return materialComp;
 }
@@ -197,7 +197,7 @@ update_status ModuleRender::RenderMesh(ComponentMesh* meshComp, ComponentCamera 
 			unsigned numIndexesActual = meshActual.numIndexesMesh;
 
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->texture);
+			glBindTexture(GL_TEXTURE_2D, meshComp->my_go->material->textureDiff);
 			glUniform1i(glGetUniformLocation(App->shaderProgram->programModel, "texture0"), 0);
 
 			glEnableVertexAttribArray(0);

@@ -18,15 +18,17 @@ public:
 	void Save(JSON_Value* componentsJSON) override;
 	void Load(JSON_Value* componentJSON) override;
 
+	void LoadTexture(char * pathText);
+
 
 public:
-	unsigned texture;
+	unsigned textureDiff;
 	float diffuse_k = 1.f;
 	float specular_k = 0.5f;
 	float shininess = 64.f;
 
-	std::string path = "";
-	/**  idMaterial indexes the mesh that is vinculated with */
+	std::string pathDiffuse = "";
+
 	unsigned idMaterial = 0;
 
 	bool hasTexture = false;
