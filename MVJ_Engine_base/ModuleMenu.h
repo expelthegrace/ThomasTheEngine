@@ -58,6 +58,7 @@ public:
 		}
 	};
 
+public:
 	//variables
 	int frames;
 	double lastFrameTime;
@@ -76,12 +77,13 @@ public:
 	char* b;
 	bool showWindows;
 	bool fovChanged = false;
+	int columnWidth;
+	int consoleHeight;
 
 private:
 	void updateFramerates();
-	int consoleHeight;
 	ImVec2 mainMenuSize;
-	int columnWidth;
+	
 	float columnScreenRatio;
 
 	bool cameraInitUpdated = false;

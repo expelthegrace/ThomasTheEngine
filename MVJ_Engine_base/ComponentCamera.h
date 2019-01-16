@@ -34,7 +34,7 @@ public:
 
 	bool cameraChanged = true;
 
-	float nearPlane = 0.01f;
+	float nearPlane = 0.1f;
 	float farPlane = 100.f;
 
 private:

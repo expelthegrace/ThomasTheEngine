@@ -3,7 +3,7 @@
         {
             "UID": 539223136,
             "ParentUID": 0,
-            "Name": "WallııııÌógöııııĞá\u001A",
+            "Name": "WallııııÌógöııııĞá\u001Aıııı,ê.’D\u0007Œ8\u0013R\u0006Ø\u0015R\u0006ıııı",
             "Active": true,
             "Components": [
                 {
@@ -63,7 +63,7 @@
         {
             "UID": 2580449563,
             "ParentUID": 539223136,
-            "Name": "Child_0ııııİııııµ\u0015Oüıııı>´º\u000BƒE\u0003ŒPµ\u000B\u0007¸Í!\u0007",
+            "Name": "Child_0ııııİııııµ\u0015Oüıııı>´º\u000BƒE\u0003ŒPµ\u000B\u0007¸Í!\u0007ıııııııı\u001F\u001D•h\u0010X",
             "Active": true,
             "Components": [
                 {
@@ -120,7 +120,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\WallDiffuse.png",
+                    "PathDiffuse": "./Assets/WallDiffuse.png",
                     "idMaterial": 0,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -136,7 +136,7 @@
         {
             "UID": 4063295709,
             "ParentUID": 539223136,
-            "Name": "Child_1ııııİİİİİhÕ6ûııııAGéııııÓÖš\u0017",
+            "Name": "Child_1ııııİİİİİhÕ6ûııııAGéııııÓÖš\u0017ııııbáÔƒıııı“\u001D\u0011h",
             "Active": true,
             "Components": [
                 {
@@ -193,7 +193,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\WallDiffuse.png",
+                    "PathDiffuse": "./Assets/WallDiffuse.png",
                     "idMaterial": 1,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -209,7 +209,7 @@
         {
             "UID": 1192337025,
             "ParentUID": 0,
-            "Name": "FloorııııııııİİİàB\u0003²ııııv™nbıııı­F4wııııOpeÇııııÈÕ$ù†¯ıııı[À\u001Bó4Å3Áy\u0010",
+            "Name": "FloorııııııııİİİàB\u0003²ııııv™nbıııı­F4wııııOpeÇııııÈÕ$ù†¯ıııı[À\u001Bó4Å3Áy\u0010ıııı\u0003…º­ııııC³\u0002k",
             "Active": true,
             "Components": [
                 {
@@ -269,7 +269,7 @@
         {
             "UID": 1152199448,
             "ParentUID": 1192337025,
-            "Name": "Child_0ıııııııııııııııııııııııı\u0006@\"uÅıııı|ĞXçıııı­Í™\u0017u•",
+            "Name": "Child_0ıııııııııııııııııııııııı\u0006@\"uÅıııı|ĞXçıııı­Í™\u0017u•ıııııııı",
             "Active": true,
             "Components": [
                 {
@@ -326,7 +326,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\PlanksDiffuse.png",
+                    "PathDiffuse": "./Assets/PlanksDiffuse.png",
                     "idMaterial": 0,
                     "diffuse_k": 1.0,
                     "specular_k": 0.2680000066757202,
@@ -342,7 +342,7 @@
         {
             "UID": 1561901008,
             "ParentUID": 1192337025,
-            "Name": "Child_1ııııİııııúW\u001B¯ıııı<ĞÃ€ııııÛPÖOıııı~SèFıııı\u0010‹/údıııı;3ıııı\u0012ÏX\u0012",
+            "Name": "Child_1ııııİııııúW\u001B¯ıııı<ĞÃ€ııııÛPÖOıııı~SèFıııı\u0010‹/údıııı;3ıııı\u0012ÏX\u0012ıııı)\u000FI®ııııv³Ñk",
             "Active": true,
             "Components": [
                 {
@@ -399,7 +399,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\PlanksDiffuse.png",
+                    "PathDiffuse": "./Assets/PlanksDiffuse.png",
                     "idMaterial": 1,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -415,7 +415,7 @@
         {
             "UID": 3906504749,
             "ParentUID": 1192337025,
-            "Name": "Child_2ııııİ\ft™ÅßP8¤ıııı4±Ë¡ıııı\\.§„ıııı‰rŠAııııek÷rybııııııııšÅïÏÅüııııÎSÌ\u0011",
+            "Name": "Child_2ııııİ\ft™ÅßP8¤ıııı4±Ë¡ıııı\\.§„ıııı‰rŠAııııek÷rybııııııııšÅïÏÅüııııÎSÌ\u0011ııııàb\u0003®ıııı²³{h",
             "Active": true,
             "Components": [
                 {
@@ -472,7 +472,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\PlanksDiffuse.png",
+                    "PathDiffuse": "./Assets/PlanksDiffuse.png",
                     "idMaterial": 2,
                     "diffuse_k": 1.0,
                     "specular_k": 0.09399999678134918,
@@ -488,7 +488,7 @@
         {
             "UID": 2009437540,
             "ParentUID": 0,
-            "Name": "Bunny1ııııİİıııı(<•±ııııŞÖmıııı\u001B_†nıııı»ªüıııı@Ì¬ÿ;\u0017ıııış>",
+            "Name": "Bunny1ııııİİıııı(<•±ııııŞÖmıııı\u001B_†nıııı»ªüıııı@Ì¬ÿ;\u0017ıııış>ıııı˜‡$¯ııııPHÉj",
             "Active": true,
             "Components": [
                 {
@@ -548,7 +548,7 @@
         {
             "UID": 1030068128,
             "ParentUID": 2009437540,
-            "Name": "Child_1ııııİııııMU®©ıııı„Ğ{€ııııA^LQııııöW`BııııÛ‹èúdıııı;µæ¹\t©ÙÎÿıııııúP˜\u0010",
+            "Name": "Child_1ııııİııııMU®©ıııı„Ğ{€ııııA^LQııııöW`BııııÛ‹èúdıııı;µæ¹\t©ÙÎÿıııııúP˜\u0010ııııÆbå®ııııR²›i",
             "Active": true,
             "Components": [
                 {
@@ -605,7 +605,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\ZomBunnyDiffuse.png",
+                    "PathDiffuse": "./Assets/ZomBunnyDiffuse.png",
                     "idMaterial": 1,
                     "diffuse_k": 1.0,
                     "specular_k": 0.41999998688697817,
@@ -621,7 +621,7 @@
         {
             "UID": 2760159547,
             "ParentUID": 2009437540,
-            "Name": "Child_0ıııııııııııııııı\f~v}ııııl_ónııııß»ôüııııÒÌ>şp\rıııı",
+            "Name": "Child_0ıııııııııııııııı\f~v}ııııl_ónııııß»ôüııııÒÌ>şp\rıııııııı»ıııı",
             "Active": true,
             "Components": [
                 {
@@ -678,7 +678,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\ZomBunnyDiffuse.png",
+                    "PathDiffuse": "./Assets/ZomBunnyDiffuse.png",
                     "idMaterial": 0,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -694,7 +694,7 @@
         {
             "UID": 2186007536,
             "ParentUID": 0,
-            "Name": "ObjectCameraıııınT¨ıııı„°{ ıııı)_$PııııPVÊCıııı\u000FŠÄúm¢ıııııııı<\u0001eºÈ\u0011",
+            "Name": "ObjectCameraıııınT¨ıııı„°{ ıııı)_$PııııPVÊCıııı\u000FŠÄúm¢ıııııııı<\u0001eºÈ\u0011ııııÅ\u000FU®ıııı÷¤ój‰\u0004",
             "Active": true,
             "Components": [
                 {
@@ -759,7 +759,7 @@
         {
             "UID": 2594917945,
             "ParentUID": 0,
-            "Name": "Playerııııÿÿıııı,3½p\t\u0001Œíl\u0005Ø²\u0005ııııııııÈßäàııııøÊ4\u0016”´",
+            "Name": "Playerııııÿÿıııı,3½p\t\u0001Œíl\u0005Ø²\u0005ııııııııÈßäàııııøÊ4\u0016”´ıııııııı›",
             "Active": true,
             "Components": [
                 {
@@ -819,7 +819,7 @@
         {
             "UID": 102080404,
             "ParentUID": 2594917945,
-            "Name": "Child_1ııııİııııû í}·{\u0003Œ0qu\u0006ˆ\n•\u0006ııııİİİİLVŞCıııı#Š\u0010û2¦ıııııııı<\u0001‚º7\u0011",
+            "Name": "Child_1ııııİııııû í}·{\u0003Œ0qu\u0006ˆ\n•\u0006ııııİİİİLVŞCıııı#Š\u0010û2¦ıııııııı<\u0001‚º7\u0011ıııı\u001F\u000F?®ııııÑ¤‘jş\u0002",
             "Active": true,
             "Components": [
                 {
@@ -876,7 +876,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\PlayerDiffuse.png",
+                    "PathDiffuse": "./Assets/PlayerDiffuse.png",
                     "idMaterial": 1,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -892,7 +892,7 @@
         {
             "UID": 951773570,
             "ParentUID": 2594917945,
-            "Name": "Child_0ııııİıııı\u0012#\u0002r×\\\u0003ˆÀ¤s\u0006Àhu\u0006ııııèVŒ\f\fU@ııııØŠ÷ûÙµıııııııı",
+            "Name": "Child_0ııııİıııı\u0012#\u0002r×\\\u0003ˆÀ¤s\u0006Àhu\u0006ııııèVŒ\f\fU@ııııØŠ÷ûÙµııııııııııııİİèy›\rÛp{¯ııııô¥òkC\u0015",
             "Active": true,
             "Components": [
                 {
@@ -949,7 +949,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\PlayerDiffuse.png",
+                    "PathDiffuse": "./Assets/PlayerDiffuse.png",
                     "idMaterial": 0,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -965,7 +965,7 @@
         {
             "UID": 2778172701,
             "ParentUID": 0,
-            "Name": "ObjectLightıııııııııııı\fÆŞ}ıııı˜]\u0007lıııı£ºˆıııııèÌ\u0004şR\u000Fıııı",
+            "Name": "ObjectLightıııııııııııı\fÆŞ}ıııı˜]\u0007lıııı£ºˆıııııèÌ\u0004şR\u000Fıııııııı»ıııı",
             "Active": true,
             "Components": [
                 {
@@ -1034,7 +1034,7 @@
         {
             "UID": 2820438449,
             "ParentUID": 0,
-            "Name": "DollhouseııııŸÅ\u0006¾Û°\u0003\u0001™\u0002Œ€^\u001B\u0007ĞÕ\u0018\u0007",
+            "Name": "DollhouseııııŸÅ\u0006¾Û°\u0003\u0001™\u0002Œ€^\u001B\u0007ĞÕ\u0018\u0007ııııııııZår",
             "Active": true,
             "Components": [
                 {
@@ -1091,7 +1091,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\DollhouseDiffuse.png",
+                    "PathDiffuse": "./Assets/DollhouseDiffuse.png",
                     "idMaterial": 0,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,
@@ -1107,7 +1107,7 @@
         {
             "UID": 4059098149,
             "ParentUID": 0,
-            "Name": "Drawersıııı\u0001\u0001\u0001\u0001\u0001òÚt",
+            "Name": "Drawersıııı\u0001\u0001\u0001\u0001\u0001òÚtıııı¤Ô“\u0006«\u0016œııııİİİİİİ¼ætq",
             "Active": true,
             "Components": [
                 {
@@ -1164,7 +1164,7 @@
                 },
                 {
                     "Type": 3,
-                    "PathDiffuse": "C:\\Users\\MSI\\Desktop\\Master\\ThomasTheEngine\\MVJ_Engine_base\\Game\\Assets\\DrawersDiffuse.png",
+                    "PathDiffuse": "./Assets/DrawersDiffuse.png",
                     "idMaterial": 0,
                     "diffuse_k": 1.0,
                     "specular_k": 0.5,

@@ -4,6 +4,7 @@
 #include "Module.h"
 #include <vector>
 #include <map>
+#include "MathGeoLib.h"
 
 class GameObject;
 class Quadtree;
@@ -37,6 +38,8 @@ public:
 	void DeleteSelected();
 	void DuplicateSelected();
 
+	void mouseClick(int mouseXi, int mouseYi);
+
 public:
 	GameObject* ROOT;
 	GameObject* GO_selected = nullptr;
@@ -46,10 +49,11 @@ public:
 	ComponentLight* mainLight = nullptr;
 	char* scenePath = "JSON/sceneDefault.tte";
 	bool drawDebugDraw = true;
+	math::LineSegment ray = LineSegment(float3(-100, -100, -100), float3(-100, -100, -100));
 
 private:
 	std::map<unsigned, GameObject*> gameObjects;
-
+	GameObject* closestToCam(GameObject* go1, GameObject* go2);
 	
 
 };

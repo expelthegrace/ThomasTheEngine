@@ -23,7 +23,7 @@ ComponentCamera::ComponentCamera(GameObject* my_go)
 	frustum.pos = my_go->transform->globalPosition;
 	frustum.front = initialFront;
 	frustum.up = initialUp;
-	frustum.nearPlaneDistance = 0.01f * App->GameScale;
+	frustum.nearPlaneDistance = 0.1f;
 	frustum.farPlaneDistance = 100.0f * App->GameScale;
 	frustum.verticalFov = math::pi / 4.0f;
 	
@@ -68,7 +68,7 @@ void ComponentCamera::UpdateFrustum() {
 	frustum.front = (my_go->transform->rotation * initialFront).Normalized();
 	frustum.up = (my_go->transform->rotation * initialUp).Normalized();
 
-	frustum.nearPlaneDistance = nearPlane * App->GameScale;
+	frustum.nearPlaneDistance = nearPlane;
 	frustum.farPlaneDistance = farPlane * App->GameScale;
 
 	w = App->camera->editorWidth;

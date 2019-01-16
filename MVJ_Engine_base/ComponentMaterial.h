@@ -18,7 +18,7 @@ public:
 	void Save(JSON_Value* componentsJSON) override;
 	void Load(JSON_Value* componentJSON) override;
 
-	void LoadTexture(char * pathText);
+	int LoadTexture(const char * pathText);
 
 
 public:

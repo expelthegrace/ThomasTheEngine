@@ -13,6 +13,8 @@
 #include "Quadtree.h"
 #include "JSONManager.h"
 #include <string>
+#include "debugdraw.h"
+#include "ModuleDebugDraw.h"
 
 using namespace std;
 
@@ -29,6 +31,8 @@ ModuleScene::~ModuleScene()
 update_status ModuleScene::Update() {
 	
 	BROFILER_CATEGORY("Component Updates", Profiler::Color::Orchid);
+
+//	if (App->input->mouse_buttons[SDL_BUTTON_LEFT - 1] == KEY_DOWN) mouseClick(App->input->mouse_position.x, App->input->mouse_position.y);
 
 	if (App->input->keyboard[SDL_SCANCODE_DELETE]) DeleteSelected();
 
@@ -185,6 +189,72 @@ void ModuleScene::ClearScene() {
 	GO_selected = ROOT;
 	mainCamera = nullptr;
 	mainLight = nullptr;
+}
+
+void ModuleScene::mouseClick(int mouseXi, int mouseYi) {
+	float mouseX = (float)mouseXi;
+	float mouseY = (float)mouseYi;
+	math::float2 viewportTopLeft(App->menu->columnWidth, 20.0f);
+	math::float2 viewportSize(App->camera->screenWidth - 2 * App->menu->columnWidth, App->camera->screenHeight - App->menu->consoleHeight - 20);
+	math::float2 windowSize(App->camera->screenWidth, App->camera->screenHeight);
+	float endpointX = App->menu->columnWidth + App->camera->screenWidth - 2 * App->menu->columnWidth;
+	float endpointY = 20.0f + App->camera->screenHeight - App->menu->consoleHeight - 20;
+	if (mouseX > App->menu->columnWidth && mouseX < (endpointX) &&
+		mouseY > 20.0f && mouseY < endpointY) {
+		float sy, sx, ty, tx;
+		/*sy = (1 + 1) / (-viewportSize.y);
+		sx = (1 + 1) / (viewportSize.x);
+		ty = (-(viewportSize.y + viewportTopLeft.y) - viewportTopLeft.y) / (-viewportSize.y);
+		tx = (-(viewportSize.x + viewportTopLeft.x) - viewportTopLeft.x) / (viewportSize.x);*/
+
+		sy = (1 + 1) / (-windowSize.y);
+		sx = (1 + 1) / (windowSize.x);
+		ty = (-(windowSize.y + viewportTopLeft.y) - viewportTopLeft.y) / (-windowSize.y);
+		tx = (-(windowSize.x + viewportTopLeft.x) - viewportTopLeft.x) / (windowSize.x);
+
+		float normX = sx * (mouseX)+tx - 0.01;
+		float normY = sy * (mouseY)+ty + 0.06;
+		ray = App->camera->frustum.UnProjectLineSegment(normX, normY);
+
+		//future implementation: make quadtree work fully and use it to make this algorithm more efficient
+		//now we check collisions
+
+		map<unsigned int, GameObject*>::iterator it;
+		std::vector<GameObject*> collisions;
+		for (it = gameObjects.begin(); it != gameObjects.end(); ++it) {
+			if (it->second->BB != nullptr /*it->second->BB->Aabb->IsFinite() && ray.Intersects(*(it->second->BB->Aabb))*/) {
+				collisions.push_back(it->second);
+			}
+		}
+
+		GameObject* picked = nullptr;
+		if (collisions.size() > 0) picked = collisions[0];
+		for (int i = 0; i < collisions.size(); ++i) {
+			picked = closestToCam(picked, collisions[i]);
+		}
+		//now that we have the picked object, make it selected
+		if (picked != nullptr) {
+			NewGOSelected(picked);
+		}
+
+		for (int i = 0; i < 10; ++i) {
+			for (int j = 0; j < 10; ++j) {
+				float newStartX = App->scene->ray.a.x + 0.001*i;
+				float newStartY = App->scene->ray.a.y + 0.001*j;
+				float newEndX = App->scene->ray.b.x + 0.001*i;
+				float newEndY = App->scene->ray.b.y + 0.001*j;
+				math:float3 newStart(newStartX, newStartY, App->scene->ray.a.z);
+				math::float3 newEnd(newEndX, newEndY, App->scene->ray.b.z);
+
+				dd::line(newStart, newEnd, math::float3(0.8, 0.3, 0.3));
+			}
+		}
+	}
+}
+
+GameObject* ModuleScene::closestToCam(GameObject* go1, GameObject* go2) {
+	if (go1->BB->Aabb->Distance(App->camera->frustum.pos) < go2->BB->Aabb->Distance(App->camera->frustum.pos)) return go1;
+	else return go2;
 }
 
 void ModuleScene::SaveScene() {

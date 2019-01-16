@@ -3,6 +3,8 @@
 #include "JSONManager.h"
 #include "ModuleModelLoader.h"
 #include "GameObject.h"
+#include <string>
+using namespace std;
 
 ComponentMaterial::ComponentMaterial(GameObject * my_go)
 {
@@ -18,10 +20,26 @@ ComponentMaterial::ComponentMaterial(GameObject * my_go, unsigned texture)
 	this->textureDiff = texture;
 }
 
-void ComponentMaterial::LoadTexture(char * pathText) {
+int ComponentMaterial::LoadTexture(const char * pathText) {
+	string pathString = pathText;
+
+	for (int i = 0; i < pathString.length(); i++)
+	{
+		if (pathString[i] == '\\')
+			pathString[i] = '/';
+	}
+
+	uint pos_slash = pathString.find_last_of('/');
+	uint pos_dot = pathString.find_last_of('.');
+
+	string extension = pathString.substr(pos_dot + 1);
+	string name = pathString.substr(pos_slash + 1, pos_dot - pos_slash - 1);
+
 	textureDiff = App->modelLoader->LoadTexture(pathText);
 	if (textureDiff != -1) hasTexture = true;
-	pathDiffuse = pathText;
+	pathDiffuse = "./Assets/" + name + "." + extension;
+
+	return textureDiff;
 }
 
 ComponentMaterial::~ComponentMaterial()
@@ -44,8 +62,8 @@ void ComponentMaterial::Save(JSON_Value* componentsJSON) {
 void ComponentMaterial::Load(JSON_Value* componentJSON) {
 	pathDiffuse = componentJSON->getString("PathDiffuse");
 	idMaterial = componentJSON->getInt("idMaterial");
-	textureDiff = App->modelLoader->LoadTexture(pathDiffuse.c_str());
-	if (textureDiff != -1) hasTexture = true;
+	LoadTexture(pathDiffuse.c_str());
+
 	diffuse_k = componentJSON->getFloat("diffuse_k");
 	specular_k = componentJSON->getFloat("specular_k");
 	shininess = componentJSON->getFloat("shininess");
