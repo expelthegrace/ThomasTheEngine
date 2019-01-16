@@ -28,7 +28,6 @@ void ComponentTransform::Reset() {
 	rotation = Quat::FromEulerXYZ(0.f, 0.f, 0.f);
 	changed = true;
 
-	//for (int i = 0; i < my_go->children.size(); ++i) my_go->children[i]->transform->Reset();
 
 }
 

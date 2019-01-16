@@ -99,18 +99,18 @@ bool ModuleScene::Init() {
 
 	//LoadScene();
 
-	/*GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
+	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
 	quadTree->Insert(casa1);
 
-	GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
-	quadTree->Insert(casa2);
+	//GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
+	//quadTree->Insert(casa2);
 
-	GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
-	quadTree->Insert(casa3);*/
+	//GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
+	//quadTree->Insert(casa3);
 
-	GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
+	/*GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
 	quadTree->Insert(bunny1);
-
+*/
 	
 
 	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
@@ -225,6 +225,7 @@ void ModuleScene::LoadScene() {
 
 		JSON_Value* gameObjectsJSON = sceneJSON->getValue("GameObjects");
 		App->GameScale = sceneJSON->getValue("Scene_properties")->getFloat("GameScale");
+		App->GameScaleIni = App->GameScale;
 
 		float quadTreeSize = 20.0f * App->GameScale;
 		quadTree->Resize(float3(-quadTreeSize), float3(quadTreeSize));

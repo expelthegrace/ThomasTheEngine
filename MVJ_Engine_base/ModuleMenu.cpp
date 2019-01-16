@@ -318,17 +318,18 @@ update_status ModuleMenu::Configuration() {
 	{
 		ImGui::Checkbox("Show grid", &App->renderer->showGrid);
 		ImGui::Checkbox("Show quadtree", &App->scene->showQuad);
+		ImGui::Checkbox("Debug draw", &App->scene->drawDebugDraw);
 		ImGui::NewLine();
 		ImGui::Text("Game Scale");
 		ImGui::SameLine();
 		if (ImGui::Button("Reset scale")) {
-			App->GameScale = 1.f;
+			App->GameScale = App->GameScaleIni;
 			App->camera->UpdateFrustum();
 		}
 		ImGui::PushID("GameScale");
 		if (ImGui::SliderFloat("", &App->GameScale, 0.1f, 200.f)) App->camera->UpdateFrustum();
 		ImGui::PopID();
-		ImGui::Checkbox("Debug draw", &App->scene->drawDebugDraw);
+		
 	}
 
 	if (ImGui::CollapsingHeader("Window"))
@@ -412,7 +413,7 @@ update_status ModuleMenu::Inspector() {
 		ImGui::PopID();
 		ImGui::PopItemWidth();
 	
-		variation = 200;
+		variation = 300;
 		math::float3 rotationAux = GO_act->transform->eulerRot;
 		rotationAux = RadToDeg(rotationAux);
 		ImGui::Text("Rotation");
