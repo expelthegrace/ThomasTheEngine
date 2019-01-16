@@ -198,7 +198,7 @@ update_status ModuleMenu::PreUpdate() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
-	ImGuizmo::BeginFrame();
+	//ImGuizmo::BeginFrame();
 	return UPDATE_CONTINUE;
 }
 
@@ -314,7 +314,7 @@ update_status ModuleMenu::Configuration() {
 
 	}
 
-	if (ImGui::CollapsingHeader("Debug gizmos"))
+	if (ImGui::CollapsingHeader("Debug"))
 	{
 		ImGui::Checkbox("Show grid", &App->renderer->showGrid);
 		ImGui::Checkbox("Show quadtree", &App->scene->showQuad);
@@ -328,6 +328,7 @@ update_status ModuleMenu::Configuration() {
 		ImGui::PushID("GameScale");
 		if (ImGui::SliderFloat("", &App->GameScale, 0.1f, 200.f)) App->camera->UpdateFrustum();
 		ImGui::PopID();
+		ImGui::Checkbox("Debug draw", &App->scene->drawDebugDraw);
 	}
 
 	if (ImGui::CollapsingHeader("Window"))
@@ -395,7 +396,7 @@ update_status ModuleMenu::Inspector() {
 	{
 		if (ImGui::Button("Reset")) GO_act->transform->Reset();
 
-		float variation = 15 * App->GameScale;	
+		float variation = 25 * App->GameScale;	
 		ImGui::Text("Position");
 		ImGui::PushItemWidth(columnWidth / 4);
 		ImGui::PushID("1");

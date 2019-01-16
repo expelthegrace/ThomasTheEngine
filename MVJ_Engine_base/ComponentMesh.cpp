@@ -5,6 +5,8 @@
 #include "JSONManager.h"
 #include "ModuleRender.h"
 #include "ModuleModelLoader.h"
+#include "debugdraw.h"
+#include "ModuleDebugDraw.h"
 
 ComponentMesh::ComponentMesh( GameObject* my_go)
 {
@@ -37,6 +39,7 @@ ComponentMesh::~ComponentMesh()
 
 
 }
+
 
 void ComponentMesh::Save(JSON_Value* componentsJSON) {
 

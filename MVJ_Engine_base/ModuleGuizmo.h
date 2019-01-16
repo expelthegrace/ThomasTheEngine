@@ -10,7 +10,6 @@ public:
 	ModuleGuizmo();
 	~ModuleGuizmo();
 
-	update_status PreUpdate() override;
 
 };
 

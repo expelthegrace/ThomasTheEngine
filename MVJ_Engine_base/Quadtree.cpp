@@ -10,7 +10,7 @@ Quadtree::Quadtree(Quadtree* parent, float3 min, float3 max, int bucket, int max
 {
 	this->parent = parent;
 	this->bucket = bucket;
-	boundaries = new AABB(float3 (min.x, -5.0f, min.z), float3( max.x , 5.0f, max.z));
+	boundaries = new AABB(float3 (min.x, -5.0f * App->GameScale, min.z), float3( max.x , 5.0f * App->GameScale, max.z));
 	maxDepth = maxLevels;
 
 }

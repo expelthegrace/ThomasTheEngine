@@ -95,7 +95,7 @@ bool ModuleScene::Init() {
 	GO_selected = ROOT;
 
 	float quadTreeSize = 20.0f * App->GameScale;
-	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 2, 8);
+	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 5, 8);
 
 	//LoadScene();
 
@@ -244,8 +244,6 @@ void ModuleScene::LoadScene() {
 				parentAux->AddChild(it->second);
 
 			}
-					
-		
 		}
 
 		char* b = new char[50];

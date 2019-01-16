@@ -45,6 +45,7 @@ public:
 	ComponentCamera* mainCamera = nullptr;
 	ComponentLight* mainLight = nullptr;
 	char* scenePath = "JSON/sceneDefault.tte";
+	bool drawDebugDraw = true;
 
 private:
 	std::map<unsigned, GameObject*> gameObjects;

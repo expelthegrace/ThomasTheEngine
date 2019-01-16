@@ -45,6 +45,7 @@ public:
 	void Load(JSON_Value* componentJSON) override;
 
 
+
 public:
 	Mesh mesh;
 	bool avaliable;

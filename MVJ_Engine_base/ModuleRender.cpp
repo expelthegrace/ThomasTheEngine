@@ -47,9 +47,23 @@ ComponentMesh* ModuleRender::CreateComponentMesh( GameObject* my_go) {
 
 ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, char* path) {
 
+	string pathString = path;
+
+	for (int i = 0; i < pathString.length(); i++)
+	{
+		if (pathString[i] == '\\')
+			pathString[i] = '/';
+	}
+
+	uint pos_slash = pathString.find_last_of('/');
+	uint pos_dot = pathString.find_last_of('.');
+
+	string extension = pathString.substr(pos_dot + 1);
+	string name = pathString.substr(pos_slash + 1, pos_dot - pos_slash - 1);
+
 	ComponentMesh* meshComp = new ComponentMesh(my_go);
 	meshComp->idMesh = idMesh;
-	meshComp->path = path;
+	meshComp->path = "./Assets/" + name + "." + extension;   //path;
 	App->modelLoader->GenerateMesh(my_go, idMesh, meshComp, path);
 	if (meshComp->mesh.numVertices > 0) meshComp->avaliable = true;
 	else {
@@ -63,11 +77,25 @@ ComponentMesh* ModuleRender::CreateComponentMesh(GameObject* my_go, int idMesh, 
 }
 
 ComponentMaterial* ModuleRender::CreateComponentMaterial(GameObject* my_go, int idMaterial, char* path) {
+	string pathString = path;
+
+	for (int i = 0; i < pathString.length(); i++)
+	{
+		if (pathString[i] == '\\')
+			pathString[i] = '/';
+	}
+
+	uint pos_slash = pathString.find_last_of('/');
+	uint pos_dot = pathString.find_last_of('.');
+
+	string extension = pathString.substr(pos_dot + 1);
+	string name = pathString.substr(pos_slash + 1, pos_dot - pos_slash - 1);
+
 	unsigned mat = App->modelLoader->GenerateMaterial(idMaterial, path); 
 	ComponentMaterial* materialComp = new ComponentMaterial(my_go, mat);
 	if (mat != -1) materialComp->hasTexture = true;
 	materialComp->idMaterial = idMaterial;
-	materialComp->pathDiffuse = path;
+	materialComp->pathDiffuse = "./Assets/" + name + "." + extension;
 
 	return materialComp;
 }
@@ -105,7 +133,7 @@ GameObject* ModuleRender::CreateModel(char * path) {
 			child->mesh = CreateComponentMesh(child, i, path);
 			child->components.push_back(child->mesh);
 
-			//child->BB->SetAABB(child->mesh);
+			child->BB->SetAABB(child->mesh);
 		}
 
 		std::vector<ComponentMesh*> meshCompsAux;
@@ -359,7 +387,7 @@ update_status ModuleRender::Update()
 	DrawEditorCamera();
 	DrawCameras();
 
-	App->debugdraw->Draw(nullptr, &(App->camera->fboSet));
+	if (App->scene->drawDebugDraw) App->debugdraw->Draw(nullptr, &(App->camera->fboSet));
 
 	App->menu->DrawCameras();
 	
