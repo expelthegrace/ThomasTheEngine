@@ -482,8 +482,8 @@ update_status ModuleMenu::Inspector() {
 				bool camCompChanged = false;
 
 				if (ImGui::Button("Reset")) camComp->Reset();
-				if (ImGui::SliderFloat("Near", &camComp->frustum.nearPlaneDistance, 0, App->GameScale * 100.f)) camCompChanged = true;
-				if (ImGui::SliderFloat("Far", &camComp->frustum.farPlaneDistance, 0, 100.f * App->GameScale * 3.f))    camCompChanged = true;
+				if (ImGui::SliderFloat("Near", &camComp->nearPlane, 0.01f, 10.f)) camCompChanged = true;
+				if (ImGui::SliderFloat("Far", &camComp->farPlane, 0, 150.f)) camCompChanged = true;
 
 				if (camCompChanged) camComp->UpdateFrustum();
 			}

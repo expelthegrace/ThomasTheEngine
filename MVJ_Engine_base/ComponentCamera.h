@@ -34,6 +34,9 @@ public:
 
 	bool cameraChanged = true;
 
+	float nearPlane = 0.01f;
+	float farPlane = 100.f;
+
 private:
 	float3 initialFront = math::float3(0, 0, -1);
 	float3 initialUp    = math::float3(0, 1, 0);

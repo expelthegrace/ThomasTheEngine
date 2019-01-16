@@ -90,7 +90,6 @@ void ModuleScene::DuplicateSelected() {
 
 bool ModuleScene::Init() {
 	ROOT = new GameObject("ROOT", true, nullptr);
-	App->GameScale = 40.f;
 
 	GO_selected = ROOT;
 

@@ -54,7 +54,8 @@ public:
 
 	bool exit;
 
-	float GameScale, GameScaleIni = 1.f;
+	float GameScale = 1.f;
+	float GameScaleIni = 1.f;
 
 private:
 	std::list<Module*> modules;
