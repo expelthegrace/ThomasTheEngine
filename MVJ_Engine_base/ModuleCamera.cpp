@@ -45,7 +45,7 @@ bool  ModuleCamera::Init() { // ------------------------------------------------
 	frustum.front = fwd.Normalized();
 	frustum.up = up.Normalized();
 	frustum.nearPlaneDistance = 0.1f * App->GameScale;
-	frustum.farPlaneDistance = 100.0 * App->GameScale;
+	frustum.farPlaneDistance = 200.0 * App->GameScale;
 	frustum.verticalFov = math::pi / 4.0f;
 
 	screenWidth = SCREEN_WIDTH;
@@ -240,7 +240,7 @@ void ModuleCamera::UpdateFrustum() {
 	frustum.up = up.Normalized();
 
 	frustum.nearPlaneDistance = 0.1f * App->GameScale;
-	frustum.farPlaneDistance = 100.0 * App->GameScale;
+	frustum.farPlaneDistance = 200.0 * App->GameScale;
 
 	float aspect = (float)editorWidth / (float)editorHeight;
 	frustum.horizontalFov = 2.f * atanf(tanf(frustum.verticalFov * 0.5f) *aspect);
