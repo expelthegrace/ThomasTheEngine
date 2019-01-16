@@ -66,10 +66,7 @@ void ComponentCamera::UpdateFrustum() {
 	frustum.pos = my_go->transform->globalPosition;
 
 	frustum.front = (my_go->transform->rotation * initialFront).Normalized();
-	//frustum.up = (my_go->transform->rotation * initialUp).Normalized();
-	Quat transformRot = Quat::FromEulerXYZ(my_go->transform->eulerRot.x, my_go->transform->eulerRot.y, my_go->transform->eulerRot.z);
-	frustum.front = (transformRot * initialFront).Normalized();
-	frustum.up = (transformRot * initialUp).Normalized();
+	frustum.up = (my_go->transform->rotation * initialUp).Normalized();
 
 	w = App->camera->editorWidth;
 	h = App->camera->editorHeight;
