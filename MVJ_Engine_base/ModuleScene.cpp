@@ -36,7 +36,6 @@ update_status ModuleScene::Update() {
 
 	if (App->input->keyboard[SDL_SCANCODE_DELETE]) DeleteSelected();
 
-
 	ROOT->Update();
 	
 	if (showQuad) quadTree->Draw();
@@ -100,30 +99,30 @@ bool ModuleScene::Init() {
 	float quadTreeSize = 20.0f * App->GameScale;
 	quadTree = new Quadtree(nullptr, float3(-quadTreeSize), float3 (quadTreeSize), 5, 8);
 
-	//LoadScene();
+	LoadScene();
 
-	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
-	quadTree->Insert(casa1);
-
-	//GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
-	//quadTree->Insert(casa2);
-
-	//GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
-	//quadTree->Insert(casa3);
-
-	/*GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
-	quadTree->Insert(bunny1);
-*/
-	
-
-	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
-	gameObjects[camObject->UID] = camObject;
-	ComponentCamera* camComp = new ComponentCamera(camObject);
-	camObject->AddComponent(camComp);
-
-	GameObject* lightObject = new GameObject("ObjectLight", true, ROOT);
-	gameObjects[lightObject->UID] = lightObject;
-	lightObject->CreateComponent(LIGHT);
+//	GameObject* casa1 = CreateModel("Casa1", ROOT, "BakerHouse.fbx");
+//	quadTree->Insert(casa1);
+//
+//	//GameObject* casa2 = CreateModel("Casa2", ROOT, "BakerHouse.fbx");
+//	//quadTree->Insert(casa2);
+//
+//	//GameObject* casa3 = CreateModel("Casa3", ROOT, "BakerHouse.fbx");
+//	//quadTree->Insert(casa3);
+//
+//	/*GameObject* bunny1 = CreateModel("Bunny1", ROOT, "Assets/Zombunny.fbx");
+//	quadTree->Insert(bunny1);
+//*/
+//	
+//
+//	GameObject* camObject = new GameObject("ObjectCamera", true, ROOT);
+//	gameObjects[camObject->UID] = camObject;
+//	ComponentCamera* camComp = new ComponentCamera(camObject);
+//	camObject->AddComponent(camComp);
+//
+//	GameObject* lightObject = new GameObject("ObjectLight", true, ROOT);
+//	gameObjects[lightObject->UID] = lightObject;
+//	lightObject->CreateComponent(LIGHT);
 
 	
 	
@@ -176,7 +175,10 @@ GameObject* ModuleScene::FindByName(char * name) {
 
 GameObject* ModuleScene::getGOByID(unsigned uid) {
 	GameObject* ret = gameObjects[uid];
-	if (ret == nullptr) return ROOT;
+	if (ret == nullptr) {
+		gameObjects.erase(uid);
+		return ROOT;
+	}
 	return ret;
 }
 
@@ -315,6 +317,8 @@ void ModuleScene::LoadScene() {
 
 			}
 		}
+
+		App->camera->UpdateFrustum();
 
 		char* b = new char[50];
 		sprintf(b, "-- %s loaded --\n", App->scene->scenePath);
