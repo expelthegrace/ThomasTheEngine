@@ -32,7 +32,7 @@ update_status ModuleScene::Update() {
 	
 	BROFILER_CATEGORY("Component Updates", Profiler::Color::Orchid);
 
-//	if (App->input->mouse_buttons[SDL_BUTTON_LEFT - 1] == KEY_DOWN) mouseClick(App->input->mouse_position.x, App->input->mouse_position.y);
+	//if (App->input->mouse_buttons[SDL_BUTTON_LEFT - 1] == KEY_DOWN) mouseClick(App->input->mouse_position.x, App->input->mouse_position.y);
 
 	if (App->input->keyboard[SDL_SCANCODE_DELETE]) DeleteSelected();
 
@@ -196,9 +196,9 @@ void ModuleScene::ClearScene() {
 void ModuleScene::mouseClick(int mouseXi, int mouseYi) {
 	float mouseX = (float)mouseXi;
 	float mouseY = (float)mouseYi;
-	math::float2 viewportTopLeft(App->menu->columnWidth, 20.0f);
-	math::float2 viewportSize(App->camera->screenWidth - 2 * App->menu->columnWidth, App->camera->screenHeight - App->menu->consoleHeight - 20);
-	math::float2 windowSize(App->camera->screenWidth, App->camera->screenHeight);
+	math::float2 viewportTopLeft(0.f, 0.f);
+	//math::float2 viewportSize(App->camera->screenWidth - 2 * App->menu->columnWidth, App->camera->screenHeight - App->menu->consoleHeight - 20);
+	math::float2 windowSize(App->camera->editorWidth, App->camera->editorHeight);
 	float endpointX = App->menu->columnWidth + App->camera->screenWidth - 2 * App->menu->columnWidth;
 	float endpointY = 20.0f + App->camera->screenHeight - App->menu->consoleHeight - 20;
 	if (mouseX > App->menu->columnWidth && mouseX < (endpointX) &&
@@ -216,6 +216,9 @@ void ModuleScene::mouseClick(int mouseXi, int mouseYi) {
 
 		float normX = sx * (mouseX)+tx - 0.01;
 		float normY = sy * (mouseY)+ty + 0.06;
+
+		//float normX = -(1.0f - (float(mouseX - App->camera->editorWidth) * 2.0f) / sceneCamera->screenWidth);
+		//float normY = 1.0f - (float(mouseY - App->renderer->sceneViewportY) * 2.0f) / sceneCamera->screenHeight;
 		ray = App->camera->frustum.UnProjectLineSegment(normX, normY);
 
 		//future implementation: make quadtree work fully and use it to make this algorithm more efficient
@@ -224,7 +227,7 @@ void ModuleScene::mouseClick(int mouseXi, int mouseYi) {
 		map<unsigned int, GameObject*>::iterator it;
 		std::vector<GameObject*> collisions;
 		for (it = gameObjects.begin(); it != gameObjects.end(); ++it) {
-			if (it->second->BB != nullptr /*it->second->BB->Aabb->IsFinite() && ray.Intersects(*(it->second->BB->Aabb))*/) {
+			if (it->second->BB->Aabb->IsFinite() && ray.Intersects(*(it->second->BB->Aabb))) {
 				collisions.push_back(it->second);
 			}
 		}
@@ -241,10 +244,10 @@ void ModuleScene::mouseClick(int mouseXi, int mouseYi) {
 
 		for (int i = 0; i < 10; ++i) {
 			for (int j = 0; j < 10; ++j) {
-				float newStartX = App->scene->ray.a.x + 0.001*i;
-				float newStartY = App->scene->ray.a.y + 0.001*j;
-				float newEndX = App->scene->ray.b.x + 0.001*i;
-				float newEndY = App->scene->ray.b.y + 0.001*j;
+				float newStartX = App->scene->ray.a.x + 0.001*i * App->GameScale;
+				float newStartY = App->scene->ray.a.y + 0.001*j* App->GameScale;
+				float newEndX = App->scene->ray.b.x + 0.001*i* App->GameScale;
+				float newEndY = App->scene->ray.b.y + 0.001*j* App->GameScale;
 				math:float3 newStart(newStartX, newStartY, App->scene->ray.a.z);
 				math::float3 newEnd(newEndX, newEndY, App->scene->ray.b.z);
 
