@@ -49,7 +49,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>C:\Users\MSI\Desktop\Master\ThomasTheEngine\MVJ_Engine_base\rapidjson;.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\Assimp\include;.\DevIL\include;.\DevIL\include\IL;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\ImGuizmo-master;C:\Users\MSI\Desktop\Master\ThomasTheEngine\MVJ_Engine_base\rapidjson;.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\Assimp\include;.\DevIL\include;.\DevIL\include\IL;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -66,7 +66,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>C:\Users\MSI\Desktop\Master\ThomasTheEngine\MVJ_Engine_base\rapidjson;.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\DevIL\include\IL;.\DevIL\include;.\Assimp\include;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\ImGuizmo-master;C:\Users\MSI\Desktop\Master\ThomasTheEngine\MVJ_Engine_base\rapidjson;.\PCG\extras;.\PCG\include;.\physfs-3.0.1\src;.\Brofiler;.\Util;.\DevIL\include\IL;.\DevIL\include;.\Assimp\include;./glew-2.1.0/include;./SDL/include;MathGeoLib/include;./IMGUI;.\IMGUI\misc\freetype</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -159,6 +159,7 @@
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleCamera.h" />
     <ClInclude Include="ModuleDebugDraw.h" />
+    <ClInclude Include="ModuleGuizmo.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleMenu.h" />
     <ClInclude Include="ModuleModelLoader.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="ModuleCamera.cpp" />
     <ClCompile Include="ModuleDebugDraw.cpp" />
+    <ClCompile Include="ModuleGuizmo.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleMenu.cpp" />
     <ClCompile Include="ModuleModelLoader.cpp" />

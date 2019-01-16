@@ -11,6 +11,7 @@
 #include "ModuleCamera.h"
 #include "ModuleInput.h"
 #include "ModuleModelLoader.h"
+#include "ImGuizmo.h"
 #include "GameObject.h"
 #include "ModuleScene.h"
 #include "ComponentTransform.h"
@@ -197,6 +198,7 @@ update_status ModuleMenu::PreUpdate() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 	return UPDATE_CONTINUE;
 }
 

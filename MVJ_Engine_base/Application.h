@@ -20,6 +20,7 @@ class Timer;
 class ModuleTimer;
 class ModuleScene;
 class ModuleDebugDraw;
+class ModuleGuizmo;
 
 class Application
 {
@@ -49,6 +50,7 @@ public:
 	ModuleTimer* timer = nullptr;
 	ModuleScene* scene = nullptr;
 	ModuleDebugDraw* debugdraw = nullptr;
+	ModuleGuizmo* guizmo = nullptr;
 
 	bool exit;
 

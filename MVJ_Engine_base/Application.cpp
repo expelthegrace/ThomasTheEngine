@@ -11,6 +11,7 @@
 #include "ModuleTimer.h"
 #include "ModuleScene.h"
 #include "ModuleDebugDraw.h"
+#include "ModuleGuizmo.h"
 #include "Brofiler.h"
 #include "pcg_variants.h"
 #include "entropy.h"
@@ -31,6 +32,7 @@ Application::Application()
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(camera = new ModuleCamera());
 	modules.push_back(menu = new ModuleMenu());
+	modules.push_back(guizmo = new ModuleGuizmo());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(textures = new ModuleTextures());
 	modules.push_back(modelLoader = new ModuleModelLoader());
